@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\build.zig" />
+    <None Include="src\Makefile" />
+    <None Include="src\minshell.html" />
+    <None Include="src\raylib.dll.rc.data" />
+    <None Include="src\raylib.rc.data" />
+    <None Include="src\shell.html" />
+    <None Include="src\external\glfw\.mailmap" />
+    <None Include="src\external\glfw\CONTRIBUTORS.md" />
+    <None Include="src\external\glfw\LICENSE.md" />
+    <None Include="src\external\glfw\README.md" />
+    <None Include="src\external\glfw\src\cocoa_init.m" />
+    <None Include="src\external\glfw\src\cocoa_joystick.m" />
+    <None Include="src\external\glfw\src\cocoa_monitor.m" />
+    <None Include="src\external\glfw\src\cocoa_window.m" />
+    <None Include="src\external\glfw\src\glfw.rc.in" />
+    <None Include="src\external\glfw\src\mappings.h.in" />
+    <None Include="src\external\glfw\src\nsgl_context.m" />
+    <None Include="src\external\glfw\CMake\cmake_uninstall.cmake.in" />
+    <None Include="src\external\glfw\CMake\GenerateMappings.cmake" />
+    <None Include="src\external\glfw\CMake\glfw3.pc.in" />
+    <None Include="src\external\glfw\CMake\glfw3Config.cmake.in" />
+    <None Include="src\external\glfw\CMake\i686-w64-mingw32.cmake" />
+    <None Include="src\external\glfw\CMake\i686-w64-mingw32-clang.cmake" />
+    <None Include="src\external\glfw\CMake\Info.plist.in" />
+    <None Include="src\external\glfw\CMake\x86_64-w64-mingw32.cmake" />
+    <None Include="src\external\glfw\CMake\x86_64-w64-mingw32-clang.cmake" />
+    <None Include="src\external\glfw\CMake\modules\FindEpollShim.cmake" />
+    <None Include="src\external\glfw\CMake\modules\FindOSMesa.cmake" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\CMakeLists.txt" />
+    <Text Include="src\external\glfw\CMakeLists.txt" />
+    <Text Include="src\external\glfw\src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\raylib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\raymath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rcamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rgestures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rlgl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\cgltf.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\dirent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\dr_flac.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\dr_mp3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\dr_wav.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glad_gles2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\jar_mod.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\jar_xm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\m3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\miniaudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\msf_gif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\par_shapes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\qoa.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\qoi.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\rl_gputex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\sdefl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\sinfl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\stb_image_resize.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\stb_image_write.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\stb_perlin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\stb_rect_pack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\stb_truetype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\tinyobj_loader_c.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\vox_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\cocoa_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\cocoa_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\cocoa_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\linux_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\mappings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\null_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\null_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\posix_poll.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\posix_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\posix_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\win32_joystick.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\win32_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\win32_thread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\win32_time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\wl_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\x11_platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\src\xkb_unicode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\include\GLFW\glfw3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\include\GLFW\glfw3native.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\getopt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\glad\gl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\glad\gles2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\glad\vulkan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\mingw\_mingw_dxhelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\mingw\dinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\mingw\xinput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\external\glfw\deps\vs2008\stdint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\raudio.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rcore.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rglfw.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rmodels.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rshapes.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rtext.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rtextures.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\utils.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\qoaplay.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\stb_vorbis.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\cocoa_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\egl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\glx_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\input.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\linux_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\null_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\null_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\null_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\null_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\osmesa_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\platform.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\posix_module.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\posix_poll.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\posix_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\posix_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\vulkan.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\wgl_context.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_joystick.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_module.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_thread.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_time.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\win32_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\wl_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\wl_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\wl_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\x11_init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\x11_monitor.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\x11_window.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\src\xkb_unicode.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\external\glfw\deps\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\raylib.dll.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="src\raylib.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\raylib.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
