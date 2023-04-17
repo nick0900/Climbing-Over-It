@@ -1,7 +1,7 @@
 #include <iostream>
 #include <thread>
-#include <Windows.h>
 #include <string>
+#include <Windows.h>
 
 #include "lua.hpp"
 
