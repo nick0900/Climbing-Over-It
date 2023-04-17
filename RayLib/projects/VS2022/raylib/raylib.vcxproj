@@ -120,38 +120,38 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.DLL|Win32'">
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug.DLL|Win32'">
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug.DLL|x64'">
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.DLL|x64'">
     <IntDir>$(SolutionDir)RayLib/int/</IntDir>
-    <OutDir>$(SolutionDir)RayLib/lib/</OutDir>
+    <OutDir>$(SolutionDir)CompiledLibs/</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>

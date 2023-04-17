@@ -204,11 +204,4 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="lib\LuaLib_d.idb" />
-    <None Include="lib\LuaLib_d.pdb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="lib\LuaLib_d.lib" />
-  </ItemGroup>
 </Project>
