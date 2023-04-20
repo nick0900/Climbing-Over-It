@@ -81,13 +81,14 @@ int main(void)
     // Define the camera to look into our 3d world
     Camera3D camera = { 0 };
     camera.position = Vector3{ 10.0f, 10.0f, 10.0f }; // Camera position
-    camera.target = Vector3{ 0.0f, 0.0f, 0.0f };      // Camera looking at point
+    camera.target = Vector3{ 0.0f, 0.0f, 1.0f };      // Camera looking at point
     camera.up = Vector3{ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera.fovy = 45.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
-
+    camera.fovy = 90.0f;                                // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;           // Camera projection type
+    
     Vector3 cubePosition = { 0.0f, 4.0f, 0.0f };
-
+    
+    
     DisableCursor();                    // Limit cursor to relative movement inside the window
 
     SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
@@ -143,7 +144,7 @@ int main(void)
     {
         // Update
         //----------------------------------------------------------------------------------
-        UpdateCamera(&camera, CAMERA_FREE);
+        UpdateCamera(&camera, CAMERA_FIRST_PERSON);
 
         if (IsKeyDown('Z')) camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
 
@@ -174,6 +175,8 @@ int main(void)
         BeginMode3D(camera);
 
         DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
+       
+       /* DrawCube(cirkel, 2.0f, 2.0f, 2.0f, RED);*/
         DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
 
         //DrawCube({0.0f, -10.0f, 0.0f}, 100.0f, 20.0f, 2.0f, BLUE);

@@ -1,0 +1,3 @@
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/CMakeFiles/raylib-populate.dir
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/CMakeFiles/edit_cache.dir
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/CMakeFiles/rebuild_cache.dir
