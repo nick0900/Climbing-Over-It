@@ -1,78 +1,22 @@
 #include <iostream>
-#include <thread>
 #include <string>
-//#include <Windows.h>
-
-//#include "lua.hpp"
-
-/*
-void DumpErreor(lua_State* L)
-{
-	if (lua_gettop(L) && lua_isstring(L, -1))
-	{
-		std::cout << "Lua error: " << lua_tostring(L, -1) << std::endl;
-		lua_pop(L, 1);
-	}
-}
-
-void ConsoleThreadFunction(lua_State* L)
-{
-	std::string input;
-	while (GetConsoleWindow())
-	{
-		std::cout << "> ";
-
-		std::getline(std::cin, input);
-
-		if (luaL_dostring(L, input.c_str()) != LUA_OK)
-		{
-			DumpErreor(L);
-		}
-	}
-}
-
-int main()
-{
-	lua_State* L = luaL_newstate();
-
-	luaL_openlibs(L);
-
-	std::thread consoleThread(ConsoleThreadFunction, L);
-
-	bool running = true;
-	while (running)
-	{
-
-	}
-
-	return 0;
-}
-*/
-
-/*******************************************************************************************
-*
-*   raylib [core] example - Initialize 3d camera free
-*
-*   Example originally created with raylib 1.3, last time updated with raylib 1.3
-*
-*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software
-*
-*   Copyright (c) 2015-2023 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
 
 #include "raylib.h"
+#include "raymath.h"
 #include "box2d.h"
 #include <chrono>
+#include "lua.hpp"
+
+#include "LuaInterface.h"
+#include "Scene.h"
+#include "System.h"
 
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
+    //-----------------------------------Raylib setup-------------------------------------//
     const int screenWidth = 2048;
     const int screenHeight = 2048;
 
@@ -91,15 +35,40 @@ int main(void)
     DisableCursor();                    // Limit cursor to relative movement inside the window
 
     SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------//
 
 
+    //--------------------------------Lua setup-------------------------------------------//
+    lua_State* L = luaL_newstate();
 
-    //-------------------------------Box2D setup--------------------------------------------
-    b2Vec2 gravity(0.0f, -10.0f);
+    luaL_openlibs(L);
 
-    b2World world(gravity);
+    //Expose all needed engine functionality
+    LuaLinking::Class::RegisterClass(L, "Scene", Scene::luaint_WrapFuncs, Scene::luaint_DestroyFuncs);
 
+    //Initialize systems and expose pointers
+    SubSceneUpdate sys_SubSceneUpdate;
+    LuaLinking::PointerReg(L, "sys_SubSceneUpdate", &sys_SubSceneUpdate);
+
+    ModelDraw sys_ModelDraw;
+    LuaLinking::PointerReg(L, "sys_ModelDraw", &sys_ModelDraw);
+
+    //Set up game root scene
+    System* rootSystems[] = {&sys_SubSceneUpdate};
+
+    Scene* rootScene = new Scene(L, 1, rootSystems);
+
+    LuaLinking::Class::PushClassInstance(L, "Scene", rootScene);
+
+    lua_setglobal(L, "RootScene");
+
+    HelpFuncs::CheckError(L, luaL_dofile(L, "init.lua"));
+
+    //------------------------------------------------------------------------------------//
+
+
+    //-------------------------------Box2D setup------------------------------------------//
+    b2World world(b2Vec2(0.0f, -10.0f));
 
     b2BodyDef groundBodyDef;
     groundBodyDef.position.Set(0.0f, -10.0f);
@@ -110,7 +79,6 @@ int main(void)
     groundBox.SetAsBox(50.0f, 10.0f);
 
     groundBody->CreateFixture(&groundBox, 0.0f);
-
 
     b2BodyDef bodyDef;
     bodyDef.type = b2_dynamicBody;
@@ -136,8 +104,6 @@ int main(void)
     //--------------------------------------------------------------------------------------
 
 
-
-
     // Main game loop
     while (!WindowShouldClose())        // Detect window close button or ESC key
     {
@@ -158,6 +124,9 @@ int main(void)
 
             world.Step(timestep, 6, 2);
 
+
+            HelpFuncs::CheckError(L, luaL_dofile(L, "fixedUpdate.lua"));
+
             b2Vec2 position = body->GetPosition();
             float angle = body->GetAngle();
 
@@ -167,17 +136,13 @@ int main(void)
 
         // Draw
         //----------------------------------------------------------------------------------
+
+        HelpFuncs::CheckError(L, luaL_dofile(L, "gameUpdate.lua"));
         BeginDrawing();
 
         ClearBackground(RAYWHITE);
 
         BeginMode3D(camera);
-
-        DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-        DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
-
-        //DrawCube({0.0f, -10.0f, 0.0f}, 100.0f, 20.0f, 2.0f, BLUE);
-        DrawCubeWires({ 0.0f, -10.0f, 0.0f }, 100.0f, 20.0f, 2.0f, MAROON);
 
         DrawGrid(10, 1.0f);
 
