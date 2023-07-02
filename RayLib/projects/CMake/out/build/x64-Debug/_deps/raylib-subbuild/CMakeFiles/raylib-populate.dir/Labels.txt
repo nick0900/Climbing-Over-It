@@ -1,0 +1,14 @@
+# Target labels
+ raylib-populate
+# Source files and their labels
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/CMakeFiles/raylib-populate
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/CMakeFiles/raylib-populate.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/CMakeFiles/raylib-populate-complete.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-build.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-configure.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-download.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-install.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-mkdir.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-patch.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-test.rule
+D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-subbuild/raylib-populate-prefix/src/raylib-populate-stamp/raylib-populate-update.rule

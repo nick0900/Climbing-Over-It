@@ -1,0 +1,117 @@
+[
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /FoCMakeFiles\\example.dir\\core_basic_window.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\core_basic_window.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/core_basic_window.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\rcore.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\rcore.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/rcore.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\rmodels.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\rmodels.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/rmodels.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\rshapes.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\rshapes.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/rshapes.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\rtext.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\rtext.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/rtext.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\rtextures.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\rtextures.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/rtextures.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\utils.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\utils.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/utils.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DGRAPHICS_API_OPENGL_33 -DPLATFORM_DESKTOP -D_CRT_SECURE_NO_WARNINGS -I_deps\\raylib-src\\src -I_deps\\raylib-src\\src\\external\\glfw\\include /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /Fo_deps\\raylib-build\\raylib\\CMakeFiles\\raylib.dir\\raudio.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\raudio.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/raudio.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\context.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\context.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/context.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\init.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\init.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/init.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\input.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\input.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/input.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\monitor.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\monitor.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/monitor.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\vulkan.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\vulkan.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/vulkan.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\window.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\window.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/window.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\win32_init.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_init.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/win32_init.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\win32_joystick.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_joystick.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/win32_joystick.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\win32_monitor.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_monitor.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/win32_monitor.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\win32_time.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_time.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/win32_time.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\win32_thread.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_thread.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/win32_thread.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\win32_window.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\win32_window.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/win32_window.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\wgl_context.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\wgl_context.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/wgl_context.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\egl_context.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\egl_context.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/egl_context.c"
+},
+{
+  "directory": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug",
+  "command": "C:\\PROGRA~2\\MICROS~3\\2019\\ENTERP~1\\VC\\Tools\\MSVC\\1429~1.301\\bin\\Hostx64\\x64\\cl.exe  /nologo -DUNICODE -D_CRT_SECURE_NO_WARNINGS -D_GLFW_USE_CONFIG_H -D_UNICODE -I_deps\\raylib-src\\src\\external\\glfw\\include -I_deps\\raylib-src\\src\\external\\glfw\\src -I_deps\\raylib-build\\raylib\\external\\glfw\\src /DWIN32 /D_WINDOWS /W3 /MDd /Zi /Ob0 /Od /RTC1 /W3 /Fo_deps\\raylib-build\\raylib\\external\\glfw\\src\\CMakeFiles\\glfw.dir\\osmesa_context.c.obj /FdTARGET_COMPILE_PDB /FS -c \"D:\\bth\\DV1633 Lua1\\RayLib\\projects\\CMake\\out\\build\\x64-Debug\\_deps\\raylib-src\\src\\external\\glfw\\src\\osmesa_context.c\"",
+  "file": "D:/bth/DV1633 Lua1/RayLib/projects/CMake/out/build/x64-Debug/_deps/raylib-src/src/external/glfw/src/osmesa_context.c"
+}
+]
