@@ -8,6 +8,8 @@
 #include "lua.hpp"
 #include <thread>
 #include <string>
+#include "imgui.h"
+#include "rlImGui.h"
 
 #include "LuaInterface.h"
 #include "Scene.h"
