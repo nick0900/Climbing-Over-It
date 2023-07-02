@@ -94,7 +94,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir)entt/;$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,7 +112,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir)entt/;$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,7 +130,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir)entt/;$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,7 +148,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjektDir)entt/;$(SolutionDir)LuaLib/src;$(SolutionDir)RayLib/src;$(SolutionDir)Box2D/include/box2d/</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,7 +161,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components.cpp" />
+    <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ioint.cpp" />
+    <ClCompile Include="PhysicsInt.cpp" />
+    <ClCompile Include="TransformInt.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="System.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Run\characterinit.lua" />
+    <None Include="Run\gameUpdate.lua" />
+    <None Include="Run\helpFuncs.lua" />
+    <None Include="Run\init.lua" />
+    <None Include="Run\inputUpdate.lua" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Components.h" />
+    <ClInclude Include="entt\entt.hpp" />
+    <ClInclude Include="LuaInterface.h" />
+    <ClInclude Include="ioint.h" />
+    <ClInclude Include="PhysicsInt.h" />
+    <ClInclude Include="TransformInt.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="System.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

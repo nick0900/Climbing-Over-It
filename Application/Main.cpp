@@ -1,78 +1,54 @@
 #include <iostream>
+#include <string>
+
+#include "raylib.h"
+#include "raymath.h"
+#include "box2d.h"
+#include <chrono>
+#include "lua.hpp"
 #include <thread>
 #include <string>
-//#include <Windows.h>
 
-//#include "lua.hpp"
+#include "LuaInterface.h"
+#include "Scene.h"
+#include "System.h"
+#include "TransformInt.h"
+#include "ioint.h"
+#include "PhysicsInt.h"
 
-/*
+#if _DEBUG
 void DumpErreor(lua_State* L)
 {
-	if (lua_gettop(L) && lua_isstring(L, -1))
-	{
-		std::cout << "Lua error: " << lua_tostring(L, -1) << std::endl;
-		lua_pop(L, 1);
-	}
+    if (lua_gettop(L) && lua_isstring(L, -1))
+    {
+        std::cout << "Lua error: " << lua_tostring(L, -1) << std::endl;
+        lua_pop(L, 1);
+    }
 }
 
 void ConsoleThreadFunction(lua_State* L)
 {
-	std::string input;
-	while (GetConsoleWindow())
-	{
-		std::cout << "> ";
+    std::string input;
+    while (!WindowShouldClose())
+    {
+        std::cout << "> ";
 
-		std::getline(std::cin, input);
+        std::getline(std::cin, input);
 
-		if (luaL_dostring(L, input.c_str()) != LUA_OK)
-		{
-			DumpErreor(L);
-		}
-	}
+        if (luaL_dostring(L, input.c_str()) != LUA_OK)
+        {
+            DumpErreor(L);
+        }
+    }
 }
-
-int main()
-{
-	lua_State* L = luaL_newstate();
-
-	luaL_openlibs(L);
-
-	std::thread consoleThread(ConsoleThreadFunction, L);
-
-	bool running = true;
-	while (running)
-	{
-
-	}
-
-	return 0;
-}
-*/
-
-/*******************************************************************************************
-*
-*   raylib [core] example - Initialize 3d camera free
-*
-*   Example originally created with raylib 1.3, last time updated with raylib 1.3
-*
-*   Example licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software
-*
-*   Copyright (c) 2015-2023 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
-#include "raylib.h"
-#include "box2d.h"
-#include <chrono>
+#endif
 
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
+    //-----------------------------------Raylib setup-------------------------------------//
     const int screenWidth = 2048;
     const int screenHeight = 2048;
 
@@ -81,106 +57,95 @@ int main(void)
     // Define the camera to look into our 3d world
     Camera3D camera = { 0 };
     camera.position = Vector3{ 10.0f, 10.0f, 10.0f }; // Camera position
-    camera.target = Vector3{ 0.0f, 0.0f, 1.0f };      // Camera looking at point
+    camera.target = Vector3{ 0.0f, 0.0f, 0.0f };      // Camera looking at point
     camera.up = Vector3{ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera.fovy = 90.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;           // Camera projection type
-    
+    camera.fovy = 45.0f;                                // Camera field-of-view Y
+    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+
     Vector3 cubePosition = { 0.0f, 4.0f, 0.0f };
-    
-    
+
     DisableCursor();                    // Limit cursor to relative movement inside the window
 
     SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
-
-
-
-    //-------------------------------Box2D setup--------------------------------------------
-    b2Vec2 gravity(0.0f, -10.0f);
-
-    b2World world(gravity);
-
-
-    b2BodyDef groundBodyDef;
-    groundBodyDef.position.Set(0.0f, -10.0f);
-
-    b2Body* groundBody = world.CreateBody(&groundBodyDef);
-
-    b2PolygonShape groundBox;
-    groundBox.SetAsBox(50.0f, 10.0f);
-
-    groundBody->CreateFixture(&groundBox, 0.0f);
-
-
-    b2BodyDef bodyDef;
-    bodyDef.type = b2_dynamicBody;
-    bodyDef.position.Set(0.0f, 4.0f);
-    b2Body* body = world.CreateBody(&bodyDef);
-
-    b2PolygonShape dynamicBox;
-    dynamicBox.SetAsBox(1.0f, 1.0f);
-
-    b2FixtureDef fixtureDef;
-    fixtureDef.shape = &dynamicBox;
-    fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
-
-    body->CreateFixture(&fixtureDef);
-
     float timestep = 1.0f / 60.0f;
+    //------------------------------------------------------------------------------------//
 
-    std::chrono::duration<double> timestepDur(timestep);
+
+    //--------------------------------Lua setup-------------------------------------------//
+    lua_State* L = luaL_newstate();
+
+    luaL_openlibs(L);
+
+    //Expose all needed engine functionality
+    LuaLinking::Class::RegisterClass(L, "Scene", Scene::luaint_WrapFuncs, Scene::luaint_DestroyFuncs);
+    LuaTransform::Register(L);
+    LuaIO::Register(L);
+    LuaPhysics::Register(L);
+
+    //Initialize systems and expose pointers
+    SubSceneUpdate sys_SubSceneUpdate;
+    LuaLinking::PointerReg(L, "sys_SubSceneUpdate", &sys_SubSceneUpdate);
+
+    ModelDraw sys_ModelDraw;
+    LuaLinking::PointerReg(L, "sys_ModelDraw", &sys_ModelDraw);
+
+    Physics sys_Physics;
+    LuaLinking::PointerReg(L, "sys_Physics", &sys_Physics);
+
+    //Set up game root scene
+    System* rootSystems[] = {&sys_SubSceneUpdate};
+
+    Scene* rootScene = new Scene(L, 1, rootSystems);
+
+    LuaLinking::Class::PushClassInstance<Scene>(L, "Scene", rootScene);
+
+    lua_setglobal(L, "RootScene");
+
+    HelpFuncs::CheckError(L, luaL_dofile(L, "init.lua"));
+
+    #if _DEBUG
+    std::thread consoleThread(ConsoleThreadFunction, L);
+    #endif
+    //------------------------------------------------------------------------------------//
 
     std::chrono::steady_clock::time_point prev = std::chrono::steady_clock::now();
-    std::chrono::duration<double> stepTimer;
-    //--------------------------------------------------------------------------------------
-
-
-
+    std::chrono::milliseconds updateTime = std::chrono::milliseconds::zero();
 
     // Main game loop
     while (!WindowShouldClose())        // Detect window close button or ESC key
     {
         // Update
         //----------------------------------------------------------------------------------
-        UpdateCamera(&camera, CAMERA_FIRST_PERSON);
+        UpdateCamera(&camera, CAMERA_FREE);
 
         if (IsKeyDown('Z')) camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
 
-
         std::chrono::steady_clock::time_point curr = std::chrono::steady_clock::now();
-        stepTimer = std::chrono::duration_cast<std::chrono::duration<double>>(curr - prev);
+        updateTime = std::chrono::duration_cast<std::chrono::milliseconds>(curr - prev);
         prev = curr;
 
-        if (stepTimer >= timestepDur)
-        {
-            stepTimer -= timestepDur;
+        lua_getglobal(L, "LuaOnUpdate");
+        lua_pushnumber(L, timestep);
+        lua_pcall(L, 1, 0, -2);
 
-            world.Step(timestep, 6, 2);
-
-            b2Vec2 position = body->GetPosition();
-            float angle = body->GetAngle();
-
-            cubePosition = { position.x, position.y, 0.0f };
-        }
+        Physics::World()->Step(timestep, 6, 2);
+        
+        rootScene->Update(timestep);
         //----------------------------------------------------------------------------------
 
         // Draw
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
 
         BeginMode3D(camera);
 
-        DrawCube(cubePosition, 2.0f, 2.0f, 2.0f, RED);
-       
-       /* DrawCube(cirkel, 2.0f, 2.0f, 2.0f, RED);*/
-        DrawCubeWires(cubePosition, 2.0f, 2.0f, 2.0f, MAROON);
+        lua_getglobal(L, "LuaOnDraw");
+        lua_pushnumber(L, timestep);
+        lua_pcall(L, 1, 0, -2);
 
-        //DrawCube({0.0f, -10.0f, 0.0f}, 100.0f, 20.0f, 2.0f, BLUE);
-        DrawCubeWires({ 0.0f, -10.0f, 0.0f }, 100.0f, 20.0f, 2.0f, MAROON);
+        rootScene->Draw(timestep);
 
         DrawGrid(10, 1.0f);
 
@@ -195,6 +160,8 @@ int main(void)
         DrawText("- Alt + Mouse Wheel Pressed to Rotate", 40, 80, 10, DARKGRAY);
         DrawText("- Alt + Ctrl + Mouse Wheel Pressed for Smooth Zoom", 40, 100, 10, DARKGRAY);
         DrawText("- Z to zoom to (0, 0, 0)", 40, 120, 10, DARKGRAY);
+
+        DrawText((std::string("Update: ") + std::to_string(updateTime.count())).c_str(), 1024, 20, 30, DARKGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
