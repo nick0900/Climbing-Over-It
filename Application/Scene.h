@@ -45,7 +45,8 @@ public:
 
 	//Systems
 public:
-	void OnUpdate(float dt);
+	void Update(float dt);
+	void Draw(float dt);
 
 	//Lua wrappers
 public:

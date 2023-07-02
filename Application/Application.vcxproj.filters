@@ -24,23 +24,28 @@
     <ClCompile Include="System.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Box2DInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TransformInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Components.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LuaInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TransformInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ioint.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicsInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Run\gameUpdate.lua" />
-    <None Include="Run\fixedUpdate.lua" />
     <None Include="Run\init.lua" />
+    <None Include="Run\helpFuncs.lua" />
+    <None Include="Run\characterinit.lua" />
+    <None Include="Run\inputUpdate.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuaInterface.h">
@@ -55,13 +60,16 @@
     <ClInclude Include="entt\entt.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Box2DInterface.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Components.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TransformInterface.h">
+    <ClInclude Include="TransformInt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ioint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicsInt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

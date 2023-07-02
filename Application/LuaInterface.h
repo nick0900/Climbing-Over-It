@@ -6,6 +6,7 @@
 
 namespace LuaLinking 
 {
+#define FunctionQuickReg(L, func) LuaLinking::FuncReg(L, #func, func)
     template<typename R, typename... Args>
     void FuncReg(lua_State* L, const char* name, R(*f)(Args...))
     {
@@ -13,9 +14,17 @@ namespace LuaLinking
         lua_setglobal(L, name);
     }
 
+#define PointerQuickReg(L, ptr) LuaLinking::EnumReg(L, #ptr, ptr)
     inline void PointerReg(lua_State* L, const char* name, void* ref)
     {
         lua_pushlightuserdata(L, ref);
+        lua_setglobal(L, name);
+    }
+
+#define EnumQuickReg(L, enumEntry) LuaLinking::EnumReg(L, #enumEntry, enumEntry)
+    inline void EnumReg(lua_State* L, const char* name, int identifier)
+    {
+        lua_pushinteger(L, identifier);
         lua_setglobal(L, name);
     }
 
@@ -55,8 +64,7 @@ namespace LuaLinking
         inline void RegisterClass(lua_State* L, std::string className, const luaL_Reg* Funcs, const luaL_Reg* DestroyFuncs)
         {
             // Register metatable for user data in registry
-            std::string metaSource = "Meta." + className;
-            luaL_newmetatable(L, ("meta." + className).c_str());
+            luaL_newmetatable(L, ("Meta." + className).c_str());
             luaL_setfuncs(L, DestroyFuncs, 0);
             luaL_setfuncs(L, Funcs, 0);
             lua_pushvalue(L, -1);
@@ -75,7 +83,7 @@ namespace LuaLinking
             void* ud = 0;
             luaL_checktype(L, index, LUA_TTABLE);
             lua_getfield(L, index, "__self");
-            ud = luaL_checkudata(L, index, ("meta." + name).c_str());
+            ud = luaL_checkudata(L, -1, ("Meta." + name).c_str());
             if (ud == 0)
             {
                 luaL_error(L, "Error getting udata for class");

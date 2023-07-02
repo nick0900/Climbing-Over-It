@@ -1,6 +1,10 @@
 #include "Components.h"
 
 #include "lua.hpp"
+#include "box2d.h"
+
+#include "LuaInterface.h"
+#include "Scene.h"
 
 void lua_pushtransform(lua_State* L, Transform& transform)
 {
@@ -76,6 +80,25 @@ Transform lua_totransform(lua_State* L, int index)
 	return out;
 }
 
+void lua_pushentity(lua_State* L, entt::entity entity)
+{
+	lua_pushinteger(L, (int)entity);
+}
+
+entt::entity lua_toentity(lua_State* L, int index)
+{
+	entt::entity out = entt::entity();
+	if (lua_isinteger(L, index))
+	{
+		out = (entt::entity)lua_tointeger(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not an integer", index);
+	}
+	return out;
+}
+
 void lua_pushmodel(lua_State* L, Model& model)
 {
 	lua_pushlightuserdata(L, &model);
@@ -86,7 +109,7 @@ Model lua_tomodel(lua_State* L, int index)
 	Model out = Model();
 	if (lua_isuserdata(L, index))
 	{
-		out = *(Model*)lua_touserdata(L, -1);
+		out = *(Model*)lua_touserdata(L, index);
 	}
 	else
 	{
@@ -95,17 +118,122 @@ Model lua_tomodel(lua_State* L, int index)
 	return out;
 }
 
-void lua_pushmaterial(lua_State* L, Material& material)
+void lua_pushscene(lua_State* L, Scene* scene)
 {
-	lua_pushlightuserdata(L, &material);
+	LuaLinking::Class::PushClassInstance<Scene>(L, "Scene", scene);
 }
 
-Material lua_tomaterial(lua_State* L, int index)
+Scene* lua_toscene(lua_State* L, int index)
 {
-	Material out = Material();
+	return LuaLinking::Class::CheckClass<Scene>(L, index, "Scene");
+}
+
+void lua_pushrigidbody(lua_State* L, b2Body* rigidbody)
+{
+	lua_pushlightuserdata(L, rigidbody);
+}
+
+b2Body* lua_torigidbody(lua_State* L, int index)
+{
+	b2Body* out = nullptr;
 	if (lua_isuserdata(L, index))
 	{
-		out = *(Material*)lua_touserdata(L, -1);
+		out = (b2Body*)lua_touserdata(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not a lightuserdata", index);
+	}
+	return out;
+}
+
+void lua_pushrigidbodydef(lua_State* L, RigidbodyDef& rigidbodyDef)
+{
+	lua_pushlightuserdata(L, &rigidbodyDef);
+}
+
+RigidbodyDef lua_torigidbodydef(lua_State* L, int index)
+{
+	RigidbodyDef out = RigidbodyDef();
+	if (lua_isuserdata(L, index))
+	{
+		out = *(RigidbodyDef*)lua_touserdata(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not a lightuserdata", index);
+	}
+	return out;
+}
+
+void lua_pushpolygonshape(lua_State* L, b2PolygonShape& shape)
+{
+	lua_pushlightuserdata(L, &shape);
+}
+
+b2PolygonShape lua_topolygonshape(lua_State* L, int index)
+{
+	b2PolygonShape out = b2PolygonShape();
+	if (lua_isuserdata(L, index))
+	{
+		out = *(b2PolygonShape*)lua_touserdata(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not a lightuserdata", index);
+	}
+	return out;
+}
+
+void lua_pushhingejoint(lua_State* L, b2RevoluteJoint* hinge)
+{
+	lua_pushlightuserdata(L, hinge);
+}
+
+b2RevoluteJoint* lua_tohingejoint(lua_State* L, int index)
+{
+	b2RevoluteJoint* out = nullptr;
+	if (lua_isuserdata(L, index))
+	{
+		out = (b2RevoluteJoint*)lua_touserdata(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not a lightuserdata", index);
+	}
+	return out;
+}
+
+void lua_pushsliderjoint(lua_State* L, b2PrismaticJoint* slider)
+{
+	lua_pushlightuserdata(L, slider);
+}
+
+b2PrismaticJoint* lua_tosliderjoint(lua_State* L, int index)
+{
+	b2PrismaticJoint* out = nullptr;
+	if (lua_isuserdata(L, index))
+	{
+		out = (b2PrismaticJoint*)lua_touserdata(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not a lightuserdata", index);
+	}
+	return out;
+}
+
+void lua_pushjoint(lua_State* L, b2Joint* joint)
+{
+	lua_pushlightuserdata(L, joint);
+}
+
+b2Joint* lua_tojoint(lua_State* L, int index)
+{
+	b2Joint* out = nullptr;
+	if (lua_isuserdata(L, index))
+	{
+		out = (b2Joint*)lua_touserdata(L, index);
 	}
 	else
 	{
