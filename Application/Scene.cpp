@@ -494,7 +494,7 @@ int Scene::lua_CreateComponent(lua_State* L)
             sliderDef.lowerTranslation = -5.0f;
             sliderDef.upperTranslation = 2.5f;
             sliderDef.enableLimit = true;
-            sliderDef.maxMotorForce = 10.0f;
+            sliderDef.maxMotorForce = 1.0f;
             sliderDef.motorSpeed = 0.0f;
             sliderDef.enableMotor = true;
 
@@ -563,6 +563,38 @@ int Scene::lua_RemoveComponent(lua_State* L)
     return 0;
 }
 
+int Scene::lua_SysOnUpdate(lua_State* L)
+{
+    int n = lua_gettop(L);
+    if (n == 2)
+    {
+        Scene* scene = CheckClassInstance(L, Scene);
+        float dt = luaL_checknumber(L, 2);
+        scene->Update(dt);
+        return 0;
+    }
+    else
+    {
+        return luaL_error(L, "Got %d arguments expected 2 (self, dt)", n);
+    }
+}
+
+int Scene::lua_SysOnDraw(lua_State* L)
+{
+    int n = lua_gettop(L);
+    if (n == 2)
+    {
+        Scene* scene = CheckClassInstance(L, Scene);
+        float dt = luaL_checknumber(L, 2);
+        scene->Draw(dt);
+        return 0;
+    }
+    else
+    {
+        return luaL_error(L, "Got %d arguments expected 2 (self, dt)", n);
+    }
+}
+
 int Scene::luaint_new(lua_State* L)
 {
     int n = lua_gettop(L);  // Number of arguments
@@ -610,7 +642,7 @@ int Scene::luaint_destroy(lua_State* L)
     return 0;
 }
 
-const luaL_Reg Scene::luaint_WrapFuncs[11] = {
+const luaL_Reg Scene::luaint_WrapFuncs[13] = {
     {"New", Scene::luaint_new},
     {"CreateEntity", Scene::lua_CreateEntity},
     {"RemoveEntity", Scene::lua_RemoveEntity},
@@ -621,6 +653,8 @@ const luaL_Reg Scene::luaint_WrapFuncs[11] = {
     {"SetComponent", Scene::lua_SetComponent},
     {"CreateComponent", Scene::lua_CreateComponent},
     {"RemoveComponent", Scene::lua_RemoveComponent},
+    {"Update", Scene::lua_SysOnUpdate},
+    {"Draw", Scene::lua_SysOnDraw},
     {NULL, NULL}
 };
 

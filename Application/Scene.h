@@ -62,6 +62,9 @@ public:
 	static int lua_CreateComponent(lua_State* L);
 	static int lua_RemoveComponent(lua_State* L);
 
+	static int lua_SysOnUpdate(lua_State* L);
+	static int lua_SysOnDraw(lua_State* L);
+
 	static int luaint_new(lua_State* L);
 	static int luaint_destroy(lua_State* L);
 	static const luaL_Reg luaint_WrapFuncs[];

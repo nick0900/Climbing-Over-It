@@ -8,8 +8,6 @@
 #include "lua.hpp"
 #include <thread>
 #include <string>
-#include "imgui.h"
-#include "rlImGui.h"
 
 #include "LuaInterface.h"
 #include "Scene.h"
@@ -17,6 +15,8 @@
 #include "TransformInt.h"
 #include "ioint.h"
 #include "PhysicsInt.h"
+#include "ImguiInt.h"
+#include "RenderingInt.h"
 
 #if _DEBUG
 void DumpErreor(lua_State* L)
@@ -50,29 +50,6 @@ void ConsoleThreadFunction(lua_State* L)
 //------------------------------------------------------------------------------------
 int main(void)
 {
-    //-----------------------------------Raylib setup-------------------------------------//
-    const int screenWidth = 2048;
-    const int screenHeight = 2048;
-
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - 3d camera free");
-
-    // Define the camera to look into our 3d world
-    Camera3D camera = { 0 };
-    camera.position = Vector3{ 10.0f, 10.0f, 10.0f }; // Camera position
-    camera.target = Vector3{ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-    camera.up = Vector3{ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-    camera.fovy = 45.0f;                                // Camera field-of-view Y
-    camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
-
-    Vector3 cubePosition = { 0.0f, 4.0f, 0.0f };
-
-    DisableCursor();                    // Limit cursor to relative movement inside the window
-
-    SetTargetFPS(60);                   // Set our game to run at 60 frames-per-second
-    float timestep = 1.0f / 60.0f;
-    //------------------------------------------------------------------------------------//
-
-
     //--------------------------------Lua setup-------------------------------------------//
     lua_State* L = luaL_newstate();
 
@@ -83,6 +60,8 @@ int main(void)
     LuaTransform::Register(L);
     LuaIO::Register(L);
     LuaPhysics::Register(L);
+    LuaImgui::Register(L);
+    LuaRendering::Register(L);
 
     //Initialize systems and expose pointers
     SubSceneUpdate sys_SubSceneUpdate;
@@ -103,75 +82,57 @@ int main(void)
 
     lua_setglobal(L, "RootScene");
 
-    HelpFuncs::CheckError(L, luaL_dofile(L, "init.lua"));
-
     #if _DEBUG
     std::thread consoleThread(ConsoleThreadFunction, L);
     #endif
     //------------------------------------------------------------------------------------//
 
+    //-----------------------------------Raylib setup-------------------------------------//
+    HelpFuncs::CheckError(L, luaL_dofile(L, "windowConfig.lua"));
+
+    lua_getglobal(L, "WindowWidth");
+    const int screenWidth = luaL_checkinteger(L, -1);
+    lua_pop(L, 1);
+
+    lua_getglobal(L, "WindowHeight");
+    const int screenHeight = luaL_checkinteger(L, -1);
+    lua_pop(L, 1);
+
+    InitWindow(screenWidth, screenHeight, "Climbing Over It");
+
+    DisableCursor();
+
+    lua_getglobal(L, "TargetFps");
+    SetTargetFPS(luaL_checkinteger(L, -1));
+    lua_pop(L, 1);
+
+    float timestep = 1.0f / 60.0f;
+
     std::chrono::steady_clock::time_point prev = std::chrono::steady_clock::now();
     std::chrono::milliseconds updateTime = std::chrono::milliseconds::zero();
 
+    HelpFuncs::CheckError(L, luaL_dofile(L, "game.lua"));
+    //------------------------------------------------------------------------------------//
+
     // Main game loop
-    while (!WindowShouldClose())        // Detect window close button or ESC key
+    while (!WindowShouldClose())
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        UpdateCamera(&camera, CAMERA_FREE);
-
-        if (IsKeyDown('Z')) camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
-
         std::chrono::steady_clock::time_point curr = std::chrono::steady_clock::now();
         updateTime = std::chrono::duration_cast<std::chrono::milliseconds>(curr - prev);
         prev = curr;
 
-        lua_getglobal(L, "LuaOnUpdate");
+        lua_getglobal(L, "LuaFrame");
         lua_pushnumber(L, timestep);
-        lua_pcall(L, 1, 0, -2);
-
-        Physics::World()->Step(timestep, 6, 2);
-        
-        rootScene->Update(timestep);
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
-        BeginDrawing();
-
-        ClearBackground(BLACK);
-
-        BeginMode3D(camera);
-
-        lua_getglobal(L, "LuaOnDraw");
-        lua_pushnumber(L, timestep);
-        lua_pcall(L, 1, 0, -2);
-
-        rootScene->Draw(timestep);
-
-        DrawGrid(10, 1.0f);
-
-        EndMode3D();
-
-        DrawRectangle(10, 10, 320, 133, Fade(SKYBLUE, 0.5f));
-        DrawRectangleLines(10, 10, 320, 133, BLUE);
-
-        DrawText("Free camera default controls:", 20, 20, 10, BLACK);
-        DrawText("- Mouse Wheel to Zoom in-out", 40, 40, 10, DARKGRAY);
-        DrawText("- Mouse Wheel Pressed to Pan", 40, 60, 10, DARKGRAY);
-        DrawText("- Alt + Mouse Wheel Pressed to Rotate", 40, 80, 10, DARKGRAY);
-        DrawText("- Alt + Ctrl + Mouse Wheel Pressed for Smooth Zoom", 40, 100, 10, DARKGRAY);
-        DrawText("- Z to zoom to (0, 0, 0)", 40, 120, 10, DARKGRAY);
-
-        DrawText((std::string("Update: ") + std::to_string(updateTime.count())).c_str(), 1024, 20, 30, DARKGRAY);
-
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+        lua_pushboolean(L, !WindowShouldClose());
+        lua_pcall(L, 2, 0, -3);
     }
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    CloseWindow();        // Close window and OpenGL context
+    lua_getglobal(L, "LuaDeinit");
+    lua_pushnumber(L, timestep);
+    lua_pcall(L, 1, 0, -2);
+    CloseWindow();
     //--------------------------------------------------------------------------------------
 
     return 0;

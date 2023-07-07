@@ -39,13 +39,23 @@
     <ClCompile Include="PhysicsInt.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ImguiInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderingInt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Run\gameUpdate.lua" />
-    <None Include="Run\init.lua" />
+    <None Include="Run\game.lua" />
     <None Include="Run\helpFuncs.lua" />
     <None Include="Run\characterinit.lua" />
     <None Include="Run\inputUpdate.lua" />
+    <None Include="Run\imgui.ini" />
+    <None Include="Run\deinit.lua" />
+    <None Include="Run\crLoops.lua" />
+    <None Include="Run\windowConfig.lua" />
+    <None Include="Run\entitiesStructure.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuaInterface.h">
@@ -70,6 +80,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PhysicsInt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ImguiInt.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderingInt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

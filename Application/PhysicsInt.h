@@ -6,6 +6,8 @@ namespace LuaPhysics
 {
 	void Register(lua_State* L);
 
+	static int PhysStep(lua_State* L);
+
 	static int GetWorldPoint(lua_State* L);
 	static int GetWorldCentre(lua_State* L);
 	static int GetLocalPoint(lua_State* L);

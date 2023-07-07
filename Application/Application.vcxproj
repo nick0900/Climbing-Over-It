@@ -162,27 +162,35 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Components.cpp" />
+    <ClCompile Include="ImguiInt.cpp" />
     <ClCompile Include="LuaInterface.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ioint.cpp" />
     <ClCompile Include="PhysicsInt.cpp" />
+    <ClCompile Include="RenderingInt.cpp" />
     <ClCompile Include="TransformInt.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Run\characterinit.lua" />
-    <None Include="Run\gameUpdate.lua" />
+    <None Include="Run\crLoops.lua" />
+    <None Include="Run\deinit.lua" />
+    <None Include="Run\entitiesStructure.lua" />
+    <None Include="Run\game.lua" />
     <None Include="Run\helpFuncs.lua" />
-    <None Include="Run\init.lua" />
+    <None Include="Run\imgui.ini" />
     <None Include="Run\inputUpdate.lua" />
+    <None Include="Run\windowConfig.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Components.h" />
     <ClInclude Include="entt\entt.hpp" />
+    <ClInclude Include="ImguiInt.h" />
     <ClInclude Include="LuaInterface.h" />
     <ClInclude Include="ioint.h" />
     <ClInclude Include="PhysicsInt.h" />
+    <ClInclude Include="RenderingInt.h" />
     <ClInclude Include="TransformInt.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="System.h" />
