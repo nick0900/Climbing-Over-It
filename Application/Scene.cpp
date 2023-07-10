@@ -45,6 +45,11 @@ int Scene::GetEntityCount()
     return m_registry.alive();
 }
 
+void Scene::ClearAll()
+{
+    m_registry.clear();
+}
+
 void Scene::Update(float dt)
 {
     for (System* s : m_systems)
@@ -126,6 +131,22 @@ int Scene::lua_GetEntityCount(lua_State* L)
     return 0;
 }
 
+int Scene::lua_ClearAll(lua_State* L)
+{
+    int n = lua_gettop(L);
+
+    if (n == 1)
+    {
+        Scene* scene = CheckClassInstance(L, Scene);
+        scene->ClearAll();
+    }
+    else
+    {
+        luaL_error(L, "Got %d arguments expected 1 (self)", n);
+    }
+    return 0;
+}
+
 int Scene::lua_HasComponents(lua_State* L)
 {
     int n = lua_gettop(L);
@@ -143,15 +164,11 @@ int Scene::lua_HasComponents(lua_State* L)
             {
                 result = false;
             }
-            else if ((component == CompModel) && !scene->HasComponents<Model>(entity))
+            else if ((component == CompModel) && !scene->HasComponents<ModelWrapper>(entity))
             {
                 result = false;
             }
-            else if ((component == CompScene) && !scene->HasComponents<Scene*>(entity))
-            {
-                result = false;
-            }
-            else if ((component == CompParent) && !scene->HasComponents<entt::entity>(entity))
+            else if ((component == CompParent) && !scene->HasComponents<std::string>(entity))
             {
                 result = false;
             }
@@ -163,15 +180,15 @@ int Scene::lua_HasComponents(lua_State* L)
             {
                 result = false;
             }
-            else if ((component == CompBoxShape) && !scene->HasComponents<b2PolygonShape>(entity))
+            else if ((component == CompBoxShape) && !scene->HasComponents<BoxWrapper>(entity))
             {
                 result = false;
             }
-            else if ((component == CompHingeJoint) && !scene->HasComponents<b2RevoluteJoint*>(entity))
+            else if ((component == CompHingeJoint) && !scene->HasComponents<HingeWrapper>(entity))
             {
                 result = false;
             }
-            else if ((component == CompSliderJoint) && !scene->HasComponents<b2PrismaticJoint*>(entity))
+            else if ((component == CompSliderJoint) && !scene->HasComponents<SliderWrapper>(entity))
             {
                 result = false;
             }
@@ -202,15 +219,11 @@ int Scene::lua_GetComponent(lua_State* L)
         }
         else if (component == CompModel)
         {
-            lua_pushmodel(L, scene->GetComponent<Model>(entity));
-        }
-        else if (component == CompScene)
-        {
-            lua_pushscene(L, scene->GetComponent<Scene*>(entity));
+            lua_pushmodel(L, scene->GetComponent<ModelWrapper>(entity));
         }
         else if (component == CompParent)
         {
-            lua_pushentity(L, scene->GetComponent<entt::entity>(entity));
+            lua_pushstring(L, scene->GetComponent<std::string>(entity).c_str());
         }
         else if (component == CompRigidbody)
         {
@@ -222,15 +235,15 @@ int Scene::lua_GetComponent(lua_State* L)
         }
         else if (component == CompBoxShape)
         {
-            lua_pushpolygonshape(L, scene->GetComponent<b2PolygonShape>(entity));
+            lua_pushpolygonshape(L, scene->GetComponent<BoxWrapper>(entity));
         }
         else if (component == CompHingeJoint)
         {
-            lua_pushhingejoint(L, scene->GetComponent<b2RevoluteJoint*>(entity));
+            lua_pushhingejoint(L, scene->GetComponent<HingeWrapper>(entity));
         }
         else if (component == CompSliderJoint)
         {
-            lua_pushsliderjoint(L, scene->GetComponent<b2PrismaticJoint*>(entity));
+            lua_pushsliderjoint(L, scene->GetComponent<SliderWrapper>(entity));
         }
 
         return 1;
@@ -259,15 +272,28 @@ int Scene::lua_SetComponent(lua_State* L)
         }
         else if (component == CompModel)
         {
-            scene->SetComponent<Model>(entity, lua_tomodel(L, 4));
-        }
-        else if (component == CompScene)
-        {
-            scene->SetComponent<Scene*>(entity, lua_toscene(L, 4));
+            ModelWrapper model = lua_tomodel(L, 4);
+
+            model.data = LoadModel(("assets/" + model.model).c_str());
+
+            if (model.texture != "")
+            {
+                Texture2D texture = LoadTexture(("assets/textures/" + model.texture).c_str());
+
+                SetMaterialTexture(&model.data.materials[0], MATERIAL_MAP_DIFFUSE, texture);
+            }
+
+            model.ptr = &model.data;
+            
+            scene->SetComponent<ModelWrapper>(entity, model);
         }
         else if (component == CompParent)
         {
-            scene->SetComponent<entt::entity>(entity, lua_toentity(L, 4));
+            scene->SetComponent<std::string>(entity, lua_tostring(L, 4));
+        }
+        else if (component == CompRigidbody)
+        {
+            scene->SetComponent<b2Body*>(entity, lua_torigidbody(L, 4));
         }
         else if (component == CompRigidbodyDef)
         {
@@ -275,7 +301,47 @@ int Scene::lua_SetComponent(lua_State* L)
         }
         else if (component == CompBoxShape)
         {
-            scene->SetComponent<b2PolygonShape>(entity, lua_topolygonshape(L, 4));
+            BoxWrapper box = lua_topolygonshape(L, 4);
+            box.data.SetAsBox(box.hx, box.hy);
+            box.ptr = &box.data;
+            scene->SetComponent<BoxWrapper>(entity, box);
+        }
+        else if (component == CompHingeJoint)
+        {
+            HingeWrapper hinge = lua_tohingejoint(L, 4);
+
+            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectA));
+            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectB));
+
+            b2RevoluteJointDef hingeDef;
+            hingeDef.Initialize(bodyA, bodyB, b2Vec2(hinge.anchorx, hinge.anchory));
+            hingeDef.maxMotorTorque = 1.0f;
+            hingeDef.motorSpeed = 0.0f;
+            hingeDef.enableMotor = hinge.motor;
+
+            hinge.ptr = (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef);
+
+            scene->SetComponent<HingeWrapper>(entity, hinge);
+        }
+        else if (component == CompSliderJoint)
+        {
+            SliderWrapper slider = lua_tosliderjoint(L, 4);
+
+            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectA));
+            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectB));
+
+            b2PrismaticJointDef sliderDef;
+            sliderDef.Initialize(bodyA, bodyB, b2Vec2(slider.anchorx, slider.anchory), b2Vec2(slider.axisx, slider.axisy));
+            sliderDef.lowerTranslation = slider.lowerlimit;
+            sliderDef.upperTranslation = slider.upperlimit;
+            sliderDef.enableLimit = true;
+            sliderDef.maxMotorForce = 1.0f;
+            sliderDef.motorSpeed = 0.0f;
+            sliderDef.enableMotor = slider.motor;
+
+            slider.ptr = (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef);
+
+            scene->SetComponent<SliderWrapper>(entity, slider);
         }
     }
     else
@@ -362,46 +428,37 @@ int Scene::lua_CreateComponent(lua_State* L)
     {
         if (n == 5)
         {
-            std::string filePath = luaL_checkstring(L, 4);
+            ModelWrapper model;
+            model.model = luaL_checkstring(L, 4);
+            
+            model.data = LoadModel(("assets/" + model.model).c_str());
 
-            Model model = LoadModel(filePath.c_str());
-
+            model.texture = "";
             if (!lua_isnil(L, 5))
             {
-               filePath = luaL_checkstring(L, 5);
+               model.texture = luaL_checkstring(L, 5);
 
-               Texture2D texture = LoadTexture(filePath.c_str());
+               Texture2D texture = LoadTexture(("assets/textures/" + model.texture).c_str());
 
-               SetMaterialTexture(&model.materials[0], MATERIAL_MAP_DIFFUSE, texture);
+               SetMaterialTexture(&model.data.materials[0], MATERIAL_MAP_DIFFUSE, texture);
             }
-            scene->SetComponent<Model>(entity, model);
+            model.ptr = &model.data;
+            scene->SetComponent<ModelWrapper>(entity, model);
         }
         else
         {
             return luaL_error(L, "Got %d arguments expected 5 (self, entity, componentstr, modelpath, texturepath)", n);
         }
     }
-    else if (component == CompScene)
-    {
-        return luaL_error(L, "Scene component creation not implemented, create scene and set it instead.");
-    }
     else if (component == CompParent)
     {
         if (n == 4)
         {
-            if (lua_isinteger(L, 4))
-            {
-                entt::entity id = (entt::entity)lua_tointeger(L, 4);
-                scene->SetComponent<entt::entity>(entity, id);
-            }
-            else
-            {
-                return luaL_error(L, "entity is now of type integer");
-            }
+            scene->SetComponent<std::string>(entity, luaL_checkstring(L, 4));
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 4 (self, entity, componentstr, parentEntity)", n);
+            return luaL_error(L, "Got %d arguments expected 4 (self, entity, componentstr, parentName)", n);
         }
     }
     else if (component == CompRigidbody)
@@ -434,14 +491,16 @@ int Scene::lua_CreateComponent(lua_State* L)
     {
         if (n == 5)
         {
-            float hx = luaL_checknumber(L, 4);
-            float hy = luaL_checknumber(L, 5);
+            BoxWrapper box;
 
-            b2PolygonShape box;
+            box.hx = luaL_checknumber(L, 4);
+            box.hy = luaL_checknumber(L, 5);
 
-            box.SetAsBox(hx, hy);
+            box.data.SetAsBox(box.hx, box.hy);
 
-            scene->SetComponent<b2PolygonShape>(entity, box);
+            box.ptr = &box.data;
+
+            scene->SetComponent<BoxWrapper>(entity, box);
         }
         else
         {
@@ -452,58 +511,68 @@ int Scene::lua_CreateComponent(lua_State* L)
     {
         if (n == 8)
         {
-            b2Body* rigidbodyA = lua_torigidbody(L, 4);
-            b2Body* rigidbodyB = lua_torigidbody(L, 5);
+            HingeWrapper hinge;
 
-            float hx = luaL_checknumber(L, 6);
-            float hy = luaL_checknumber(L, 7);
+            hinge.objectA = luaL_checkstring(L, 4);
+            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectA));
+            hinge.objectB = luaL_checkstring(L, 5);
+            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectB));
 
-            bool motorEnabled = lua_toboolean(L, 8);
+            hinge.anchorx = luaL_checknumber(L, 6);
+            hinge.anchory = luaL_checknumber(L, 7);
+
+            hinge.motor = lua_toboolean(L, 8);
 
             b2RevoluteJointDef hingeDef;
-            hingeDef.Initialize(rigidbodyA, rigidbodyB, b2Vec2(hx, hy));
-            hingeDef.maxMotorTorque = 10.0f;
+            hingeDef.Initialize(bodyA, bodyB, b2Vec2(hinge.anchorx, hinge.anchory));
+            hingeDef.maxMotorTorque = 1.0f;
             hingeDef.motorSpeed = 0.0f;
-            hingeDef.enableMotor = motorEnabled;
+            hingeDef.enableMotor = hinge.motor;
             
+            hinge.ptr = (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef);
 
-            scene->SetComponent<b2RevoluteJoint*>(entity, (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef));
+            scene->SetComponent<HingeWrapper>(entity, hinge);
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 8 (self, entity, componentstr, rigidbodyA, rigidbodyB, anchorWorldX, anchorWorldY, motorEnabled)", n);
+            return luaL_error(L, "Got %d arguments expected 8 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, motorEnabled)", n);
         }
     }
     else if (component == CompSliderJoint)
     {
         if (n == 10)
         {
-            b2Body* rigidbodyA = lua_torigidbody(L, 4);
-            b2Body* rigidbodyB = lua_torigidbody(L, 5);
+            SliderWrapper slider;
 
-            float hx = luaL_checknumber(L, 6);
-            float hy = luaL_checknumber(L, 7);
+            slider.objectA = luaL_checkstring(L, 4);
+            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectA));
+            slider.objectB = luaL_checkstring(L, 5);
+            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectB));
 
-            float ax = luaL_checknumber(L, 8);
-            float ay = luaL_checknumber(L, 9);
+            slider.anchorx = luaL_checknumber(L, 6);
+            slider.anchory = luaL_checknumber(L, 7);
 
-            bool motorEnabled = lua_toboolean(L, 10);
+            slider.axisx = luaL_checknumber(L, 8);
+            slider.axisy = luaL_checknumber(L, 9);
+
+            slider.motor = lua_toboolean(L, 10);
 
             b2PrismaticJointDef sliderDef;
-            sliderDef.Initialize(rigidbodyA, rigidbodyB, b2Vec2(hx, hy), b2Vec2(ax, ay));
-            sliderDef.lowerTranslation = -5.0f;
-            sliderDef.upperTranslation = 2.5f;
+            sliderDef.Initialize(bodyA, bodyB, b2Vec2(slider.anchorx, slider.anchory), b2Vec2(slider.axisx, slider.axisy));
+            sliderDef.lowerTranslation = slider.lowerlimit;
+            sliderDef.upperTranslation = slider.upperlimit;
             sliderDef.enableLimit = true;
             sliderDef.maxMotorForce = 1.0f;
             sliderDef.motorSpeed = 0.0f;
-            sliderDef.enableMotor = true;
+            sliderDef.enableMotor = slider.motor;
 
+            slider.ptr = (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef);
 
-            scene->SetComponent<b2PrismaticJoint*>(entity, (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef));
+            scene->SetComponent<SliderWrapper>(entity, slider);
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 10 (self, entity, componentstr, rigidbodyA, rigidbodyB, anchorWorldX, anchorWorldY, worldaxisX, worldaxisY, motorEnabled)", n);
+            return luaL_error(L, "Got %d arguments expected 10 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, worldaxisX, worldaxisY, motorEnabled)", n);
         }
     }
     else
@@ -527,13 +596,13 @@ int Scene::lua_RemoveComponent(lua_State* L)
         {
             scene->RemoveComponent<Transform>(entity);
         }
+        else if (component == CompParent)
+        {
+            scene->RemoveComponent<std::string>(entity);
+        }
         else if (component == CompModel)
         {
-            scene->RemoveComponent<Model>(entity);
-        }
-        else if (component == CompScene)
-        {
-            scene->RemoveComponent<Scene*>(entity);
+            scene->RemoveComponent<ModelWrapper>(entity);
         }
         else if (component == CompRigidbody)
         {
@@ -545,15 +614,15 @@ int Scene::lua_RemoveComponent(lua_State* L)
         }
         else if (component == CompBoxShape)
         {
-            scene->RemoveComponent<b2PolygonShape>(entity);
+            scene->RemoveComponent<BoxWrapper>(entity);
         }
         else if (component == CompHingeJoint)
         {
-            scene->RemoveComponent<b2RevoluteJoint*>(entity);
+            scene->RemoveComponent<HingeWrapper>(entity);
         }
         else if (component == CompSliderJoint)
         {
-            scene->RemoveComponent<b2PrismaticJoint*>(entity);
+            scene->RemoveComponent<SliderWrapper>(entity);
         }
     }
     else
@@ -642,12 +711,13 @@ int Scene::luaint_destroy(lua_State* L)
     return 0;
 }
 
-const luaL_Reg Scene::luaint_WrapFuncs[13] = {
+const luaL_Reg Scene::luaint_WrapFuncs[14] = {
     {"New", Scene::luaint_new},
     {"CreateEntity", Scene::lua_CreateEntity},
     {"RemoveEntity", Scene::lua_RemoveEntity},
     {"IsEntity", Scene::lua_IsEntity},
     {"GetEntityCount", Scene::lua_GetEntityCount},
+    {"ClearAll", Scene::lua_ClearAll},
     {"HasComponents", Scene::lua_HasComponents},
     {"GetComponent", Scene::lua_GetComponent},
     {"SetComponent", Scene::lua_SetComponent},

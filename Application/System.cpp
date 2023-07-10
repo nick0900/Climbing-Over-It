@@ -13,46 +13,21 @@ namespace Base
     b2World World = b2World(b2Vec2(0.0f, -10.0f));
 }
 
-
-void SubSceneUpdate::SystemSetup(entt::registry* registry)
+Matrix TransformCascade(lua_State* L, entt::registry* registry, entt::entity entity, Matrix transform)
 {
-}
-
-bool SubSceneUpdate::OnUpdate(entt::registry* registry, float dt)
-{
-    for (auto [entity, s] : registry->view<Scene*>().each())
+    if (registry->all_of<std::string>(entity))
     {
-        s->Update(dt);
-    }
-    return true;
-}
-
-bool SubSceneUpdate::OnDraw(entt::registry* registry, float dt)
-{
-    for (auto [entity, s] : registry->view<Scene*>().each())
-    {
-        s->Draw(dt);
-    }
-    return true;
-}
-
-Matrix TransformCascade(entt::registry* registry, entt::entity entity, Matrix transform)
-{
-    if (registry->all_of<entt::entity>(entity))
-    {
-        entt::entity parent = registry->get<entt::entity>(entity);
+        entt::entity parent = lua_objecttoentity(L, registry->get<std::string>(entity));
         if (registry->all_of<Transform>(parent))
         {
             Transform t = registry->get<Transform>(parent);
-            Matrix m = MatrixMultiply(MatrixTranslate(t.translation.x, t.translation.y, t.translation.z),
-                 MatrixMultiply(QuaternionToMatrix(t.rotation),
-                 MatrixScale(t.scale.x, t.scale.y, t.scale.z)));
+            Matrix m = MatrixMultiply(MatrixMultiply(MatrixScale(t.scale.x, t.scale.y, t.scale.z), QuaternionToMatrix(t.rotation)), MatrixTranslate(t.translation.x, t.translation.y, t.translation.z));
 
-            return MatrixMultiply(TransformCascade(registry, parent, transform), m);
+            return MatrixMultiply(TransformCascade(L, registry, parent, transform), m);
         }
         else
         {
-            return TransformCascade(registry, parent, transform);
+            return TransformCascade(L, registry, parent, transform);
         }
     }
     else
@@ -61,8 +36,11 @@ Matrix TransformCascade(entt::registry* registry, entt::entity entity, Matrix tr
     }
 }
 
+ModelDraw::ModelDraw(lua_State* L) : m_L(L) {}
+
 void ModelDraw::SystemSetup(entt::registry* registry)
 {
+
 }
 
 bool ModelDraw::OnUpdate(entt::registry* registry, float dt)
@@ -72,10 +50,10 @@ bool ModelDraw::OnUpdate(entt::registry* registry, float dt)
 
 bool ModelDraw::OnDraw(entt::registry* registry, float dt)
 {
-    for (auto [entity, m, t] : registry->view<Model, Transform>().each())
+    for (auto [entity, m, t] : registry->view<ModelWrapper, Transform>().each())
     {
-        m.transform = TransformCascade(registry, entity, MatrixMultiply(MatrixTranslate(t.translation.x, t.translation.y, t.translation.z), MatrixMultiply(QuaternionToMatrix(t.rotation), MatrixScale(t.scale.x, t.scale.y, t.scale.z))));
-        DrawModel(m, Vector3Zero(), 1.0f, WHITE);
+        m.data.transform = TransformCascade(m_L, registry, entity, MatrixMultiply(MatrixMultiply(MatrixScale(t.scale.x, t.scale.y, t.scale.z), QuaternionToMatrix(t.rotation)), MatrixTranslate(t.translation.x, t.translation.y, t.translation.z)));
+        DrawModel(m.data, Vector3Zero(), 1.0f, WHITE);
     }
     return true;
 }
@@ -90,14 +68,14 @@ void Physics::SystemSetup(entt::registry* registry)
     registry->on_update<RigidbodyDef>().connect<Physics::SetBody>();
     registry->on_destroy<RigidbodyDef>().connect<Physics::RemoveBody>();
 
-    registry->on_construct<b2PolygonShape>().connect<Physics::SetBody>();
-    registry->on_update<b2PolygonShape>().connect<Physics::SetBody>();
-    registry->on_destroy<b2PolygonShape>().connect<Physics::RemoveBody>();
+    registry->on_construct<BoxWrapper>().connect<Physics::SetBody>();
+    registry->on_update<BoxWrapper>().connect<Physics::SetBody>();
+    registry->on_destroy<BoxWrapper>().connect<Physics::RemoveBody>();
 }
 
 bool Physics::OnUpdate(entt::registry* registry, float dt)
 {
-    for (auto [entity, rigidbody, rigidbodyDef, box, transform] : registry->view<b2Body*, RigidbodyDef, b2PolygonShape, Transform>().each())
+    for (auto [entity, rigidbody, rigidbodyDef, box, transform] : registry->view<b2Body*, RigidbodyDef, BoxWrapper, Transform>().each())
     {
         b2Transform b2transform = rigidbody->GetTransform();
         transform.translation = { b2transform.p.x, b2transform.p.y, transform.translation.z };
@@ -119,7 +97,7 @@ b2World* Physics::World()
 
 void Physics::SetBody(entt::registry& registry, entt::entity entity)
 {
-    if (registry.all_of<b2Body*, RigidbodyDef, b2PolygonShape, Transform>(entity))
+    if (registry.all_of<b2Body*, RigidbodyDef, BoxWrapper, Transform>(entity))
     {
         b2Body* &bodyPtr = registry.get<b2Body*>(entity);
 
@@ -127,7 +105,7 @@ void Physics::SetBody(entt::registry& registry, entt::entity entity)
 
         Transform &transform = registry.get<Transform>(entity);
 
-        b2PolygonShape* shape = &registry.get<b2PolygonShape>(entity);
+        BoxWrapper shape = registry.get<BoxWrapper>(entity);
 
         if (bodyPtr != nullptr)
         {
@@ -158,7 +136,7 @@ void Physics::SetBody(entt::registry& registry, entt::entity entity)
 
         fixtureDef.friction = rigidbodyDef.friction;
 
-        fixtureDef.shape = shape;
+        fixtureDef.shape = &shape.data;
 
         (bodyPtr)->CreateFixture(&fixtureDef);
     }

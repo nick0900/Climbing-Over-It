@@ -27,6 +27,14 @@ namespace LuaImgui
 	static int ImguiBeginListBox(lua_State* L);
 	static int ImguiEndListBox(lua_State* L);
 	static int ImguiSelectable(lua_State* L);
+	static int ImguiInputText(lua_State* L);
+	static int ImguiInputInt(lua_State* L);
+	static int ImguiInputInt2(lua_State* L);
+	static int ImguiInputInt3(lua_State* L);
+	static int ImguiInputFloat(lua_State* L);
+	static int ImguiInputFloat2(lua_State* L);
+	static int ImguiInputFloat3(lua_State* L);
+	static int ImguiInputFloat4(lua_State* L);
 }
 
 void lua_pushimvec2(lua_State* L, ImVec2& vec);

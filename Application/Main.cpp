@@ -64,27 +64,11 @@ int main(void)
     LuaRendering::Register(L);
 
     //Initialize systems and expose pointers
-    SubSceneUpdate sys_SubSceneUpdate;
-    LuaLinking::PointerReg(L, "sys_SubSceneUpdate", &sys_SubSceneUpdate);
-
-    ModelDraw sys_ModelDraw;
+    ModelDraw sys_ModelDraw(L);
     LuaLinking::PointerReg(L, "sys_ModelDraw", &sys_ModelDraw);
 
     Physics sys_Physics;
     LuaLinking::PointerReg(L, "sys_Physics", &sys_Physics);
-
-    //Set up game root scene
-    System* rootSystems[] = {&sys_SubSceneUpdate};
-
-    Scene* rootScene = new Scene(L, 1, rootSystems);
-
-    LuaLinking::Class::PushClassInstance<Scene>(L, "Scene", rootScene);
-
-    lua_setglobal(L, "RootScene");
-
-    #if _DEBUG
-    std::thread consoleThread(ConsoleThreadFunction, L);
-    #endif
     //------------------------------------------------------------------------------------//
 
     //-----------------------------------Raylib setup-------------------------------------//
@@ -113,6 +97,10 @@ int main(void)
 
     HelpFuncs::CheckError(L, luaL_dofile(L, "game.lua"));
     //------------------------------------------------------------------------------------//
+
+#if _DEBUG
+    std::thread consoleThread(ConsoleThreadFunction, L);
+#endif
 
     // Main game loop
     while (!WindowShouldClose())

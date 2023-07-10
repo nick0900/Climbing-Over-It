@@ -25,7 +25,7 @@ tablePrint = function (table)
 		elseif type(value) == "function" then
 			print(key .. " " .. type(value));
 		else
-			print(key .. " " .. type(value) .. " " .. value);
+			print(key .. " " .. type(value) .. " " .. tostring(value));
 		end
 	end
 

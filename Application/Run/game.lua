@@ -1,14 +1,18 @@
 -----------------------init----------------------------------
 require "helpFuncs"
 require "inputUpdate"
-require "characterinit"
 require "crLoops"
+require "entitiesStructure"
 
-testscene = Scene:New(2, {sys_ModelDraw, sys_Physics});
-testsceneid = RootScene:CreateEntity();
-RootScene:SetComponent(testsceneid, "Scene", testscene);
+ActiveScene = Scene:New(2, {sys_ModelDraw, sys_Physics});
+Entities = {};
 
-player = instantiatePlayer(testscene);
+--translation function for c side to convert object names to entity id
+function NameToEntity(name)
+	for _, v in ipairs(Entities) do
+		if v.name == name then return v.entity end
+	end
+end
 
 ImguiSetup(true);
 ImguiMoveFromTitleBarOnly(true);
@@ -18,7 +22,7 @@ editorloop = coroutine.create(EditorLoop);
 coroutine.resume(gameloop, 0, true);
 coroutine.resume(editorloop, 0, true);
 
-SetCameraPosition({10.0, 10.0, 10.0});
+SetCameraPosition({0.0, 10.0, 10.0});
 SetCameraTarget({0.0, 0.0, 0.0});
 SetCameraUp({0.0, 1.0, 0.0});
 SetCameraFov(45.0);

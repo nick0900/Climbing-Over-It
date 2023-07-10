@@ -13,20 +13,18 @@ public:
 	virtual bool OnDraw(entt::registry* registry, float dt) = 0;
 };
 
-class SubSceneUpdate : public System
-{
-	virtual void SystemSetup(entt::registry* registry) override;
-
-	virtual bool OnUpdate(entt::registry* registry, float dt) override;
-	virtual bool OnDraw(entt::registry* registry, float dt) override;
-};
-
 class ModelDraw : public System
 {
+public:
+	ModelDraw(lua_State* L);
+
 	virtual void SystemSetup(entt::registry* registry) override;
 
 	virtual bool OnUpdate(entt::registry* registry, float dt) override;
 	virtual bool OnDraw(entt::registry* registry, float dt) override;
+
+private:
+	lua_State* m_L;
 };
 
 class Physics : public System
