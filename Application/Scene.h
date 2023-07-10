@@ -25,6 +25,8 @@ public:
 
 	bool IsEntity(int entity);
 	int GetEntityCount();
+
+	void ClearAll();
 	
 	//Components
 public:
@@ -56,11 +58,16 @@ public:
 	static int lua_IsEntity(lua_State* L);
 	static int lua_GetEntityCount(lua_State* L);
 
+	static int lua_ClearAll(lua_State* L);
+
 	static int lua_HasComponents(lua_State* L);
 	static int lua_GetComponent(lua_State* L);
 	static int lua_SetComponent(lua_State* L);
 	static int lua_CreateComponent(lua_State* L);
 	static int lua_RemoveComponent(lua_State* L);
+
+	static int lua_SysOnUpdate(lua_State* L);
+	static int lua_SysOnDraw(lua_State* L);
 
 	static int luaint_new(lua_State* L);
 	static int luaint_destroy(lua_State* L);

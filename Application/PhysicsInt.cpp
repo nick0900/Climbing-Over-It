@@ -4,9 +4,12 @@
 #include "box2d.h"
 #include "LuaInterface.h"
 #include "Components.h"
+#include "System.h"
 
 void LuaPhysics::Register(lua_State* L)
 {
+	FunctionQuickReg(L, PhysStep);
+
 	FunctionQuickReg(L, GetWorldPoint);
 	FunctionQuickReg(L, GetWorldCentre);
 	FunctionQuickReg(L, GetLocalPoint);
@@ -16,6 +19,21 @@ void LuaPhysics::Register(lua_State* L)
 	FunctionQuickReg(L, SetMaxMotor);
 	FunctionQuickReg(L, GetMotorSpeed);
 	FunctionQuickReg(L, SetMotorSpeed);
+}
+
+int LuaPhysics::PhysStep(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 3)
+	{
+		float dt = luaL_checknumber(L, 1);
+		int velIter = luaL_checkinteger(L, 2);
+		int posIter = luaL_checkinteger(L, 3);
+
+		Physics::World()->Step(dt, velIter, posIter);
+		return 0;
+	}
+	return luaL_error(L, "Got %d arguments expected 3, (dt, velIterations, posIterations)", n);
 }
 
 int LuaPhysics::GetWorldPoint(lua_State* L)

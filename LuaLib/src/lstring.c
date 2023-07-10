@@ -251,9 +251,8 @@ TString *luaS_new (lua_State *L, const char *str) {
     p[j] = p[j - 1];  /* move out last element */
   /* new element is first in the list */
   p[0] = luaS_newlstr(L, str, strlen(str));
-  return p[0];
-}
 
+}
 
 Udata *luaS_newudata (lua_State *L, size_t s, int nuvalue) {
   Udata *u;

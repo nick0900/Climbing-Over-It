@@ -1,5 +1,7 @@
 #include "Components.h"
 
+#include <string>
+
 #include "lua.hpp"
 #include "box2d.h"
 
@@ -75,57 +77,69 @@ Transform lua_totransform(lua_State* L, int index)
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not a Transform", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
 }
 
-void lua_pushentity(lua_State* L, entt::entity entity)
+entt::entity lua_objecttoentity(lua_State* L, std::string& object)
 {
-	lua_pushinteger(L, (int)entity);
+	lua_getglobal(L, "NameToEntity");
+	lua_pushstring(L, object.c_str());
+	lua_pcall(L, 1, 1, -2);
+	entt::entity entity = (entt::entity)lua_tointeger(L, -1);
+	lua_pop(L, -1);
+	return entity;
 }
 
-entt::entity lua_toentity(lua_State* L, int index)
+void lua_pushmodel(lua_State* L, ModelWrapper& model)
 {
-	entt::entity out = entt::entity();
-	if (lua_isinteger(L, index))
+	lua_newtable(L);
+
+	lua_pushlightuserdata(L, model.ptr);
+	lua_setfield(L, -2, "ptr");
+
+	lua_pushstring(L, model.model.c_str());
+	lua_setfield(L, -2, "model");
+
+	lua_pushstring(L, model.texture.c_str());
+	lua_setfield(L, -2, "texture");
+}
+
+ModelWrapper lua_tomodel(lua_State* L, int index)
+{
+	ModelWrapper out;
+
+	if (lua_istable(L, index))
 	{
-		out = (entt::entity)lua_tointeger(L, index);
+		lua_getfield(L, index, "ptr");
+		out.ptr = nullptr;
+		if (lua_isuserdata(L, -1))
+		{
+			out.ptr = (Model*)lua_touserdata(L, -1);
+		}
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "model");
+		out.model = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "texture");
+		if (!lua_isnil(L, -1))
+		{
+			out.texture = luaL_checkstring(L, -1);
+		}
+		else
+		{
+			out.texture = "";
+		}
+		lua_pop(L, 1);
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not an integer", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
-}
-
-void lua_pushmodel(lua_State* L, Model& model)
-{
-	lua_pushlightuserdata(L, &model);
-}
-
-Model lua_tomodel(lua_State* L, int index)
-{
-	Model out = Model();
-	if (lua_isuserdata(L, index))
-	{
-		out = *(Model*)lua_touserdata(L, index);
-	}
-	else
-	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
-	}
-	return out;
-}
-
-void lua_pushscene(lua_State* L, Scene* scene)
-{
-	LuaLinking::Class::PushClassInstance<Scene>(L, "Scene", scene);
-}
-
-Scene* lua_toscene(lua_State* L, int index)
-{
-	return LuaLinking::Class::CheckClass<Scene>(L, index, "Scene");
 }
 
 void lua_pushrigidbody(lua_State* L, b2Body* rigidbody)
@@ -135,109 +149,263 @@ void lua_pushrigidbody(lua_State* L, b2Body* rigidbody)
 
 b2Body* lua_torigidbody(lua_State* L, int index)
 {
-	b2Body* out = nullptr;
-	if (lua_isuserdata(L, index))
-	{
-		out = (b2Body*)lua_touserdata(L, index);
-	}
-	else
-	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
-	}
-	return out;
+	return nullptr;
 }
 
 void lua_pushrigidbodydef(lua_State* L, RigidbodyDef& rigidbodyDef)
 {
-	lua_pushlightuserdata(L, &rigidbodyDef);
+	lua_newtable(L);
+
+	lua_pushboolean(L, rigidbodyDef.dynamic);
+	lua_setfield(L, -2, "dynamic");
+
+	lua_pushnumber(L, rigidbodyDef.density);
+	lua_setfield(L, -2, "density");
+
+	lua_pushnumber(L, rigidbodyDef.friction);
+	lua_setfield(L, -2, "friction");
 }
 
 RigidbodyDef lua_torigidbodydef(lua_State* L, int index)
 {
-	RigidbodyDef out = RigidbodyDef();
-	if (lua_isuserdata(L, index))
+	RigidbodyDef out;
+
+	if (lua_istable(L, index))
 	{
-		out = *(RigidbodyDef*)lua_touserdata(L, index);
+		lua_getfield(L, index, "dynamic");
+		out.dynamic = lua_toboolean(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "density");
+		out.dynamic = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "friction");
+		out.friction = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
 }
 
-void lua_pushpolygonshape(lua_State* L, b2PolygonShape& shape)
+void lua_pushpolygonshape(lua_State* L, BoxWrapper& shape)
 {
-	lua_pushlightuserdata(L, &shape);
+	lua_newtable(L);
+
+	lua_pushlightuserdata(L, shape.ptr);
+	lua_setfield(L, -2, "ptr");
+
+	lua_pushnumber(L, shape.hx);
+	lua_setfield(L, -2, "hx");
+
+	lua_pushnumber(L, shape.hy);
+	lua_setfield(L, -2, "hy");
 }
 
-b2PolygonShape lua_topolygonshape(lua_State* L, int index)
+BoxWrapper lua_topolygonshape(lua_State* L, int index)
 {
-	b2PolygonShape out = b2PolygonShape();
-	if (lua_isuserdata(L, index))
+	BoxWrapper out;
+
+	if (lua_istable(L, index))
 	{
-		out = *(b2PolygonShape*)lua_touserdata(L, index);
+		lua_getfield(L, index, "ptr");
+		out.ptr = nullptr;
+		if (lua_isuserdata(L, -1))
+		{
+			out.ptr = (b2PolygonShape*)lua_touserdata(L, -1);
+		}
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "hx");
+		out.hx = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "hy");
+		out.hy = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
 }
 
-void lua_pushhingejoint(lua_State* L, b2RevoluteJoint* hinge)
+void lua_pushhingejoint(lua_State* L, HingeWrapper hinge)
 {
-	lua_pushlightuserdata(L, hinge);
+	lua_newtable(L);
+
+	lua_pushlightuserdata(L, hinge.ptr);
+	lua_setfield(L, -2, "ptr");
+
+	lua_pushstring(L, hinge.objectA.c_str());
+	lua_setfield(L, -2, "objectA");
+
+	lua_pushstring(L, hinge.objectB.c_str());
+	lua_setfield(L, -2, "objectB");
+
+	lua_pushnumber(L, hinge.anchorx);
+	lua_setfield(L, -2, "anchorx");
+
+	lua_pushnumber(L, hinge.anchory);
+	lua_setfield(L, -2, "anchory");
+
+	lua_pushboolean(L, hinge.motor);
+	lua_setfield(L, -2, "motor");
 }
 
-b2RevoluteJoint* lua_tohingejoint(lua_State* L, int index)
+HingeWrapper lua_tohingejoint(lua_State* L, int index)
 {
-	b2RevoluteJoint* out = nullptr;
-	if (lua_isuserdata(L, index))
+	HingeWrapper out;
+
+	if (lua_istable(L, index))
 	{
-		out = (b2RevoluteJoint*)lua_touserdata(L, index);
+		lua_getfield(L, index, "ptr");
+		out.ptr = nullptr;
+		if (lua_isuserdata(L, -1))
+		{
+			out.ptr = (b2RevoluteJoint*)lua_touserdata(L, -1);
+		}
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "objectA");
+		out.objectA = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "objectB");
+		out.objectB = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "anchorx");
+		out.anchorx = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "anchory");
+		out.anchory = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "motor");
+		out.motor = lua_toboolean(L, -1);
+		lua_pop(L, 1);
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
 }
 
-void lua_pushsliderjoint(lua_State* L, b2PrismaticJoint* slider)
+void lua_pushsliderjoint(lua_State* L, SliderWrapper slider)
 {
-	lua_pushlightuserdata(L, slider);
+	lua_newtable(L);
+
+	lua_pushlightuserdata(L, slider.ptr);
+	lua_setfield(L, -2, "ptr");
+
+	lua_pushstring(L, slider.objectA.c_str());
+	lua_setfield(L, -2, "objectA");
+
+	lua_pushstring(L, slider.objectB.c_str());
+	lua_setfield(L, -2, "objectB");
+
+	lua_pushnumber(L, slider.anchorx);
+	lua_setfield(L, -2, "anchorx");
+
+	lua_pushnumber(L, slider.anchory);
+	lua_setfield(L, -2, "anchory");
+
+	lua_pushnumber(L, slider.axisx);
+	lua_setfield(L, -2, "axisx");
+
+	lua_pushnumber(L, slider.axisy);
+	lua_setfield(L, -2, "axisy");
+
+	lua_pushnumber(L, slider.upperlimit);
+	lua_setfield(L, -2, "upperlimit");
+
+	lua_pushnumber(L, slider.lowerlimit);
+	lua_setfield(L, -2, "lowerlimit");
+
+	lua_pushboolean(L, slider.motor);
+	lua_setfield(L, -2, "motor");
 }
 
-b2PrismaticJoint* lua_tosliderjoint(lua_State* L, int index)
+SliderWrapper lua_tosliderjoint(lua_State* L, int index)
 {
-	b2PrismaticJoint* out = nullptr;
-	if (lua_isuserdata(L, index))
+	SliderWrapper out;
+
+	if (lua_istable(L, index))
 	{
-		out = (b2PrismaticJoint*)lua_touserdata(L, index);
+		lua_getfield(L, index, "ptr");
+		out.ptr = nullptr;
+		if (lua_isuserdata(L, -1))
+		{
+			out.ptr = (b2PrismaticJoint*)lua_touserdata(L, -1);
+		}
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "objectA");
+		out.objectA = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "objectB");
+		out.objectB = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "anchorx");
+		out.anchorx = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "anchory");
+		out.anchory = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "axisx");
+		out.axisx = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "axisy");
+		out.axisy = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "upperlimit");
+		out.upperlimit = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "lowerlimit");
+		out.lowerlimit = luaL_checknumber(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "motor");
+		out.motor = lua_toboolean(L, -1);
+		lua_pop(L, 1);
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
-}
-
-void lua_pushjoint(lua_State* L, b2Joint* joint)
-{
-	lua_pushlightuserdata(L, joint);
 }
 
 b2Joint* lua_tojoint(lua_State* L, int index)
 {
 	b2Joint* out = nullptr;
-	if (lua_isuserdata(L, index))
+
+	if (lua_istable(L, index))
 	{
-		out = (b2Joint*)lua_touserdata(L, index);
+		lua_getfield(L, index, "ptr");
+		if (lua_isuserdata(L, -1))
+		{
+			out = (b2Joint*)lua_touserdata(L, -1);
+		}
+		lua_pop(L, 1);
 	}
 	else
 	{
-		luaL_error(L, "item at index %d is not a lightuserdata", index);
+		luaL_error(L, "item at index %d is not a table", index);
 	}
 	return out;
 }

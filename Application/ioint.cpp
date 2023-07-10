@@ -15,6 +15,9 @@ void LuaIO::Register(lua_State* L)
 	EnumQuickReg(L, KEY_DOWN);
 	EnumQuickReg(L, KEY_RIGHT);
 	EnumQuickReg(L, KEY_SPACE);
+	EnumQuickReg(L, KEY_P);
+	EnumQuickReg(L, KEY_LEFT_CONTROL);
+	EnumQuickReg(L, KEY_LEFT_SHIFT);
 	
 	FunctionQuickReg(L, KeyDown);
 	FunctionQuickReg(L, MousePosition);
