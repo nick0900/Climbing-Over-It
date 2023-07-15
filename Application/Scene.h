@@ -48,6 +48,7 @@ public:
 	//Systems
 public:
 	void Update(float dt);
+	void Edit(float dt);
 	void Draw(float dt);
 
 	//Lua wrappers
@@ -67,6 +68,7 @@ public:
 	static int lua_RemoveComponent(lua_State* L);
 
 	static int lua_SysOnUpdate(lua_State* L);
+	static int lua_SysOnEdit(lua_State* L);
 	static int lua_SysOnDraw(lua_State* L);
 
 	static int luaint_new(lua_State* L);

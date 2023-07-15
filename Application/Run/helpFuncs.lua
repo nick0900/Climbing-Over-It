@@ -1,5 +1,5 @@
 hello = function ()
-	print('Hello World!');
+	print('Hello world even even more hello for ever!!!');
 end
 
 tablePrint = function (table)
@@ -34,4 +34,11 @@ tablePrint = function (table)
 		print('\nmetatable:');
 		tablePrint(meta);
 	end
+end
+
+reloadProject = function()
+	dofile("game.lua");
+	dofile("helpFuncs.lua");
+	dofile("crLoops.lua");
+	dofile("inputUpdate.lua");
 end

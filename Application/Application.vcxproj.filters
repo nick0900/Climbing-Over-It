@@ -52,7 +52,6 @@
     <None Include="Run\characterinit.lua" />
     <None Include="Run\inputUpdate.lua" />
     <None Include="Run\imgui.ini" />
-    <None Include="Run\deinit.lua" />
     <None Include="Run\crLoops.lua" />
     <None Include="Run\windowConfig.lua" />
     <None Include="Run\entitiesStructure.lua" />

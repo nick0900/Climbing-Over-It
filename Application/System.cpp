@@ -4,6 +4,7 @@
 #include "box2d.h"
 #include "raylib.h"
 #include "raymath.h"
+#include "rlgl.h"
 #include "Components.h"
 
 #include <iostream>
@@ -48,6 +49,11 @@ bool ModelDraw::OnUpdate(entt::registry* registry, float dt)
     return true;
 }
 
+bool ModelDraw::OnEdit(entt::registry* registry, float dt)
+{
+    return true;
+}
+
 bool ModelDraw::OnDraw(entt::registry* registry, float dt)
 {
     for (auto [entity, m, t] : registry->view<ModelWrapper, Transform>().each())
@@ -60,6 +66,10 @@ bool ModelDraw::OnDraw(entt::registry* registry, float dt)
 
 void Physics::SystemSetup(entt::registry* registry)
 {
+    registry->on_construct<Transform>().connect<Physics::SetBody>();
+    registry->on_update<Transform>().connect<Physics::SetBody>();
+    registry->on_destroy<Transform>().connect<Physics::RemoveBody>();
+
     registry->on_construct<b2Body*>().connect<Physics::SetBody>();
     registry->on_update<b2Body*>().connect<Physics::SetBody>();
     registry->on_destroy<b2Body*>().connect<Physics::RemoveBody>();
@@ -80,7 +90,24 @@ bool Physics::OnUpdate(entt::registry* registry, float dt)
         b2Transform b2transform = rigidbody->GetTransform();
         transform.translation = { b2transform.p.x, b2transform.p.y, transform.translation.z };
         transform.rotation = QuaternionFromEuler(0.0f, 0.0f, b2transform.q.GetAngle());
-        transform.scale = { 1.0f, 1.0f, 1.0f};
+        transform.scale = { box.sx, box.sy, transform.scale.z};
+    }
+    return true;
+}
+
+bool Physics::OnEdit(entt::registry* registry, float dt)
+{
+    for (auto [entity, rigidbody, rigidbodyDef, box, transform] : registry->view<b2Body*, RigidbodyDef, BoxWrapper, Transform>().each())
+    {
+        if ((box.sx != transform.scale.x) || (box.sy != transform.scale.y))
+        {
+            box.sx = transform.scale.x;
+            box.sy = transform.scale.y;
+            box.data.SetAsBox(box.hx * box.sx, box.hy * box.sy);
+            SetBody(*registry, entity);
+        }
+        
+        rigidbody->SetTransform({ transform.translation.x, transform.translation.y }, QuaternionToEuler(transform.rotation).z);
     }
     return true;
 }
@@ -109,6 +136,7 @@ void Physics::SetBody(entt::registry& registry, entt::entity entity)
 
         if (bodyPtr != nullptr)
         {
+            if (bodyPtr->GetJointList() != nullptr) return;
             World()->DestroyBody(bodyPtr);
             bodyPtr = nullptr;
         }
@@ -118,6 +146,8 @@ void Physics::SetBody(entt::registry& registry, entt::entity entity)
         bodyDef.position = b2Vec2(transform.translation.x, transform.translation.y);
 
         bodyDef.angle = QuaternionToEuler(transform.rotation).z;
+
+        bodyDef.fixedRotation = !rigidbodyDef.rotation;
 
         if (rigidbodyDef.dynamic)
         {
@@ -138,6 +168,12 @@ void Physics::SetBody(entt::registry& registry, entt::entity entity)
 
         fixtureDef.shape = &shape.data;
 
+        fixtureDef.isSensor = rigidbodyDef.sensor;
+
+        fixtureDef.filter.categoryBits = rigidbodyDef.category;
+
+        fixtureDef.filter.maskBits = rigidbodyDef.mask;
+
         (bodyPtr)->CreateFixture(&fixtureDef);
     }
 }
@@ -146,7 +182,7 @@ void Physics::RemoveBody(entt::registry& registry, entt::entity entity)
 {
     if (registry.all_of<b2Body*>(entity))
     {
-        b2Body* bodyPtr = registry.get<b2Body*>(entity);
+        b2Body*& bodyPtr = registry.get<b2Body*>(entity);
 
         if (bodyPtr != nullptr)
         {

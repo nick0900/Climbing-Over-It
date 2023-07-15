@@ -61,6 +61,7 @@ void LuaImgui::Register(lua_State* L)
 	FunctionQuickReg(L, ImguiInputFloat2);
 	FunctionQuickReg(L, ImguiInputFloat3);
 	FunctionQuickReg(L, ImguiInputFloat4);
+	FunctionQuickReg(L, ImguiInputCheckbox);
 }
 
 int LuaImgui::ImguiSetup(lua_State* L)
@@ -305,63 +306,67 @@ int LuaImgui::ImguiInputInt3(lua_State* L)
 int LuaImgui::ImguiInputFloat(lua_State* L)
 {
 	int n = lua_gettop(L);
-	if (n == 2)
+	if (n == 3)
 	{
 		std::string lable = luaL_checkstring(L, 1);
-		float value = luaL_checknumber(L, 2);
+		float speed = luaL_checknumber(L, 2);
+		float value = luaL_checknumber(L, 3);
 
-		bool clicked = ImGui::DragFloat(lable.c_str(), &value, 0.001f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
+		bool clicked = ImGui::DragFloat(lable.c_str(), &value, speed, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
 		lua_pushboolean(L, clicked);
 		lua_pushnumber(L, value);
 		return 2;
 	}
-	return luaL_error(L, "Got %d arguments expected 2, (lable, value)", n);
+	return luaL_error(L, "Got %d arguments expected 3, (lable, speed, value)", n);
 }
 
 int LuaImgui::ImguiInputFloat2(lua_State* L)
 {
 	int n = lua_gettop(L);
-	if (n == 3)
+	if (n == 4)
 	{
 		std::string lable = luaL_checkstring(L, 1);
-		float value[2] = { luaL_checknumber(L, 2), luaL_checknumber(L, 3) };
+		float speed = luaL_checknumber(L, 2);
+		float value[2] = { luaL_checknumber(L, 3), luaL_checknumber(L, 4) };
 
-		bool clicked = ImGui::DragFloat2(lable.c_str(), value, 0.001f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
+		bool clicked = ImGui::DragFloat2(lable.c_str(), value, speed, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
 		lua_pushboolean(L, clicked);
 		lua_pushnumber(L, value[0]);
 		lua_pushnumber(L, value[1]);
 		return 3;
 	}
-	return luaL_error(L, "Got %d arguments expected 3, (lable, value1, value2)", n);
+	return luaL_error(L, "Got %d arguments expected 4, (lable, speed, value1, value2)", n);
 }
 
 int LuaImgui::ImguiInputFloat3(lua_State* L)
 {
 	int n = lua_gettop(L);
-	if (n == 4)
+	if (n == 5)
 	{
 		std::string lable = luaL_checkstring(L, 1);
-		float value[3] = { luaL_checknumber(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4) };
+		float speed = luaL_checknumber(L, 2);
+		float value[3] = { luaL_checknumber(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5) };
 
-		bool clicked = ImGui::DragFloat3(lable.c_str(), value, 0.001f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
+		bool clicked = ImGui::DragFloat3(lable.c_str(), value, speed, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
 		lua_pushboolean(L, clicked);
 		lua_pushnumber(L, value[0]);
 		lua_pushnumber(L, value[1]);
 		lua_pushnumber(L, value[2]);
 		return 4;
 	}
-	return luaL_error(L, "Got %d arguments expected 4, (lable, value1, value2, value3)", n);
+	return luaL_error(L, "Got %d arguments expected 5, (lable, speed, value1, value2, value3)", n);
 }
 
 int LuaImgui::ImguiInputFloat4(lua_State* L)
 {
 	int n = lua_gettop(L);
-	if (n == 5)
+	if (n == 6)
 	{
 		std::string lable = luaL_checkstring(L, 1);
-		float value[4] = { luaL_checknumber(L, 2), luaL_checknumber(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5) };
+		float speed = luaL_checknumber(L, 2);
+		float value[4] = { luaL_checknumber(L, 3), luaL_checknumber(L, 4), luaL_checknumber(L, 5), luaL_checknumber(L, 6) };
 
-		bool clicked = ImGui::DragFloat4(lable.c_str(), value, 0.001f, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
+		bool clicked = ImGui::DragFloat4(lable.c_str(), value, speed, 0.0f, 0.0f, "%.3f", ImGuiSliderFlags_NoRoundToFormat);
 		lua_pushboolean(L, clicked);
 		lua_pushnumber(L, value[0]);
 		lua_pushnumber(L, value[1]);
@@ -370,6 +375,22 @@ int LuaImgui::ImguiInputFloat4(lua_State* L)
 		return 5;
 	}
 	return luaL_error(L, "Got %d arguments expected 5, (lable, value1, value2, value3, value4)", n);
+}
+
+int LuaImgui::ImguiInputCheckbox(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 2)
+	{
+		std::string lable = luaL_checkstring(L, 1);
+		bool checked = lua_toboolean(L, 2);
+
+		bool clicked = ImGui::Checkbox(lable.c_str(), &checked);
+		lua_pushboolean(L, clicked);
+		lua_pushboolean(L, checked);
+		return 2;
+	}
+	return luaL_error(L, "Got %d arguments expected 5, (lable, checked)", n);
 }
 
 ImVec2 lua_toimvec2(lua_State* L, int index)

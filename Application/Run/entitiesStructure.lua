@@ -52,6 +52,7 @@ function GetEntity(self, name)
 			return v;
 		end
 	end
+	return nil;
 end
 
 function DuplicateEntity(self, scene)
@@ -85,10 +86,19 @@ function serialize (o)
 end
 
 function LoadToScene(self, scene)
+	local delayed = {};
 	for _, v in ipairs(self) do
 		v.entity = scene:CreateEntity();
 		for _, comp in ipairs(v.components) do
-			scene:SetComponent(v.entity, comp.name, comp.data);
+			if comp.name == "Hingejoint" or comp.name == "Sliderjoint" then
+				table.insert(delayed, {entity = v.entity , component = comp.name, data = comp.data});
+			else
+				scene:SetComponent(v.entity, comp.name, comp.data);
+			end
 		end
+	end
+
+	for _, v in ipairs(delayed) do 
+		scene:SetComponent(v.entity, v.component, v.data);
 	end
 end

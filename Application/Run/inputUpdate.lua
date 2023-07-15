@@ -115,3 +115,19 @@ debugCamera = function(dt)
 	SetCameraPosition(position);
 	SetCameraTarget(target);
 end
+
+playerController = function(dt)
+	local botBody = ActiveScene:GetComponent(GetEntity(Entities, "playerBot"), "Rigidbody");
+
+	local moveSpeed = 2;
+	
+	if KeyDown(KEY_D) then
+		position[1] = position[1] + dt * fast;
+		target[1] = target[1] + dt * fast;
+	end
+
+	if KeyDown(KEY_A) then
+		position[1] = position[1] - dt * fast;
+		target[1] = target[1] - dt * fast;
+	end
+end

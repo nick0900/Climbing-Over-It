@@ -19,6 +19,10 @@ void LuaPhysics::Register(lua_State* L)
 	FunctionQuickReg(L, SetMaxMotor);
 	FunctionQuickReg(L, GetMotorSpeed);
 	FunctionQuickReg(L, SetMotorSpeed);
+	FunctionQuickReg(L, HasJoints);
+	FunctionQuickReg(L, CheckHit);
+	FunctionQuickReg(L, GetVelocity);
+	FunctionQuickReg(L, ApplyForce);
 }
 
 int LuaPhysics::PhysStep(lua_State* L)
@@ -167,7 +171,7 @@ int LuaPhysics::SetMaxMotor(lua_State* L)
 		}
 		return 0;
 	}
-	return luaL_error(L, "Got %d arguments expected 2, (rigidbody, maxTorque/Force)", n);
+	return luaL_error(L, "Got %d arguments expected 2, (joint, maxTorque/Force)", n);
 }
 
 int LuaPhysics::SetMotorSpeed(lua_State* L)
@@ -190,5 +194,60 @@ int LuaPhysics::SetMotorSpeed(lua_State* L)
 		}
 		return 0;
 	}
-	return luaL_error(L, "Got %d arguments expected 2, (rigidbody, speed)", n);
+	return luaL_error(L, "Got %d arguments expected 2, (joint, speed)", n);
+}
+
+int LuaPhysics::GetVelocity(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 1)
+	{
+		b2Body* body = lua_torigidbody(L, 1);
+		b2Vec2 vel = body->GetLinearVelocity();
+		
+		lua_pushnumber(L, vel.x);
+		lua_pushnumber(L, vel.y);
+		return 2;
+	}
+	return luaL_error(L, "Got %d arguments expected 1, (rigidbody)", n);
+}
+
+int LuaPhysics::ApplyForce(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 3)
+	{
+		b2Body* body = lua_torigidbody(L, 1);
+		b2Vec2 force = { luaL_checknumber(L, 2), luaL_checknumber(L, 3) };
+
+		body->ApplyForceToCenter(force, true);
+		return 0;
+	}
+	return luaL_error(L, "Got %d arguments expected 3, (rigidbody, x, y)", n);
+}
+
+int LuaPhysics::HasJoints(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 1)
+	{
+		b2Body* body = lua_torigidbody(L, 1);
+
+		lua_pushboolean(L, body->GetJointList() != nullptr);
+		return 1;
+	}
+	return luaL_error(L, "Got %d arguments expected , (rigidbody)", n);
+}
+
+int LuaPhysics::CheckHit(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 1)
+	{
+		b2Body* body = lua_torigidbody(L, 1);
+
+		lua_pushboolean(L, body->GetContactList() != nullptr);
+		return 1;
+	}
+	return luaL_error(L, "Got %d arguments expected , (rigidbody)", n);
 }

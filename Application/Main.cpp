@@ -96,6 +96,8 @@ int main(void)
     std::chrono::milliseconds updateTime = std::chrono::milliseconds::zero();
 
     HelpFuncs::CheckError(L, luaL_dofile(L, "game.lua"));
+    lua_getglobal(L, "LuaInit");
+    lua_pcall(L, 0, 0, -1);
     //------------------------------------------------------------------------------------//
 
 #if _DEBUG
@@ -118,8 +120,7 @@ int main(void)
     // De-Initialization
     //--------------------------------------------------------------------------------------
     lua_getglobal(L, "LuaDeinit");
-    lua_pushnumber(L, timestep);
-    lua_pcall(L, 1, 0, -2);
+    lua_pcall(L, 0, 0, -1);
     CloseWindow();
     //--------------------------------------------------------------------------------------
 

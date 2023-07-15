@@ -10,6 +10,7 @@ public:
 	virtual void SystemSetup(entt::registry* registry) = 0;
 
 	virtual bool OnUpdate(entt::registry* registry, float dt) = 0;
+	virtual bool OnEdit(entt::registry* registry, float dt) = 0;
 	virtual bool OnDraw(entt::registry* registry, float dt) = 0;
 };
 
@@ -21,6 +22,7 @@ public:
 	virtual void SystemSetup(entt::registry* registry) override;
 
 	virtual bool OnUpdate(entt::registry* registry, float dt) override;
+	virtual bool OnEdit(entt::registry* registry, float dt) override;
 	virtual bool OnDraw(entt::registry* registry, float dt) override;
 
 private:
@@ -32,6 +34,7 @@ class Physics : public System
 	virtual void SystemSetup(entt::registry* registry) override;
 
 	virtual bool OnUpdate(entt::registry* registry, float dt) override;
+	virtual bool OnEdit(entt::registry* registry, float dt) override;
 	virtual bool OnDraw(entt::registry* registry, float dt) override;
 public:
 	static b2World* World();

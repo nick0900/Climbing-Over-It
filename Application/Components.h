@@ -34,9 +34,13 @@ b2Body* lua_torigidbody(lua_State* L, int index);
 
 struct RigidbodyDef
 {
-	bool dynamic = false;
-	float density = 1.0f;
-	float friction = 1.0f;
+	bool dynamic;
+	float density;
+	float friction;
+	int category;
+	int mask;
+	bool sensor;
+	bool rotation;
 };
 
 #define CompRigidbodyDef "RigidbodyDef"
@@ -49,6 +53,9 @@ struct BoxWrapper
 	b2PolygonShape* ptr;
 	float hx;
 	float hy;
+	//inaccesible by lua
+	float sx;
+	float sy;
 };
 
 #define CompBoxShape "BoxCollider"
@@ -63,6 +70,7 @@ struct HingeWrapper
 	float anchorx;
 	float anchory;
 	bool motor;
+	float maxforce;
 };
 
 #define CompHingeJoint "Hingejoint"
@@ -81,6 +89,7 @@ struct SliderWrapper
 	float upperlimit;
 	float lowerlimit;
 	bool motor;
+	float maxforce;
 };
 
 #define CompSliderJoint "Sliderjoint"

@@ -1,12 +1,21 @@
 #include "Components.h"
 
 #include <string>
+#include <math.h>
 
 #include "lua.hpp"
 #include "box2d.h"
+#include "raymath.h"
+#include "raylib.h"
 
 #include "LuaInterface.h"
 #include "Scene.h"
+
+#define PI 3.141592653589793238462643383279502884
+
+#define TO_RADIANS PI / 180.0f
+
+#define TO_DEGREES 180.0f / PI
 
 void lua_pushtransform(lua_State* L, Transform& transform)
 {
@@ -19,14 +28,13 @@ void lua_pushtransform(lua_State* L, Transform& transform)
 	lua_pushnumber(L, transform.translation.z);
 	lua_setfield(L, -2, "tz");
 
-	lua_pushnumber(L, transform.rotation.x);
+	Vector3 angles = QuaternionToEuler(transform.rotation);
+	lua_pushnumber(L, TO_DEGREES * angles.x);
 	lua_setfield(L, -2, "rx");
-	lua_pushnumber(L, transform.rotation.y);
+	lua_pushnumber(L, TO_DEGREES * angles.y);
 	lua_setfield(L, -2, "ry");
-	lua_pushnumber(L, transform.rotation.z);
+	lua_pushnumber(L, TO_DEGREES * angles.z);
 	lua_setfield(L, -2, "rz");
-	lua_pushnumber(L, transform.rotation.w);
-	lua_setfield(L, -2, "rw");
 
 	lua_pushnumber(L, transform.scale.x);
 	lua_setfield(L, -2, "sx");
@@ -52,18 +60,22 @@ Transform lua_totransform(lua_State* L, int index)
 		out.translation.z = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
 
+		Vector3 angles;
 		lua_getfield(L, index, "rx");
-		out.rotation.x = luaL_checknumber(L, -1);
+		angles.x = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
 		lua_getfield(L, index, "ry");
-		out.rotation.y = luaL_checknumber(L, -1);
+		angles.y = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
 		lua_getfield(L, index, "rz");
-		out.rotation.z = luaL_checknumber(L, -1);
+		angles.z = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
-		lua_getfield(L, index, "rw");
-		out.rotation.w = luaL_checknumber(L, -1);
-		lua_pop(L, 1);
+
+		angles.x *= TO_RADIANS;
+		angles.y *= TO_RADIANS;
+		angles.z *= TO_RADIANS;
+
+		out.rotation = QuaternionFromEuler(angles.x, angles.y, angles.z);
 
 		lua_getfield(L, index, "sx");
 		out.scale.x = luaL_checknumber(L, -1);
@@ -149,7 +161,17 @@ void lua_pushrigidbody(lua_State* L, b2Body* rigidbody)
 
 b2Body* lua_torigidbody(lua_State* L, int index)
 {
-	return nullptr;
+	b2Body* out = nullptr;
+
+	if (lua_isuserdata(L, index))
+	{
+		out = (b2Body*) lua_touserdata(L, index);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not userdata", index);
+	}
+	return out;
 }
 
 void lua_pushrigidbodydef(lua_State* L, RigidbodyDef& rigidbodyDef)
@@ -164,31 +186,58 @@ void lua_pushrigidbodydef(lua_State* L, RigidbodyDef& rigidbodyDef)
 
 	lua_pushnumber(L, rigidbodyDef.friction);
 	lua_setfield(L, -2, "friction");
+
+	lua_pushinteger(L, rigidbodyDef.category);
+	lua_setfield(L, -2, "category");
+
+	lua_pushinteger(L, rigidbodyDef.mask);
+	lua_setfield(L, -2, "mask");
+
+	lua_pushboolean(L, rigidbodyDef.sensor);
+	lua_setfield(L, -2, "sensor");
+
+	lua_pushboolean(L, rigidbodyDef.rotation);
+	lua_setfield(L, -2, "rotation");
 }
 
 RigidbodyDef lua_torigidbodydef(lua_State* L, int index)
 {
-	RigidbodyDef out;
-
 	if (lua_istable(L, index))
 	{
 		lua_getfield(L, index, "dynamic");
-		out.dynamic = lua_toboolean(L, -1);
+		bool dynamic = lua_toboolean(L, -1);
 		lua_pop(L, 1);
 
 		lua_getfield(L, index, "density");
-		out.dynamic = luaL_checknumber(L, -1);
+		float density = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
 
 		lua_getfield(L, index, "friction");
-		out.friction = luaL_checknumber(L, -1);
+		float friction = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
+
+		lua_getfield(L, index, "category");
+		int category = luaL_checkinteger(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "mask");
+		int mask = luaL_checkinteger(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "sensor");
+		bool sensor = lua_toboolean(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "rotation");
+		bool rotation = lua_toboolean(L, -1);
+		lua_pop(L, 1);
+		return {dynamic, density, friction, category, mask, sensor, rotation};
 	}
 	else
 	{
 		luaL_error(L, "item at index %d is not a table", index);
 	}
-	return out;
+	return {false, 1.0f, 1.0f, 0xffff, 0xffff, false};
 }
 
 void lua_pushpolygonshape(lua_State* L, BoxWrapper& shape)
@@ -255,6 +304,9 @@ void lua_pushhingejoint(lua_State* L, HingeWrapper hinge)
 
 	lua_pushboolean(L, hinge.motor);
 	lua_setfield(L, -2, "motor");
+
+	lua_pushnumber(L, hinge.maxforce);
+	lua_setfield(L, -2, "maxforce");
 }
 
 HingeWrapper lua_tohingejoint(lua_State* L, int index)
@@ -289,6 +341,10 @@ HingeWrapper lua_tohingejoint(lua_State* L, int index)
 
 		lua_getfield(L, index, "motor");
 		out.motor = lua_toboolean(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "maxforce");
+		out.maxforce = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
 	}
 	else
@@ -331,6 +387,9 @@ void lua_pushsliderjoint(lua_State* L, SliderWrapper slider)
 
 	lua_pushboolean(L, slider.motor);
 	lua_setfield(L, -2, "motor");
+
+	lua_pushnumber(L, slider.maxforce);
+	lua_setfield(L, -2, "maxforce");
 }
 
 SliderWrapper lua_tosliderjoint(lua_State* L, int index)
@@ -381,6 +440,10 @@ SliderWrapper lua_tosliderjoint(lua_State* L, int index)
 
 		lua_getfield(L, index, "motor");
 		out.motor = lua_toboolean(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "maxforce");
+		out.maxforce = luaL_checknumber(L, -1);
 		lua_pop(L, 1);
 	}
 	else

@@ -35,6 +35,7 @@ namespace LuaImgui
 	static int ImguiInputFloat2(lua_State* L);
 	static int ImguiInputFloat3(lua_State* L);
 	static int ImguiInputFloat4(lua_State* L);
+	static int ImguiInputCheckbox(lua_State* L);
 }
 
 void lua_pushimvec2(lua_State* L, ImVec2& vec);

@@ -99,20 +99,30 @@ while running do
 			local update = false;
 			local changed;
 			if comp.name == "Transform" then
-				changed, comp.data.tx, comp.data.ty, comp.data.tz = ImguiInputFloat3("Position", comp.data.tx, comp.data.ty, comp.data.tz);
+				comp.data = ActiveScene:GetComponent(selected.entity, "Transform");
+				changed, comp.data.tx, comp.data.ty, comp.data.tz = ImguiInputFloat3("Position", 0.001, comp.data.tx, comp.data.ty, comp.data.tz);
 				if changed then update = true; end
 
-				changed, comp.data.rx, comp.data.ry, comp.data.rz, comp.data.rw = ImguiInputFloat4("Rotation", comp.data.rx, comp.data.ry, comp.data.rz, comp.data.rw);
+				changed, comp.data.rx, comp.data.ry, comp.data.rz = ImguiInputFloat3("Rotation", 0.1, comp.data.rx, comp.data.ry, comp.data.rz);
 				if changed then update = true; end
 
-				changed, comp.data.sx, comp.data.sy, comp.data.sz = ImguiInputFloat3("Scale", comp.data.sx, comp.data.sy, comp.data.sz);
-				if changed then update = true; end	
+				changed, comp.data.sx, comp.data.sy, comp.data.sz = ImguiInputFloat3("Scale", 0.001, comp.data.sx, comp.data.sy, comp.data.sz);
+				if changed then update = true; end
 
 				if transformIO(dt, comp.data) then update = true; end
 
 				if ImguiButton("RemoveTransform", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
 					ActiveScene:RemoveComponent(selected.entity, "Transform");
 					RemoveComponent(selected.components, "Transform");
+				end
+
+			elseif comp.name == "Parent" then
+				changed, comp.data = ImguiInputText("Other", comp.data, 40);
+				if changed then update = true; end
+
+				if ImguiButton("RemoveParent", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "Parent");
+					RemoveComponent(selected.components, "Parent");
 				end
 
 			elseif comp.name == "Model" then
@@ -126,6 +136,99 @@ while running do
 					ActiveScene:RemoveComponent(selected.entity, "Model");
 					RemoveComponent(selected.components, "Model");
 				end
+
+			elseif comp.name == "Rigidbody" then
+				if ImguiButton("RemoveRigidbody", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "Rigidbody");
+					RemoveComponent(selected.components, "Rigidbody");
+				end
+
+			elseif comp.name == "RigidbodyDef" then
+				changed, comp.data.dynamic = ImguiInputCheckbox("Dynamic", comp.data.dynamic);
+				if changed then update = true; end
+
+				changed, comp.data.density = ImguiInputFloat("Density", 0.01, comp.data.density);
+				if changed then update = true; end
+
+				changed, comp.data.friction = ImguiInputFloat("Friction", 0.01, comp.data.friction);
+				if changed then update = true; end
+
+				changed, comp.data.category = ImguiInputInt("Category", comp.data.category);
+				if changed then update = true; end
+
+				changed, comp.data.mask = ImguiInputInt("Mask", comp.data.mask);
+				if changed then update = true; end
+
+				changed, comp.data.sensor = ImguiInputCheckbox("Sensor", comp.data.sensor);
+				if changed then update = true; end
+
+				changed, comp.data.rotation = ImguiInputCheckbox("EnableRotation", comp.data.rotation);
+				if changed then update = true; end
+
+				if ImguiButton("RemoveRigidbodyDef", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "RigidbodyDef");
+					RemoveComponent(selected.components, "RigidbodyDef");
+				end
+
+			elseif comp.name == "BoxCollider" then
+				changed, comp.data.hx = ImguiInputFloat("hx", 0.001, comp.data.hx);
+				if changed then update = true; end
+
+				changed, comp.data.hy = ImguiInputFloat("hy", 0.001, comp.data.hy);
+				if changed then update = true; end
+
+				if ImguiButton("RemoveBoxCollider", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "BoxCollider");
+					RemoveComponent(selected.components, "BoxCollider");
+				end
+
+			elseif comp.name == "Hingejoint" then
+				changed, comp.data.objectA = ImguiInputText("ObjectA", comp.data.objectA, 40);
+				if changed then update = true; end
+
+				changed, comp.data.objectB = ImguiInputText("ObjectB", comp.data.objectB, 40);
+				if changed then update = true; end
+
+				changed, comp.data.anchorx, comp.data.anchory = ImguiInputFloat2("GlobalAnchor", 0.001, comp.data.anchorx, comp.data.anchory);
+				if changed then update = true; end
+
+				changed, comp.data.motor = ImguiInputCheckbox("Motor", comp.data.motor);
+				if changed then update = true; end
+
+				changed, comp.data.maxforce = ImguiInputFloat("MaxTorque", 0.01, comp.data.maxforce);
+				if changed then update = true; end
+
+				if ImguiButton("RemoveHingejoint", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "Hingejoint");
+					RemoveComponent(selected.components, "Hingejoint");
+				end
+
+			elseif comp.name == "Sliderjoint" then
+				changed, comp.data.objectA = ImguiInputText("ObjectA", comp.data.objectA, 40);
+				if changed then update = true; end
+
+				changed, comp.data.objectB = ImguiInputText("ObjectB", comp.data.objectB, 40);
+				if changed then update = true; end
+
+				changed, comp.data.anchorx, comp.data.anchory = ImguiInputFloat2("GlobalAnchor", 0.001, comp.data.anchorx, comp.data.anchory);
+				if changed then update = true; end
+
+				changed, comp.data.axisx, comp.data.axisy = ImguiInputFloat2("GlobalAxis", 0.001, comp.data.axisx, comp.data.axisy);
+				if changed then update = true; end
+
+				changed, comp.data.lowerlimit, comp.data.upperlimit = ImguiInputFloat2("Limits", 0.001, comp.data.lowerlimit, comp.data.upperlimit);
+				if changed then update = true; end
+
+				changed, comp.data.motor = ImguiInputCheckbox("Motor", comp.data.motor);
+				if changed then update = true; end
+
+				changed, comp.data.maxforce = ImguiInputFloat("MaxForce", 0.01, comp.data.maxforce);
+				if changed then update = true; end
+
+				if ImguiButton("RemoveSliderjoint", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "Sliderjoint");
+					RemoveComponent(selected.components, "Sliderjoint");
+				end
 			end
 
 			if update then
@@ -137,13 +240,43 @@ while running do
 
 		ImguiBeginListBox("Components", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.1)});
 			if ImguiButton("NewTransform", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
-				ActiveScene:CreateComponent(selected.entity, "Transform", {0, 0, 0}, {0, 0, 0, 1}, {1, 1, 1});
+				ActiveScene:CreateComponent(selected.entity, "Transform", {0, 0, 0}, {0, 0, 0}, {1, 1, 1});
 				NewComponent(selected.components, "Transform", ActiveScene:GetComponent(selected.entity, "Transform"));
+			end
+
+			if ImguiButton("NewParent", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "Parent", "");
+				NewComponent(selected.components, "Parent", ActiveScene:GetComponent(selected.entity, "Parent"));
 			end
 
 			if ImguiButton("NewModel", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
 				ActiveScene:CreateComponent(selected.entity, "Model", "climber ball.obj", "climber pallet.png");
 				NewComponent(selected.components, "Model", ActiveScene:GetComponent(selected.entity, "Model"));
+			end
+
+			if ImguiButton("NewRigidbody", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "Rigidbody");
+				NewComponent(selected.components, "Rigidbody", ActiveScene:GetComponent(selected.entity, "Rigidbody"));
+			end
+
+			if ImguiButton("NewRigidbodyDef", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "RigidbodyDef", false, 1.0, 1.0, 0xffff, 0xffff, false, true);
+				NewComponent(selected.components, "RigidbodyDef", ActiveScene:GetComponent(selected.entity, "RigidbodyDef"));
+			end
+
+			if ImguiButton("NewBoxCollider", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "BoxCollider", 0.5, 0.5);
+				NewComponent(selected.components, "BoxCollider", ActiveScene:GetComponent(selected.entity, "BoxCollider"));
+			end
+
+			if ImguiButton("NewHingejoint", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "Hingejoint", "", "", 0.0, 0.0, true, 1.0);
+				NewComponent(selected.components, "Hingejoint", ActiveScene:GetComponent(selected.entity, "Hingejoint"));
+			end
+
+			if ImguiButton("NewSliderJoint", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "Sliderjoint", "", "", 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, false, 1.0);
+				NewComponent(selected.components, "Sliderjoint", ActiveScene:GetComponent(selected.entity, "Sliderjoint"));
 			end
 		ImguiEndListBox();
 
@@ -186,6 +319,8 @@ while running do
 
 	ImguiEndFrame();
 	EndFrame();
+
+	ActiveScene:Edit(dt);
 
 	dt, running = coroutine.yield();
 end

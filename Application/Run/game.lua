@@ -4,31 +4,34 @@ require "inputUpdate"
 require "crLoops"
 require "entitiesStructure"
 
-ActiveScene = Scene:New(2, {sys_ModelDraw, sys_Physics});
-Entities = {};
-
 --translation function for c side to convert object names to entity id
 function NameToEntity(name)
 	for _, v in ipairs(Entities) do
 		if v.name == name then return v.entity end
 	end
+	return -1;
 end
 
-ImguiSetup(true);
-ImguiMoveFromTitleBarOnly(true);
+LuaInit = function()
+	ActiveScene = Scene:New(2, {sys_ModelDraw, sys_Physics});
+	Entities = {};
 
-gameloop = coroutine.create(GameLoop);
-editorloop = coroutine.create(EditorLoop);
-coroutine.resume(gameloop, 0, true);
-coroutine.resume(editorloop, 0, true);
+	ImguiSetup(true);
+	ImguiMoveFromTitleBarOnly(true);
 
-SetCameraPosition({0.0, 10.0, 10.0});
-SetCameraTarget({0.0, 0.0, 0.0});
-SetCameraUp({0.0, 1.0, 0.0});
-SetCameraFov(45.0);
-SetCameraProjection(CAMERA_PERSPECTIVE);
+	gameloop = coroutine.create(GameLoop);
+	editorloop = coroutine.create(EditorLoop);
+	coroutine.resume(gameloop, 0, true);
+	coroutine.resume(editorloop, 0, true);
 
-editing = false;
+	SetCameraPosition({0.0, 2.0, 10.0});
+	SetCameraTarget({0.0, 0.0, 0.0});
+	SetCameraUp({0.0, 1.0, 0.0});
+	SetCameraFov(45.0);
+	SetCameraProjection(CAMERA_PERSPECTIVE);
+
+	editing = false;
+end
 -------------------------------------------------------------
 
 ---------------------gameloop--------------------------------

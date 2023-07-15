@@ -17,4 +17,10 @@ namespace LuaPhysics
 	static int GetMotorSpeed(lua_State* L);
 	static int SetMaxMotor(lua_State* L);
 	static int SetMotorSpeed(lua_State* L);
+
+	static int GetVelocity(lua_State* L);
+	static int ApplyForce(lua_State* L);
+
+	static int HasJoints(lua_State* L);
+	static int CheckHit(lua_State* L);
 }

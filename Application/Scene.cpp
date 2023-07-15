@@ -58,6 +58,14 @@ void Scene::Update(float dt)
     }
 }
 
+void Scene::Edit(float dt)
+{
+    for (System* s : m_systems)
+    {
+        s->OnEdit(&m_registry, dt);
+    }
+}
+
 void Scene::Draw(float dt)
 {
     for (System* s : m_systems)
@@ -293,7 +301,7 @@ int Scene::lua_SetComponent(lua_State* L)
         }
         else if (component == CompRigidbody)
         {
-            scene->SetComponent<b2Body*>(entity, lua_torigidbody(L, 4));
+            scene->SetComponent<b2Body*>(entity, nullptr);
         }
         else if (component == CompRigidbodyDef)
         {
@@ -309,17 +317,41 @@ int Scene::lua_SetComponent(lua_State* L)
         else if (component == CompHingeJoint)
         {
             HingeWrapper hinge = lua_tohingejoint(L, 4);
+            b2World* world = Physics::World();
 
-            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectA));
-            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectB));
+            if (scene->HasComponents<HingeWrapper>(entity))
+            {
+                HingeWrapper temp = scene->GetComponent<HingeWrapper>(entity);
+                if (temp.ptr != nullptr)
+                {
+                    Physics::World()->DestroyJoint(temp.ptr);
+                }
+            }
 
-            b2RevoluteJointDef hingeDef;
-            hingeDef.Initialize(bodyA, bodyB, b2Vec2(hinge.anchorx, hinge.anchory));
-            hingeDef.maxMotorTorque = 1.0f;
-            hingeDef.motorSpeed = 0.0f;
-            hingeDef.enableMotor = hinge.motor;
+            b2Body* bodyA = nullptr;
+            b2Body* bodyB = nullptr;
+            int id = (int)lua_objecttoentity(L, hinge.objectA);
+            if (id != -1)
+            {
+                bodyA = scene->GetComponent<b2Body*>(id);
+            }
+            id = (int)lua_objecttoentity(L, hinge.objectB);
+            if (id != -1)
+            {
+                bodyB = scene->GetComponent<b2Body*>(id);
+            }
 
-            hinge.ptr = (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef);
+            hinge.ptr = nullptr;
+            if ((bodyA != nullptr) && (bodyB != nullptr))
+            {
+                b2RevoluteJointDef hingeDef;
+                hingeDef.Initialize(bodyA, bodyB, b2Vec2(hinge.anchorx, hinge.anchory));
+                hingeDef.maxMotorTorque = hinge.maxforce;
+                hingeDef.motorSpeed = 0.0f;
+                hingeDef.enableMotor = hinge.motor;
+
+                hinge.ptr = (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef);
+            }
 
             scene->SetComponent<HingeWrapper>(entity, hinge);
         }
@@ -327,20 +359,43 @@ int Scene::lua_SetComponent(lua_State* L)
         {
             SliderWrapper slider = lua_tosliderjoint(L, 4);
 
-            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectA));
-            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectB));
+            if (scene->HasComponents<SliderWrapper>(entity))
+            {
+                SliderWrapper temp = scene->GetComponent<SliderWrapper>(entity);
+                if (temp.ptr != nullptr)
+                {
+                    Physics::World()->DestroyJoint(temp.ptr);
+                }
+            }
 
-            b2PrismaticJointDef sliderDef;
-            sliderDef.Initialize(bodyA, bodyB, b2Vec2(slider.anchorx, slider.anchory), b2Vec2(slider.axisx, slider.axisy));
-            sliderDef.lowerTranslation = slider.lowerlimit;
-            sliderDef.upperTranslation = slider.upperlimit;
-            sliderDef.enableLimit = true;
-            sliderDef.maxMotorForce = 1.0f;
-            sliderDef.motorSpeed = 0.0f;
-            sliderDef.enableMotor = slider.motor;
+            b2Body* bodyA = nullptr;
+            b2Body* bodyB = nullptr;
+            int id = (int)lua_objecttoentity(L, slider.objectA);
+            if (id != -1)
+            {
+                bodyA = scene->GetComponent<b2Body*>(id);
+            }
+            id = (int)lua_objecttoentity(L, slider.objectB);
+            if (id != -1)
+            {
+                bodyB = scene->GetComponent<b2Body*>(id);
+            }
 
-            slider.ptr = (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef);
+            slider.ptr = nullptr;
+            if ((bodyA != nullptr) && (bodyB != nullptr))
+            {
+                b2PrismaticJointDef sliderDef;
+                sliderDef.Initialize(bodyA, bodyB, b2Vec2(slider.anchorx, slider.anchory), b2Vec2(slider.axisx, slider.axisy));
+                sliderDef.lowerTranslation = slider.lowerlimit;
+                sliderDef.upperTranslation = slider.upperlimit;
+                sliderDef.enableLimit = true;
+                sliderDef.maxMotorForce = slider.maxforce;
+                sliderDef.motorSpeed = 0.0f;
+                sliderDef.enableMotor = slider.motor;
 
+                slider.ptr = (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef);
+            }
+          
             scene->SetComponent<SliderWrapper>(entity, slider);
         }
     }
@@ -350,6 +405,10 @@ int Scene::lua_SetComponent(lua_State* L)
     }
     return 0;
 }
+
+#define PI 3.141592653589793238462643383279502884
+
+#define TO_RADIANS PI / 180.0f
 
 int Scene::lua_CreateComponent(lua_State* L)
 {
@@ -379,25 +438,29 @@ int Scene::lua_CreateComponent(lua_State* L)
             lua_pop(L, 1);
 
 
+            Vector3 angles;
             lua_pushnumber(L, 1);
             lua_gettable(L, 5);
-            float rx = luaL_checknumber(L, -1);
+            angles.x = luaL_checknumber(L, -1);
             lua_pop(L, 1);
+
 
             lua_pushnumber(L, 2);
             lua_gettable(L, 5);
-            float ry = luaL_checknumber(L, -1);
+            angles.y = luaL_checknumber(L, -1);
             lua_pop(L, 1);
+
 
             lua_pushnumber(L, 3);
             lua_gettable(L, 5);
-            float rz = luaL_checknumber(L, -1);
+            angles.z = luaL_checknumber(L, -1);
             lua_pop(L, 1);
 
-            lua_pushnumber(L, 4);
-            lua_gettable(L, 5);
-            float rw = luaL_checknumber(L, -1);
-            lua_pop(L, 1);
+            angles.x *= TO_RADIANS;
+            angles.y *= TO_RADIANS;
+            angles.z *= TO_RADIANS;
+
+            Quaternion rot = QuaternionFromEuler(angles.x, angles.y, angles.z);
 
 
             lua_pushnumber(L, 1);
@@ -415,13 +478,13 @@ int Scene::lua_CreateComponent(lua_State* L)
             float sz = luaL_checknumber(L, -1);
             lua_pop(L, 1);
 
-            Transform transform = { {px, py, pz}, {rx, ry, rz, rw}, {sx, sy, sz} };
+            Transform transform = { {px, py, pz}, {rot.x, rot.y, rot.z, rot.w}, {sx, sy, sz} };
 
             scene->SetComponent<Transform>(entity, transform);
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 6 (self, entity, componentstr, position, quaternion, scale)", n);
+            return luaL_error(L, "Got %d arguments expected 6 (self, entity, componentstr, position, eulerangles, scale)", n);
         }
     }
     else if (component == CompModel)
@@ -474,17 +537,21 @@ int Scene::lua_CreateComponent(lua_State* L)
     }
     else if (component == CompRigidbodyDef)
     {
-        if (n == 6)
+        if (n == 10)
         {
             bool dynamic = lua_toboolean(L, 4);
             float density = luaL_checknumber(L, 5);
             float friction = luaL_checknumber(L, 6);
+            int category = luaL_checkinteger(L, 7);
+            int mask = luaL_checkinteger(L, 8);
+            bool sensor = lua_toboolean(L, 9);
+            bool rotation = lua_toboolean(L, 9);
 
-            scene->SetComponent<RigidbodyDef>(entity, {dynamic, density, friction});
+            scene->SetComponent<RigidbodyDef>(entity, {dynamic, density, friction, category, mask, sensor, rotation});
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 6 (self, entity, componentstr, dynamic, density, friction)", n);
+            return luaL_error(L, "Got %d arguments expected 10 (self, entity, componentstr, dynamic, density, friction, category, mask, sensor, rotation)", n);
         }
     }
     else if (component == CompBoxShape)
@@ -509,70 +576,122 @@ int Scene::lua_CreateComponent(lua_State* L)
     }
     else if (component == CompHingeJoint)
     {
-        if (n == 8)
+        if (n == 9)
         {
+            if (scene->HasComponents<HingeWrapper>(entity))
+            {
+                HingeWrapper temp = scene->GetComponent<HingeWrapper>(entity);
+                if (temp.ptr != nullptr)
+                {
+                    Physics::World()->DestroyJoint(temp.ptr);
+                }
+            }
+
             HingeWrapper hinge;
 
             hinge.objectA = luaL_checkstring(L, 4);
-            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectA));
             hinge.objectB = luaL_checkstring(L, 5);
-            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, hinge.objectB));
+            b2Body* bodyA = nullptr;
+            b2Body* bodyB = nullptr;
+            int id = (int)lua_objecttoentity(L, hinge.objectA);
+            if (id != -1)
+            {
+                bodyA = scene->GetComponent<b2Body*>(id);
+            }
+            id = (int)lua_objecttoentity(L, hinge.objectB);
+            if (id != -1)
+            {
+                bodyB = scene->GetComponent<b2Body*>(id);
+            }
 
-            hinge.anchorx = luaL_checknumber(L, 6);
-            hinge.anchory = luaL_checknumber(L, 7);
+            hinge.anchorx = lua_tonumber(L, 6);
+            hinge.anchory = lua_tonumber(L, 7);
 
             hinge.motor = lua_toboolean(L, 8);
 
-            b2RevoluteJointDef hingeDef;
-            hingeDef.Initialize(bodyA, bodyB, b2Vec2(hinge.anchorx, hinge.anchory));
-            hingeDef.maxMotorTorque = 1.0f;
-            hingeDef.motorSpeed = 0.0f;
-            hingeDef.enableMotor = hinge.motor;
-            
-            hinge.ptr = (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef);
+            hinge.maxforce = lua_tonumber(L, 9);
 
+            hinge.ptr = nullptr;
+            if ((bodyA != nullptr) && (bodyB != nullptr))
+            {
+                b2RevoluteJointDef hingeDef;
+                hingeDef.Initialize(bodyA, bodyB, b2Vec2(hinge.anchorx, hinge.anchory));
+                hingeDef.maxMotorTorque = hinge.maxforce;
+                hingeDef.motorSpeed = 0.0f;
+                hingeDef.enableMotor = hinge.motor;
+                hinge.ptr = (b2RevoluteJoint*)Physics::World()->CreateJoint(&hingeDef);
+            }
+            
             scene->SetComponent<HingeWrapper>(entity, hinge);
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 8 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, motorEnabled)", n);
+            return luaL_error(L, "Got %d arguments expected 9 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, motorEnabled, maxforce)", n);
         }
     }
     else if (component == CompSliderJoint)
     {
-        if (n == 10)
+        if (n == 13)
         {
+            if (scene->HasComponents<SliderWrapper>(entity))
+            {
+                SliderWrapper temp = scene->GetComponent<SliderWrapper>(entity);
+                if (temp.ptr != nullptr)
+                {
+                    Physics::World()->DestroyJoint(temp.ptr);
+                }
+            }
+
             SliderWrapper slider;
 
             slider.objectA = luaL_checkstring(L, 4);
-            b2Body* bodyA = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectA));
             slider.objectB = luaL_checkstring(L, 5);
-            b2Body* bodyB = scene->GetComponent<b2Body*>((int)lua_objecttoentity(L, slider.objectB));
+            b2Body* bodyA = nullptr;
+            b2Body* bodyB = nullptr;
+            int id = (int)lua_objecttoentity(L, slider.objectA);
+            if (id != -1)
+            {
+                bodyA = scene->GetComponent<b2Body*>(id);
+            }
+            id = (int)lua_objecttoentity(L, slider.objectB);
+            if (id != -1)
+            {
+                bodyB = scene->GetComponent<b2Body*>(id);
+            }
 
-            slider.anchorx = luaL_checknumber(L, 6);
-            slider.anchory = luaL_checknumber(L, 7);
+            slider.anchorx = lua_tonumber(L, 6);
+            slider.anchory = lua_tonumber(L, 7);
 
-            slider.axisx = luaL_checknumber(L, 8);
-            slider.axisy = luaL_checknumber(L, 9);
+            slider.axisx = lua_tonumber(L, 8);
+            slider.axisy = lua_tonumber(L, 9);
 
-            slider.motor = lua_toboolean(L, 10);
+            slider.lowerlimit = lua_tonumber(L, 10);
+            slider.upperlimit = lua_tonumber(L, 11);
 
-            b2PrismaticJointDef sliderDef;
-            sliderDef.Initialize(bodyA, bodyB, b2Vec2(slider.anchorx, slider.anchory), b2Vec2(slider.axisx, slider.axisy));
-            sliderDef.lowerTranslation = slider.lowerlimit;
-            sliderDef.upperTranslation = slider.upperlimit;
-            sliderDef.enableLimit = true;
-            sliderDef.maxMotorForce = 1.0f;
-            sliderDef.motorSpeed = 0.0f;
-            sliderDef.enableMotor = slider.motor;
+            slider.motor = lua_toboolean(L, 12);
 
-            slider.ptr = (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef);
+            slider.maxforce = lua_tonumber(L, 13);
+
+            slider.ptr = nullptr;
+            if ((bodyA != nullptr) && (bodyB != nullptr))
+            {
+                b2PrismaticJointDef sliderDef;
+                sliderDef.Initialize(bodyA, bodyB, b2Vec2(slider.anchorx, slider.anchory), b2Vec2(slider.axisx, slider.axisy));
+                sliderDef.lowerTranslation = slider.lowerlimit;
+                sliderDef.upperTranslation = slider.upperlimit;
+                sliderDef.enableLimit = true;
+                sliderDef.maxMotorForce = slider.maxforce;
+                sliderDef.motorSpeed = 0.0f;
+                sliderDef.enableMotor = slider.motor;
+
+                slider.ptr = (b2PrismaticJoint*)Physics::World()->CreateJoint(&sliderDef);
+            }
 
             scene->SetComponent<SliderWrapper>(entity, slider);
         }
         else
         {
-            return luaL_error(L, "Got %d arguments expected 10 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, worldaxisX, worldaxisY, motorEnabled)", n);
+            return luaL_error(L, "Got %d arguments expected 13 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, worldaxisX, worldaxisY, lowerlimit, upperlimit, motorEnabled, maxforce)", n);
         }
     }
     else
@@ -618,10 +737,26 @@ int Scene::lua_RemoveComponent(lua_State* L)
         }
         else if (component == CompHingeJoint)
         {
+            if (scene->HasComponents<HingeWrapper>(entity))
+            {
+                HingeWrapper temp = scene->GetComponent<HingeWrapper>(entity);
+                if (temp.ptr != nullptr)
+                {
+                    Physics::World()->DestroyJoint(temp.ptr);
+                }
+            }
             scene->RemoveComponent<HingeWrapper>(entity);
         }
         else if (component == CompSliderJoint)
         {
+            if (scene->HasComponents<SliderWrapper>(entity))
+            {
+                SliderWrapper temp = scene->GetComponent<SliderWrapper>(entity);
+                if (temp.ptr != nullptr)
+                {
+                    Physics::World()->DestroyJoint(temp.ptr);
+                }
+            }
             scene->RemoveComponent<SliderWrapper>(entity);
         }
     }
@@ -640,6 +775,22 @@ int Scene::lua_SysOnUpdate(lua_State* L)
         Scene* scene = CheckClassInstance(L, Scene);
         float dt = luaL_checknumber(L, 2);
         scene->Update(dt);
+        return 0;
+    }
+    else
+    {
+        return luaL_error(L, "Got %d arguments expected 2 (self, dt)", n);
+    }
+}
+
+int Scene::lua_SysOnEdit(lua_State* L)
+{
+    int n = lua_gettop(L);
+    if (n == 2)
+    {
+        Scene* scene = CheckClassInstance(L, Scene);
+        float dt = luaL_checknumber(L, 2);
+        scene->Edit(dt);
         return 0;
     }
     else
@@ -711,7 +862,7 @@ int Scene::luaint_destroy(lua_State* L)
     return 0;
 }
 
-const luaL_Reg Scene::luaint_WrapFuncs[14] = {
+const luaL_Reg Scene::luaint_WrapFuncs[15] = {
     {"New", Scene::luaint_new},
     {"CreateEntity", Scene::lua_CreateEntity},
     {"RemoveEntity", Scene::lua_RemoveEntity},
@@ -724,6 +875,7 @@ const luaL_Reg Scene::luaint_WrapFuncs[14] = {
     {"CreateComponent", Scene::lua_CreateComponent},
     {"RemoveComponent", Scene::lua_RemoveComponent},
     {"Update", Scene::lua_SysOnUpdate},
+    {"Edit", Scene::lua_SysOnEdit},
     {"Draw", Scene::lua_SysOnDraw},
     {NULL, NULL}
 };
