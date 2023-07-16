@@ -42,3 +42,12 @@ reloadProject = function()
 	dofile("crLoops.lua");
 	dofile("inputUpdate.lua");
 end
+
+Magnitude = function(x, y)
+	return math.sqrt(x*x + y*y);
+end
+
+Normal = function(x,y)
+	local length = Magnitude(x, y);
+	return x / length, y / length;
+end

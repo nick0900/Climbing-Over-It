@@ -21,6 +21,9 @@ void LuaIO::Register(lua_State* L)
 	
 	FunctionQuickReg(L, KeyDown);
 	FunctionQuickReg(L, MousePosition);
+	FunctionQuickReg(L, MouseDelta);
+	FunctionQuickReg(L, CursorDisable);
+	FunctionQuickReg(L, CursorEnable);
 }
 
 int LuaIO::KeyDown(lua_State* L)
@@ -45,4 +48,24 @@ int LuaIO::MousePosition(lua_State* L)
 	lua_pushnumber(L, vec2.x);
 	lua_pushnumber(L, vec2.y);
 	return 2;
+}
+
+int LuaIO::MouseDelta(lua_State* L)
+{
+	Vector2 vec2 = GetMouseDelta();
+	lua_pushnumber(L, vec2.x);
+	lua_pushnumber(L, vec2.y);
+	return 2;
+}
+
+int LuaIO::CursorDisable(lua_State* L)
+{
+	DisableCursor();
+	return 0;
+}
+
+int LuaIO::CursorEnable(lua_State* L)
+{
+	EnableCursor();
+	return 0;
 }

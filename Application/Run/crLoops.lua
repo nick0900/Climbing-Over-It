@@ -5,7 +5,8 @@ dt, running = coroutine.yield();
 --loop
 while running do
 	--UpdateCamera(CAMERA_FREE);
-	PhysStep(dt, 6, 2);
+	playerController(dt);
+	PhysStep(dt, 20, 4);
 	ActiveScene:Update(dt);
 
 	BeginFrame();

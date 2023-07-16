@@ -1,95 +1,97 @@
 loaded = {
   [1] = {
-  ["components"] = {
-  [3] = {
-  ["name"] = "Transform",
-  ["data"] = {
-  ["ty"] = 0,
-  ["tz"] = 0,
-  ["tx"] = 0,
-  ["sx"] = 1,
-  ["rx"] = 0,
-  ["rz"] = 0,
-  ["ry"] = 0,
-  ["sz"] = 1,
-  ["sy"] = 1,
-}
-,
-}
-,
-  [1] = {
-  ["name"] = "Model",
-  ["data"] = {
-  ["model"] = "climber ball.obj",
-  ["texture"] = "climber pallet.png",
-}
-,
-}
-,
-  [2] = {
-  ["name"] = "Parent",
-  ["data"] = "playerBot",
-}
-,
-}
-,
+  ["entity"] = 1048576,
   ["name"] = "climberBall",
-  ["entity"] = 12582912,
-  ["selected"] = false,
-}
-,
-  [2] = {
   ["components"] = {
   [3] = {
-  ["name"] = "Transform",
   ["data"] = {
-  ["ty"] = 0,
+  ["sz"] = 1,
   ["tz"] = 0,
-  ["tx"] = 0,
   ["sx"] = 1,
+  ["tx"] = 0,
+  ["ry"] = 0,
   ["rx"] = 0,
   ["rz"] = 0,
-  ["ry"] = 0,
-  ["sz"] = 1,
   ["sy"] = 1,
+  ["ty"] = 0,
 }
 ,
+  ["name"] = "Transform",
 }
 ,
   [1] = {
-  ["name"] = "Model",
   ["data"] = {
-  ["model"] = "climber body.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "climber ball.obj",
 }
 ,
+  ["name"] = "Model",
 }
 ,
   [2] = {
+  ["data"] = "playerBot",
   ["name"] = "Parent",
-  ["data"] = "playerTop",
 }
 ,
 }
 ,
+  ["selected"] = false,
+}
+,
+  [2] = {
+  ["entity"] = 1048577,
   ["name"] = "climberBody",
-  ["entity"] = 12582913,
+  ["components"] = {
+  [3] = {
+  ["data"] = {
+  ["sz"] = 1,
+  ["tz"] = 0,
+  ["sx"] = 1,
+  ["tx"] = 0,
+  ["ry"] = 0,
+  ["rx"] = 0,
+  ["rz"] = 0,
+  ["sy"] = 1,
+  ["ty"] = 0,
+}
+,
+  ["name"] = "Transform",
+}
+,
+  [1] = {
+  ["data"] = {
+  ["texture"] = "climber pallet.png",
+  ["model"] = "climber body.obj",
+}
+,
+  ["name"] = "Model",
+}
+,
+  [2] = {
+  ["data"] = "playerTop",
+  ["name"] = "Parent",
+}
+,
+}
+,
   ["selected"] = false,
 }
 ,
   [3] = {
+  ["entity"] = 1048578,
+  ["name"] = "climberHammer",
   ["components"] = {
   [3] = {
   ["data"] = {
-  ["ty"] = 0,
+  ["sz"] = 1,
   ["tz"] = 0.61400002241135,
-  ["tx"] = 0,
   ["sx"] = 1,
+  ["tx"] = 0,
+  ["ry"] = 0,
   ["rx"] = 0,
   ["rz"] = 0,
-  ["sz"] = 1,
-  ["ry"] = 0,
   ["sy"] = 1,
+  ["ty"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -111,68 +113,68 @@ loaded = {
 ,
 }
 ,
-  ["name"] = "climberHammer",
-  ["entity"] = 12582914,
   ["selected"] = false,
 }
 ,
   [4] = {
+  ["entity"] = 1048579,
+  ["name"] = "climberHead",
   ["components"] = {
   [3] = {
-  ["name"] = "Transform",
   ["data"] = {
-  ["ty"] = 0.42499995231628,
+  ["sz"] = 1,
   ["tz"] = 0,
-  ["tx"] = 0,
   ["sx"] = 1,
+  ["tx"] = 0,
+  ["ry"] = 0,
   ["rx"] = 0,
   ["rz"] = 0,
-  ["ry"] = 0,
-  ["sz"] = 1,
   ["sy"] = 1,
+  ["ty"] = 0.42499995231628,
 }
 ,
+  ["name"] = "Transform",
 }
 ,
   [1] = {
-  ["name"] = "Model",
   ["data"] = {
-  ["model"] = "climber head.obj",
   ["texture"] = "climber eyes.png",
+  ["model"] = "climber head.obj",
 }
 ,
+  ["name"] = "Model",
 }
 ,
   [2] = {
-  ["name"] = "Parent",
   ["data"] = "playerTop",
+  ["name"] = "Parent",
 }
 ,
 }
 ,
-  ["name"] = "climberHead",
-  ["entity"] = 12582915,
   ["selected"] = false,
 }
 ,
   [5] = {
+  ["entity"] = 1048580,
+  ["name"] = "ground",
   ["components"] = {
   [1] = {
-  ["name"] = "BoxCollider",
   ["data"] = {
   ["hy"] = 0.5,
   ["hx"] = 0.5,
 }
 ,
+  ["name"] = "BoxCollider",
 }
 ,
   [2] = {
-  ["name"] = "Model",
   ["data"] = {
-  ["model"] = "box line.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "box line.obj",
 }
 ,
+  ["name"] = "Model",
 }
 ,
   [3] = {
@@ -180,87 +182,87 @@ loaded = {
 }
 ,
   [4] = {
-  ["name"] = "RigidbodyDef",
   ["data"] = {
   ["density"] = 1,
-  ["dynamic"] = false,
-  ["rotation"] = false,
-  ["mask"] = 65535,
-  ["sensor"] = false,
-  ["category"] = 1,
   ["friction"] = 1,
+  ["category"] = 1,
+  ["rotation"] = false,
+  ["sensor"] = false,
+  ["dynamic"] = false,
+  ["mask"] = 65535,
 }
 ,
+  ["name"] = "RigidbodyDef",
 }
 ,
   [5] = {
-  ["name"] = "Transform",
   ["data"] = {
-  ["ty"] = -1.1000002622604,
-  ["tz"] = 0,
-  ["tx"] = 0,
-  ["sx"] = 7.9870004653931,
-  ["rx"] = 0,
-  ["sy"] = 1,
-  ["ry"] = 0,
   ["sz"] = 1,
+  ["tz"] = 0,
+  ["sx"] = 7.9870004653931,
+  ["tx"] = 0,
+  ["ry"] = 0,
+  ["rx"] = 0,
   ["rz"] = 0,
+  ["sy"] = 1,
+  ["ty"] = -1.1000002622604,
+}
+,
+  ["name"] = "Transform",
 }
 ,
 }
 ,
-}
-,
-  ["name"] = "ground",
-  ["entity"] = 12582916,
   ["selected"] = false,
 }
 ,
   [6] = {
+  ["entity"] = 1048581,
+  ["name"] = "playerAimHinge",
   ["components"] = {
   [1] = {
-  ["name"] = "Hingejoint",
   ["data"] = {
-  ["motor"] = false,
-  ["anchory"] = 0.80000001192093,
-  ["anchorx"] = 0,
-  ["maxforce"] = 0,
   ["objectB"] = "playerAimer",
+  ["motor"] = true,
+  ["anchorx"] = 0,
+  ["maxforce"] = 100,
   ["objectA"] = "playerTop",
+  ["anchory"] = 0.80000001192093,
+}
+,
+  ["name"] = "Hingejoint",
 }
 ,
 }
 ,
-}
-,
-  ["name"] = "playerAimHinge",
-  ["entity"] = 12582917,
   ["selected"] = false,
 }
 ,
   [7] = {
+  ["entity"] = 1048582,
+  ["name"] = "playerAimer",
   ["components"] = {
   [3] = {
-  ["name"] = "RigidbodyDef",
   ["data"] = {
   ["density"] = 1,
-  ["dynamic"] = true,
-  ["rotation"] = true,
-  ["mask"] = 0,
-  ["sensor"] = false,
-  ["category"] = 2,
   ["friction"] = 1,
+  ["category"] = 2,
+  ["rotation"] = true,
+  ["sensor"] = false,
+  ["dynamic"] = true,
+  ["mask"] = 0,
 }
 ,
+  ["name"] = "RigidbodyDef",
 }
 ,
   [1] = {
-  ["name"] = "BoxCollider",
   ["data"] = {
-  ["hy"] = 0.10000000149012,
-  ["hx"] = 0.10000000149012,
+  ["hy"] = 0.5,
+  ["hx"] = 0.5,
 }
 ,
+  ["name"] = "BoxCollider",
 }
 ,
   [2] = {
@@ -268,51 +270,51 @@ loaded = {
 }
 ,
   [4] = {
-  ["name"] = "Transform",
   ["data"] = {
-  ["ty"] = 0.80000001192093,
+  ["sz"] = 1,
   ["tz"] = 0,
-  ["tx"] = 0,
   ["sx"] = 1,
+  ["tx"] = 0,
+  ["ry"] = 0,
   ["rx"] = 0,
   ["rz"] = 0,
-  ["sz"] = 1,
-  ["ry"] = 0,
   ["sy"] = 1,
+  ["ty"] = 0.80000001192093,
+}
+,
+  ["name"] = "Transform",
 }
 ,
 }
 ,
-}
-,
-  ["name"] = "playerAimer",
-  ["entity"] = 12582918,
   ["selected"] = false,
 }
 ,
   [8] = {
+  ["entity"] = 1048583,
+  ["name"] = "playerBot",
   ["components"] = {
   [3] = {
-  ["name"] = "RigidbodyDef",
   ["data"] = {
   ["density"] = 1,
-  ["dynamic"] = true,
-  ["rotation"] = false,
-  ["mask"] = 1,
-  ["sensor"] = false,
+  ["friction"] = 0.30000001192093,
   ["category"] = 2,
-  ["friction"] = 1,
+  ["rotation"] = false,
+  ["sensor"] = false,
+  ["dynamic"] = true,
+  ["mask"] = 1,
 }
 ,
+  ["name"] = "RigidbodyDef",
 }
 ,
   [1] = {
-  ["name"] = "BoxCollider",
   ["data"] = {
-  ["hx"] = 0.5,
   ["hy"] = 0.5,
+  ["hx"] = 0.5,
 }
 ,
+  ["name"] = "BoxCollider",
 }
 ,
   [2] = {
@@ -320,65 +322,65 @@ loaded = {
 }
 ,
   [4] = {
-  ["name"] = "Transform",
   ["data"] = {
-  ["ty"] = 0,
+  ["sz"] = 1,
   ["tz"] = 0,
-  ["tx"] = 0,
   ["sx"] = 1,
+  ["sy"] = 1,
+  ["ry"] = 0,
   ["rx"] = 0,
   ["rz"] = 0,
-  ["ry"] = 0,
-  ["sz"] = 1,
-  ["sy"] = 1,
+  ["tx"] = 0,
+  ["ty"] = 0,
+}
+,
+  ["name"] = "Transform",
 }
 ,
 }
 ,
-}
-,
-  ["name"] = "playerBot",
-  ["entity"] = 7340039,
   ["selected"] = false,
 }
 ,
   [9] = {
+  ["entity"] = 1048584,
+  ["name"] = "playerCrouchSlider",
   ["components"] = {
   [1] = {
-  ["name"] = "Sliderjoint",
   ["data"] = {
-  ["motor"] = false,
-  ["upperlimit"] = 0.40000000596046,
-  ["maxforce"] = 0,
-  ["objectA"] = "playerBot",
-  ["anchory"] = 0,
-  ["axisy"] = 1,
-  ["objectB"] = "playerTop",
-  ["anchorx"] = 0,
-  ["axisx"] = 0,
   ["lowerlimit"] = -0.30000001192093,
+  ["anchory"] = 0,
+  ["anchorx"] = 0,
+  ["maxforce"] = 100,
+  ["axisy"] = 1,
+  ["motor"] = true,
+  ["axisx"] = 0,
+  ["upperlimit"] = 0.40000000596046,
+  ["objectA"] = "playerBot",
+  ["objectB"] = "playerTop",
+}
+,
+  ["name"] = "Sliderjoint",
 }
 ,
 }
 ,
-}
-,
-  ["name"] = "playerCrouchSlider",
-  ["entity"] = 7340040,
-  ["selected"] = false,
+  ["selected"] = true,
 }
 ,
   [10] = {
+  ["entity"] = 1048585,
+  ["name"] = "playerHand",
   ["components"] = {
   [3] = {
   ["data"] = {
   ["density"] = 1,
-  ["sensor"] = false,
-  ["rotation"] = true,
-  ["mask"] = 1,
-  ["dynamic"] = true,
-  ["category"] = 2,
   ["friction"] = 1,
+  ["category"] = 2,
+  ["rotation"] = true,
+  ["sensor"] = false,
+  ["dynamic"] = true,
+  ["mask"] = 1,
 }
 ,
   ["name"] = "RigidbodyDef",
@@ -399,14 +401,14 @@ loaded = {
 ,
   [4] = {
   ["data"] = {
-  ["ty"] = 0.80000001192093,
-  ["tz"] = 0,
-  ["tx"] = 0.60000002384186,
-  ["sx"] = 1,
-  ["rx"] = 0,
   ["sz"] = 1,
-  ["rz"] = 0,
+  ["tz"] = 0,
+  ["sx"] = 1,
+  ["tx"] = 0.60000002384186,
   ["ry"] = 0,
+  ["rx"] = 0,
+  ["rz"] = 0,
+  ["ty"] = 0.80000001192093,
   ["sy"] = 1,
 }
 ,
@@ -415,26 +417,25 @@ loaded = {
 ,
 }
 ,
-  ["name"] = "playerHand",
-  ["entity"] = 7340041,
   ["selected"] = false,
 }
 ,
   [11] = {
+  ["entity"] = 1048586,
+  ["name"] = "playerHandSlider",
   ["components"] = {
   [1] = {
   ["data"] = {
-  ["motor"] = false,
-  ["upperlimit"] = 0.5,
-  ["maxforce"] = 0,
-  ["objectA"] = "playerAimer",
-  ["ptr"] = nil,
-  ["anchory"] = 0.80000001192093,
-  ["axisy"] = 0,
-  ["objectB"] = "playerHand",
-  ["anchorx"] = 0,
-  ["axisx"] = 1,
   ["lowerlimit"] = -0.10000000149012,
+  ["anchory"] = 0.80000001192093,
+  ["anchorx"] = 0,
+  ["maxforce"] = 100,
+  ["axisy"] = 0,
+  ["motor"] = true,
+  ["axisx"] = 1,
+  ["upperlimit"] = 0.69999998807907,
+  ["objectA"] = "playerAimer",
+  ["objectB"] = "playerHand",
 }
 ,
   ["name"] = "Sliderjoint",
@@ -442,34 +443,34 @@ loaded = {
 ,
 }
 ,
-  ["name"] = "playerHandSlider",
-  ["entity"] = 4194314,
-  ["selected"] = true,
+  ["selected"] = false,
 }
 ,
   [12] = {
+  ["entity"] = 1048587,
+  ["name"] = "playerTop",
   ["components"] = {
   [3] = {
-  ["name"] = "RigidbodyDef",
   ["data"] = {
   ["density"] = 1,
-  ["dynamic"] = true,
-  ["rotation"] = false,
-  ["mask"] = 1,
-  ["sensor"] = false,
-  ["category"] = 2,
   ["friction"] = 1,
+  ["category"] = 2,
+  ["rotation"] = false,
+  ["sensor"] = false,
+  ["dynamic"] = true,
+  ["mask"] = 1,
 }
 ,
+  ["name"] = "RigidbodyDef",
 }
 ,
   [1] = {
-  ["name"] = "BoxCollider",
   ["data"] = {
-  ["hx"] = 0.5,
   ["hy"] = 0.5,
+  ["hx"] = 0.5,
 }
 ,
+  ["name"] = "BoxCollider",
 }
 ,
   [2] = {
@@ -477,25 +478,23 @@ loaded = {
 }
 ,
   [4] = {
-  ["name"] = "Transform",
   ["data"] = {
-  ["ty"] = 0.80000001192093,
+  ["sz"] = 1,
   ["tz"] = 0,
-  ["tx"] = 0,
   ["sx"] = 1,
+  ["tx"] = 0,
+  ["ry"] = 0,
   ["rx"] = 0,
   ["rz"] = 0,
-  ["ry"] = 0,
-  ["sz"] = 1,
+  ["ty"] = 0.80000001192093,
   ["sy"] = 1,
 }
 ,
+  ["name"] = "Transform",
 }
 ,
 }
 ,
-  ["name"] = "playerTop",
-  ["entity"] = 4194315,
   ["selected"] = false,
 }
 ,

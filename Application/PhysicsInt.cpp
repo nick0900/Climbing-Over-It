@@ -218,7 +218,7 @@ int LuaPhysics::ApplyForce(lua_State* L)
 	if (n == 3)
 	{
 		b2Body* body = lua_torigidbody(L, 1);
-		b2Vec2 force = { luaL_checknumber(L, 2), luaL_checknumber(L, 3) };
+		b2Vec2 force = { (float)luaL_checknumber(L, 2), (float)luaL_checknumber(L, 3) };
 
 		body->ApplyForceToCenter(force, true);
 		return 0;

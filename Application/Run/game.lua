@@ -30,6 +30,7 @@ LuaInit = function()
 	SetCameraFov(45.0);
 	SetCameraProjection(CAMERA_PERSPECTIVE);
 
+	holdingEditor = false;
 	editing = false;
 end
 -------------------------------------------------------------
