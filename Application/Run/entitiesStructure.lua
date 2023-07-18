@@ -55,8 +55,40 @@ function GetEntity(self, name)
 	return nil;
 end
 
-function DuplicateEntity(self, scene)
-	
+function DuplicateEntity(entity, entities, scene)
+	local newname = entity.name;
+	while GetEntity(entities, newname) ~= nil do
+		local num = tonumber(string.sub(newname, -2), 10);
+		if (num == nil) then
+			newname = newname .. "02"
+		else
+			num = num + 1;
+			if num < 10 then
+				num = "0" .. tostring(num);
+			else
+				num = tostring(num);
+			end
+			newname = string.sub(newname, 1, -3) .. num;
+		end
+	end
+
+	NewEntity(entities, newname, scene);
+	new = GetEntity(entities, newname);
+
+	local delayed = {};
+	for _, comp in ipairs(entity.components) do
+		if comp.name == "Hingejoint" or comp.name == "Sliderjoint" then
+			table.insert(delayed, {name = comp.name, data = comp.data});
+		else
+			scene:SetComponent(new.entity, comp.name, comp.data);
+			NewComponent(new.components, comp.name, scene:GetComponent(new.entity, comp.name));
+		end
+	end
+
+	for _, v in ipairs(delayed) do 
+		scene:SetComponent(new.entity, v.name, v.data);
+		NewComponent(new.components, v.name, scene:GetComponent(new.entity, v.name));
+	end
 end
 
 function serialize (o)

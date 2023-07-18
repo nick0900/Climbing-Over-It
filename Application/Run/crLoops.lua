@@ -4,7 +4,6 @@ GameLoop = function(dt, running)
 dt, running = coroutine.yield();
 --loop
 while running do
-	--UpdateCamera(CAMERA_FREE);
 	playerController(dt);
 	PhysStep(dt, 20, 4);
 	ActiveScene:Update(dt);
@@ -28,7 +27,7 @@ EditorLoop = function(dt, running)
 --init
 
 local windowScale = math.floor(ScreenHeight() / 1080);
-local selected = nil;
+selected = nil;
 local newname = "new";
 local filepath = "test.lua";
 
@@ -82,6 +81,11 @@ while running do
 	end
 	ImguiEndListBox();
 
+	if selected ~= nil then
+		if ImguiButton("Duplicate", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) and newname ~= "" then
+			DuplicateEntity(selected, Entities, ActiveScene);
+		end
+	end
 	ImguiEnd();
 
 	ImguiSetNextWindowSize({math.floor(ScreenWidth() * 0.15), math.floor(ScreenHeight() * 0.5)}, ImGuiCond_None);

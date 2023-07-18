@@ -180,6 +180,7 @@
     <None Include="Run\helpFuncs.lua" />
     <None Include="Run\imgui.ini" />
     <None Include="Run\inputUpdate.lua" />
+    <None Include="Run\levelCache.lua" />
     <None Include="Run\windowConfig.lua" />
   </ItemGroup>
   <ItemGroup>

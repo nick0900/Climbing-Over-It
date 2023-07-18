@@ -16,6 +16,11 @@ LuaInit = function()
 	ActiveScene = Scene:New(2, {sys_ModelDraw, sys_Physics});
 	Entities = {};
 
+	dofile("levelCache.lua");
+	Entities = loaded;
+	LoadToScene(Entities, ActiveScene);
+	ActiveScene:Edit(0);
+
 	ImguiSetup(true);
 	ImguiMoveFromTitleBarOnly(true);
 
@@ -44,7 +49,6 @@ LuaFrame = function(dt, running)
 	else
 		coroutine.resume(gameloop, dt, running);
 	end
-
 end
 -------------------------------------------------------------
 

@@ -4,8 +4,24 @@ baseinput = function(dt)
 			editing = not editing;
 			holdingEditor = true;
 
-			if not editing then CursorDisable();
-			else CursorEnable(); end
+			if not editing then 
+				CursorDisable();
+				file = io.open("levelCache.lua", "w");
+				io.output(file);
+				io.write("loaded = ");
+				serialize(Entities);
+				io.close(file);
+			else 
+				CursorEnable(); 
+				dofile("levelCache.lua");
+				Entities = loaded;
+				ActiveScene:ClearAll();
+				LoadToScene(Entities, ActiveScene);
+				for _, v in ipairs(Entities) do
+					v.selected = false;
+				end
+				selected = nil;
+			end
 		end
 	elseif holdingEditor then
 		holdingEditor = false;
@@ -259,4 +275,15 @@ playerController = function(dt)
 		SetMotorSpeed(aimSlider, (aimLen - length) * stretchSpeed);
 	end
 	
+	--------------------CameraUpdate------------------------
+
+	local topTransform = nil;
+	if topEntity ~= nil then
+		topTransform = ActiveScene:GetComponent(topEntity.entity, "Transform");
+	end
+
+	if topTransform ~= nil then 
+		SetCameraPosition({topTransform.tx, topTransform.ty + 2, topTransform.tz + 10});
+		SetCameraTarget({topTransform.tx, topTransform.ty, topTransform.tz});
+	end
 end

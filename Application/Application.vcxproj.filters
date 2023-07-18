@@ -55,6 +55,7 @@
     <None Include="Run\crLoops.lua" />
     <None Include="Run\windowConfig.lua" />
     <None Include="Run\entitiesStructure.lua" />
+    <None Include="Run\levelCache.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuaInterface.h">
