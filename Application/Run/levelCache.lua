@@ -1,261 +1,46 @@
 loaded = {
-  [1] = {
+  [15] = {
+  ["selected"] = false,
+  ["entity"] = 2097167,
+  ["name"] = "playerHandSlider",
   ["components"] = {
   [1] = {
   ["data"] = {
-  ["hx"] = 0.5,
-  ["hy"] = 0.5,
+  ["anchorx"] = 0,
+  ["anchory"] = 0.80000001192093,
+  ["lowerlimit"] = -0.10000000149012,
+  ["axisx"] = 1,
+  ["maxforce"] = 100,
+  ["axisy"] = 0,
+  ["objectB"] = "playerHand",
+  ["objectA"] = "playerAimer",
+  ["motor"] = true,
+  ["upperlimit"] = 0.69999998807907,
 }
 ,
-  ["name"] = "BoxCollider",
+  ["name"] = "Sliderjoint",
 }
 ,
-  [2] = {
-  ["data"] = {
-  ["model"] = "box diamond.obj",
-  ["texture"] = "climber pallet.png",
 }
 ,
-  ["name"] = "Model",
 }
 ,
+  [1] = {
+  ["selected"] = false,
+  ["entity"] = 5242880,
+  ["name"] = "climberBall",
+  ["components"] = {
   [3] = {
-  ["name"] = "Rigidbody",
-}
-,
-  [4] = {
-  ["data"] = {
-  ["density"] = 1,
-  ["category"] = 1,
-  ["mask"] = 65535,
-  ["rotation"] = true,
-  ["dynamic"] = true,
-  ["friction"] = 1,
-  ["sensor"] = false,
-}
-,
-  ["name"] = "RigidbodyDef",
-}
-,
-  [5] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 7.6333274841309,
   ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
-  ["rz"] = 0,
-  ["ty"] = 3.5666646957397,
-}
-,
-  ["name"] = "Transform",
-}
-,
-}
-,
-  ["selected"] = false,
-  ["name"] = "box",
-  ["entity"] = 4194304,
-}
-,
-  [2] = {
-  ["components"] = {
-  [1] = {
-  ["data"] = {
-  ["hx"] = 0.5,
-  ["hy"] = 0.5,
-}
-,
-  ["name"] = "BoxCollider",
-}
-,
-  [2] = {
-  ["data"] = {
-  ["model"] = "box diamond.obj",
-  ["texture"] = "climber pallet.png",
-}
-,
-  ["name"] = "Model",
-}
-,
-  [3] = {
-  ["name"] = "Rigidbody",
-}
-,
-  [4] = {
-  ["data"] = {
-  ["density"] = 1,
-  ["category"] = 1,
-  ["mask"] = 65535,
-  ["rotation"] = true,
-  ["dynamic"] = true,
-  ["friction"] = 1,
-  ["sensor"] = false,
-}
-,
-  ["name"] = "RigidbodyDef",
-}
-,
-  [5] = {
-  ["data"] = {
-  ["sy"] = 1,
   ["tz"] = 0,
   ["sz"] = 1,
-  ["tx"] = 5.8666625022888,
-  ["ty"] = 3.1333317756653,
-  ["rx"] = 0,
-  ["ry"] = 0,
   ["rz"] = 0,
-  ["sx"] = 1,
-}
-,
-  ["name"] = "Transform",
-}
-,
-}
-,
-  ["selected"] = false,
-  ["name"] = "box02",
-  ["entity"] = 4194305,
-}
-,
-  [3] = {
-  ["components"] = {
-  [1] = {
-  ["data"] = {
-  ["hx"] = 0.5,
-  ["hy"] = 0.5,
-}
-,
-  ["name"] = "BoxCollider",
-}
-,
-  [2] = {
-  ["data"] = {
-  ["model"] = "box diamond.obj",
-  ["texture"] = "climber pallet.png",
-}
-,
-  ["name"] = "Model",
-}
-,
-  [3] = {
-  ["name"] = "Rigidbody",
-}
-,
-  [4] = {
-  ["data"] = {
-  ["density"] = 1,
-  ["category"] = 1,
-  ["mask"] = 65535,
-  ["rotation"] = true,
-  ["dynamic"] = true,
-  ["friction"] = 1,
-  ["sensor"] = false,
-}
-,
-  ["name"] = "RigidbodyDef",
-}
-,
-  [5] = {
-  ["data"] = {
-  ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 5.8666625022888,
-  ["ty"] = 4.2999973297119,
-  ["rx"] = 0,
-  ["ry"] = 0,
-  ["rz"] = 0,
-  ["sx"] = 1,
-}
-,
-  ["name"] = "Transform",
-}
-,
-}
-,
-  ["selected"] = false,
-  ["name"] = "box03",
-  ["entity"] = 4194306,
-}
-,
-  [4] = {
-  ["components"] = {
-  [1] = {
-  ["data"] = {
-  ["hx"] = 0.5,
-  ["hy"] = 0.5,
-}
-,
-  ["name"] = "BoxCollider",
-}
-,
-  [2] = {
-  ["data"] = {
-  ["model"] = "box diamond.obj",
-  ["texture"] = "climber pallet.png",
-}
-,
-  ["name"] = "Model",
-}
-,
-  [3] = {
-  ["name"] = "Rigidbody",
-}
-,
-  [4] = {
-  ["data"] = {
-  ["density"] = 1,
-  ["category"] = 1,
-  ["mask"] = 65535,
-  ["rotation"] = true,
-  ["dynamic"] = true,
-  ["friction"] = 1,
-  ["sensor"] = false,
-}
-,
-  ["name"] = "RigidbodyDef",
-}
-,
-  [5] = {
-  ["data"] = {
-  ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 5.8666625022888,
-  ["sx"] = 1,
-  ["rx"] = 0,
-  ["ry"] = 0,
-  ["rz"] = 0,
-  ["ty"] = 5.3999962806702,
-}
-,
-  ["name"] = "Transform",
-}
-,
-}
-,
-  ["selected"] = false,
-  ["name"] = "box04",
-  ["entity"] = 4194307,
-}
-,
-  [5] = {
-  ["components"] = {
-  [3] = {
-  ["data"] = {
-  ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0,
   ["ty"] = 0,
-  ["rx"] = 0,
-  ["ry"] = 0,
-  ["rz"] = 0,
-  ["sx"] = 1,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -263,8 +48,8 @@ loaded = {
 ,
   [1] = {
   ["data"] = {
-  ["model"] = "climber ball.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "climber ball.obj",
 }
 ,
   ["name"] = "Model",
@@ -277,24 +62,24 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "climberBall",
-  ["entity"] = 4194308,
 }
 ,
-  [6] = {
+  [2] = {
+  ["selected"] = false,
+  ["entity"] = 5242881,
+  ["name"] = "climberBody",
   ["components"] = {
   [3] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0,
-  ["ty"] = 0,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -302,8 +87,8 @@ loaded = {
 ,
   [1] = {
   ["data"] = {
-  ["model"] = "climber body.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "climber body.obj",
 }
 ,
   ["name"] = "Model",
@@ -316,24 +101,24 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "climberBody",
-  ["entity"] = 4194309,
 }
 ,
-  [7] = {
+  [3] = {
+  ["selected"] = false,
+  ["entity"] = 5242882,
+  ["name"] = "climberHammer",
   ["components"] = {
   [3] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0.61400002241135,
-  ["sz"] = 1,
-  ["tx"] = 0,
-  ["ty"] = 0,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0.61400002241135,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -341,8 +126,8 @@ loaded = {
 ,
   [1] = {
   ["data"] = {
-  ["model"] = "climber hammer.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "climber hammer.obj",
 }
 ,
   ["name"] = "Model",
@@ -355,24 +140,24 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "climberHammer",
-  ["entity"] = 4194310,
 }
 ,
-  [8] = {
+  [4] = {
+  ["selected"] = false,
+  ["entity"] = 5242883,
+  ["name"] = "climberHead",
   ["components"] = {
   [3] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0,
-  ["ty"] = 0.42499995231628,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0.42499995231628,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -380,8 +165,8 @@ loaded = {
 ,
   [1] = {
   ["data"] = {
-  ["model"] = "climber head.obj",
   ["texture"] = "climber eyes.png",
+  ["model"] = "climber head.obj",
 }
 ,
   ["name"] = "Model",
@@ -394,12 +179,12 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "climberHead",
-  ["entity"] = 4194311,
 }
 ,
-  [9] = {
+  [5] = {
+  ["selected"] = false,
+  ["entity"] = 4194308,
+  ["name"] = "coin",
   ["components"] = {
   [1] = {
   ["data"] = {
@@ -412,8 +197,8 @@ loaded = {
 ,
   [2] = {
   ["data"] = {
-  ["triggerFunction"] = "IncrementCoins",
   ["object"] = "coin",
+  ["triggerFunction"] = "IncrementCoins",
 }
 ,
   ["name"] = "HitTrigger",
@@ -421,8 +206,8 @@ loaded = {
 ,
   [3] = {
   ["data"] = {
-  ["model"] = "coin.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "coin.obj",
 }
 ,
   ["name"] = "Model",
@@ -434,12 +219,12 @@ loaded = {
 ,
   [5] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 1,
-  ["mask"] = 2,
+  ["friction"] = 1,
   ["rotation"] = false,
   ["dynamic"] = false,
-  ["friction"] = 1,
+  ["mask"] = 2,
+  ["density"] = 1,
   ["sensor"] = true,
 }
 ,
@@ -448,15 +233,15 @@ loaded = {
 ,
   [6] = {
   ["data"] = {
-  ["tx"] = 2.5666632652283,
-  ["tz"] = 0,
-  ["sz"] = 1,
   ["sy"] = 1,
   ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
   ["ty"] = 0.29999873042107,
+  ["tx"] = 2.5666632652283,
 }
 ,
   ["name"] = "Transform",
@@ -464,14 +249,12 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "coin",
-  ["entity"] = 4194312,
 }
 ,
-  [10] = {
-  ["name"] = "coin02",
+  [6] = {
   ["selected"] = false,
+  ["entity"] = 5242886,
+  ["name"] = "diamondbox",
   ["components"] = {
   [1] = {
   ["data"] = {
@@ -484,51 +267,42 @@ loaded = {
 ,
   [2] = {
   ["data"] = {
-  ["object"] = "coin02",
-  ["triggerFunction"] = "IncrementCoins",
-}
-,
-  ["name"] = "HitTrigger",
-}
-,
-  [3] = {
-  ["data"] = {
-  ["model"] = "coin.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "box diamond.obj",
 }
 ,
   ["name"] = "Model",
 }
 ,
-  [4] = {
+  [3] = {
   ["name"] = "Rigidbody",
 }
 ,
-  [5] = {
+  [4] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 1,
-  ["mask"] = 2,
-  ["rotation"] = false,
-  ["dynamic"] = false,
   ["friction"] = 1,
-  ["sensor"] = true,
+  ["rotation"] = true,
+  ["dynamic"] = true,
+  ["mask"] = 65535,
+  ["density"] = 1,
+  ["sensor"] = false,
 }
 ,
   ["name"] = "RigidbodyDef",
 }
 ,
-  [6] = {
+  [5] = {
   ["data"] = {
-  ["tx"] = 5.8333277702332,
-  ["tz"] = 0,
-  ["sz"] = 1,
   ["sy"] = 1,
   ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["ty"] = 7.9666604995728,
+  ["ty"] = 2.6666655540466,
+  ["tx"] = 0.06666673719883,
 }
 ,
   ["name"] = "Transform",
@@ -536,86 +310,15 @@ loaded = {
 ,
 }
 ,
-  ["entity"] = 4194313,
 }
 ,
-  [11] = {
-  ["name"] = "coin03",
+  [7] = {
   ["selected"] = false,
+  ["entity"] = 5242887,
   ["components"] = {
   [1] = {
   ["data"] = {
-  ["hx"] = 0.5,
-  ["hy"] = 0.5,
-}
-,
-  ["name"] = "BoxCollider",
-}
-,
-  [2] = {
-  ["data"] = {
-  ["object"] = "coin03",
-  ["triggerFunction"] = "IncrementCoins",
-}
-,
-  ["name"] = "HitTrigger",
-}
-,
-  [3] = {
-  ["data"] = {
-  ["model"] = "coin.obj",
-  ["texture"] = "climber pallet.png",
-}
-,
-  ["name"] = "Model",
-}
-,
-  [4] = {
-  ["name"] = "Rigidbody",
-}
-,
-  [5] = {
-  ["data"] = {
-  ["density"] = 1,
-  ["category"] = 1,
-  ["mask"] = 2,
-  ["rotation"] = false,
-  ["dynamic"] = false,
-  ["friction"] = 1,
-  ["sensor"] = true,
-}
-,
-  ["name"] = "RigidbodyDef",
-}
-,
-  [6] = {
-  ["data"] = {
-  ["tx"] = 2.9999971389771,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["sy"] = 1,
-  ["sx"] = 1,
-  ["rx"] = 0,
-  ["ry"] = 0,
-  ["rz"] = 0,
-  ["ty"] = 3.4666647911072,
-}
-,
-  ["name"] = "Transform",
-}
-,
-}
-,
-  ["entity"] = 4194314,
-}
-,
-  [12] = {
-  ["name"] = "goal",
-  ["selected"] = true,
-  ["components"] = {
-  [1] = {
-  ["data"] = {
-  ["hx"] = 0.5,
+  ["hx"] = 0.20000000298023,
   ["hy"] = 0.5,
 }
 ,
@@ -633,8 +336,8 @@ loaded = {
 ,
   [3] = {
   ["data"] = {
-  ["model"] = "flag.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "flag.obj",
 }
 ,
   ["name"] = "Model",
@@ -646,12 +349,12 @@ loaded = {
 ,
   [5] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 1,
-  ["mask"] = 2,
+  ["friction"] = 1,
   ["rotation"] = false,
   ["dynamic"] = false,
-  ["friction"] = 1,
+  ["mask"] = 2,
+  ["density"] = 1,
   ["sensor"] = true,
 }
 ,
@@ -660,74 +363,77 @@ loaded = {
 ,
   [6] = {
   ["data"] = {
-  ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = -3.2333352565765,
-  ["ty"] = -0.13333459198475,
-  ["rx"] = 0,
-  ["ry"] = 0,
+  ["tx"] = 4.5333271026611,
+  ["sx"] = 2.0710000991821,
+  ["sz"] = 1.8259999752045,
   ["rz"] = 0,
+  ["tz"] = 0,
+  ["ry"] = 0,
+  ["sy"] = 1.7900000810623,
+  ["ty"] = 0.29999873042107,
+  ["rx"] = 0,
+}
+,
+  ["name"] = "Transform",
+}
+,
+}
+,
+  ["name"] = "goal",
+}
+,
+  [8] = {
+  ["selected"] = false,
+  ["entity"] = 5242888,
+  ["name"] = "linebox",
+  ["components"] = {
+  [1] = {
+  ["data"] = {
+  ["hx"] = 0.5,
+  ["hy"] = 0.5,
+}
+,
+  ["name"] = "BoxCollider",
+}
+,
+  [2] = {
+  ["data"] = {
+  ["texture"] = "climber pallet.png",
+  ["model"] = "box line.obj",
+}
+,
+  ["name"] = "Model",
+}
+,
+  [3] = {
+  ["name"] = "Rigidbody",
+}
+,
+  [4] = {
+  ["data"] = {
+  ["category"] = 1,
+  ["friction"] = 1,
+  ["rotation"] = false,
+  ["dynamic"] = false,
+  ["mask"] = 65535,
+  ["density"] = 1,
+  ["sensor"] = false,
+}
+,
+  ["name"] = "RigidbodyDef",
+}
+,
+  [5] = {
+  ["data"] = {
+  ["sy"] = 1,
   ["sx"] = 1,
-}
-,
-  ["name"] = "Transform",
-}
-,
-}
-,
-  ["entity"] = 4194315,
-}
-,
-  [13] = {
-  ["components"] = {
-  [1] = {
-  ["data"] = {
-  ["hx"] = 0.5,
-  ["hy"] = 0.5,
-}
-,
-  ["name"] = "BoxCollider",
-}
-,
-  [2] = {
-  ["data"] = {
-  ["model"] = "box line.obj",
-  ["texture"] = "climber pallet.png",
-}
-,
-  ["name"] = "Model",
-}
-,
-  [3] = {
-  ["name"] = "Rigidbody",
-}
-,
-  [4] = {
-  ["data"] = {
-  ["density"] = 1,
-  ["category"] = 1,
-  ["mask"] = 65535,
-  ["rotation"] = false,
-  ["dynamic"] = false,
-  ["friction"] = 1,
-  ["sensor"] = false,
-}
-,
-  ["name"] = "RigidbodyDef",
-}
-,
-  [5] = {
-  ["data"] = {
-  ["sy"] = 1,
+  ["rx"] = 0,
+  ["ry"] = 0,
   ["tz"] = 0,
   ["sz"] = 1,
-  ["tx"] = 0,
+  ["rz"] = 0,
   ["ty"] = -1.1000002622604,
-  ["rx"] = 0,
-  ["ry"] = 0,
-  ["rz"] = 0,
-  ["sx"] = 7.9870004653931,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -735,12 +441,11 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "ground",
-  ["entity"] = 4194316,
 }
 ,
-  [14] = {
+  [9] = {
+  ["selected"] = true,
+  ["entity"] = 5242889,
   ["components"] = {
   [1] = {
   ["data"] = {
@@ -753,8 +458,8 @@ loaded = {
 ,
   [2] = {
   ["data"] = {
-  ["model"] = "box line.obj",
   ["texture"] = "climber pallet.png",
+  ["model"] = "box diamond.obj",
 }
 ,
   ["name"] = "Model",
@@ -766,12 +471,12 @@ loaded = {
 ,
   [4] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 1,
-  ["mask"] = 65535,
+  ["friction"] = 1,
   ["rotation"] = false,
   ["dynamic"] = false,
-  ["friction"] = 1,
+  ["mask"] = 65535,
+  ["density"] = 1,
   ["sensor"] = false,
 }
 ,
@@ -780,15 +485,15 @@ loaded = {
 ,
   [5] = {
   ["data"] = {
-  ["sy"] = 1,
-  ["tz"] = 0,
+  ["tx"] = 4.5666637420654,
+  ["sx"] = 1,
   ["sz"] = 1,
-  ["tx"] = 6.0999956130981,
-  ["ty"] = 1.6333330869675,
-  ["rx"] = 0,
-  ["ry"] = 0,
   ["rz"] = 0,
-  ["sx"] = 7.9870004653931,
+  ["tz"] = 0,
+  ["ry"] = 0,
+  ["sy"] = 1,
+  ["ty"] = -1.1000002622604,
+  ["rx"] = -179.99998474121,
 }
 ,
   ["name"] = "Transform",
@@ -796,21 +501,22 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "ground02",
-  ["entity"] = 4194317,
+  ["name"] = "tilebox",
 }
 ,
-  [15] = {
+  [10] = {
+  ["selected"] = false,
+  ["entity"] = 5242890,
+  ["name"] = "playerAimHinge",
   ["components"] = {
   [1] = {
   ["data"] = {
-  ["objectB"] = "playerAimer",
-  ["objectA"] = "playerTop",
   ["maxforce"] = 100,
-  ["anchory"] = 0.80000001192093,
-  ["motor"] = true,
   ["anchorx"] = 0,
+  ["anchory"] = 0.80000001192093,
+  ["objectB"] = "playerAimer",
+  ["motor"] = true,
+  ["objectA"] = "playerTop",
 }
 ,
   ["name"] = "Hingejoint",
@@ -818,21 +524,21 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "playerAimHinge",
-  ["entity"] = 4194318,
 }
 ,
-  [16] = {
+  [11] = {
+  ["selected"] = false,
+  ["entity"] = 5242891,
+  ["name"] = "playerAimer",
   ["components"] = {
   [3] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 2,
-  ["mask"] = 0,
+  ["friction"] = 1,
   ["rotation"] = true,
   ["dynamic"] = true,
-  ["friction"] = 1,
+  ["mask"] = 0,
+  ["density"] = 1,
   ["sensor"] = false,
 }
 ,
@@ -855,14 +561,14 @@ loaded = {
   [4] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0,
-  ["ty"] = 0.80000001192093,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0.80000001192093,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -870,21 +576,21 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "playerAimer",
-  ["entity"] = 4194319,
 }
 ,
-  [17] = {
+  [12] = {
+  ["selected"] = false,
+  ["entity"] = 5242892,
+  ["name"] = "playerBot",
   ["components"] = {
   [3] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 2,
-  ["mask"] = 1,
+  ["friction"] = 0.30000001192093,
   ["rotation"] = false,
   ["dynamic"] = true,
-  ["friction"] = 0.30000001192093,
+  ["mask"] = 1,
+  ["density"] = 1,
   ["sensor"] = false,
 }
 ,
@@ -907,14 +613,14 @@ loaded = {
   [4] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0,
-  ["ty"] = 0,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -922,25 +628,25 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "playerBot",
-  ["entity"] = 4194320,
 }
 ,
-  [18] = {
+  [13] = {
+  ["selected"] = false,
+  ["entity"] = 4194317,
+  ["name"] = "playerCrouchSlider",
   ["components"] = {
   [1] = {
   ["data"] = {
-  ["lowerlimit"] = -0.30000001192093,
-  ["objectA"] = "playerBot",
-  ["maxforce"] = 100,
-  ["anchory"] = 0,
-  ["objectB"] = "playerTop",
-  ["axisy"] = 1,
   ["anchorx"] = 0,
-  ["upperlimit"] = 0.40000000596046,
+  ["anchory"] = 0,
+  ["lowerlimit"] = -0.30000001192093,
   ["axisx"] = 0,
+  ["maxforce"] = 100,
+  ["axisy"] = 1,
+  ["objectB"] = "playerTop",
+  ["objectA"] = "playerBot",
   ["motor"] = true,
+  ["upperlimit"] = 0.40000000596046,
 }
 ,
   ["name"] = "Sliderjoint",
@@ -948,21 +654,21 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "playerCrouchSlider",
-  ["entity"] = 4194321,
 }
 ,
-  [19] = {
+  [14] = {
+  ["selected"] = false,
+  ["entity"] = 2097166,
+  ["name"] = "playerHand",
   ["components"] = {
   [3] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 2,
-  ["mask"] = 1,
+  ["friction"] = 1,
   ["rotation"] = true,
   ["dynamic"] = true,
-  ["friction"] = 1,
+  ["mask"] = 1,
+  ["density"] = 1,
   ["sensor"] = false,
 }
 ,
@@ -985,14 +691,14 @@ loaded = {
   [4] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0.60000002384186,
-  ["ty"] = 0.80000001192093,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0.80000001192093,
+  ["tx"] = 0.60000002384186,
 }
 ,
   ["name"] = "Transform",
@@ -1000,47 +706,21 @@ loaded = {
 ,
 }
 ,
+}
+,
+  [16] = {
   ["selected"] = false,
-  ["name"] = "playerHand",
-  ["entity"] = 4194322,
-}
-,
-  [20] = {
-  ["components"] = {
-  [1] = {
-  ["data"] = {
-  ["lowerlimit"] = -0.10000000149012,
-  ["objectA"] = "playerAimer",
-  ["maxforce"] = 100,
-  ["anchory"] = 0.80000001192093,
-  ["objectB"] = "playerHand",
-  ["axisy"] = 0,
-  ["anchorx"] = 0,
-  ["upperlimit"] = 0.69999998807907,
-  ["axisx"] = 1,
-  ["motor"] = true,
-}
-,
-  ["name"] = "Sliderjoint",
-}
-,
-}
-,
-  ["selected"] = false,
-  ["name"] = "playerHandSlider",
-  ["entity"] = 4194323,
-}
-,
-  [21] = {
+  ["entity"] = 4194309,
+  ["name"] = "playerTop",
   ["components"] = {
   [3] = {
   ["data"] = {
-  ["density"] = 1,
   ["category"] = 2,
-  ["mask"] = 1,
+  ["friction"] = 1,
   ["rotation"] = false,
   ["dynamic"] = true,
-  ["friction"] = 1,
+  ["mask"] = 1,
+  ["density"] = 1,
   ["sensor"] = false,
 }
 ,
@@ -1063,14 +743,14 @@ loaded = {
   [4] = {
   ["data"] = {
   ["sy"] = 1,
-  ["tz"] = 0,
-  ["sz"] = 1,
-  ["tx"] = 0,
-  ["ty"] = 0.80000001192093,
+  ["sx"] = 1,
   ["rx"] = 0,
   ["ry"] = 0,
+  ["tz"] = 0,
+  ["sz"] = 1,
   ["rz"] = 0,
-  ["sx"] = 1,
+  ["ty"] = 0.80000001192093,
+  ["tx"] = 0,
 }
 ,
   ["name"] = "Transform",
@@ -1078,9 +758,6 @@ loaded = {
 ,
 }
 ,
-  ["selected"] = false,
-  ["name"] = "playerTop",
-  ["entity"] = 4194324,
 }
 ,
 }

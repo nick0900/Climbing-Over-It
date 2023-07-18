@@ -123,6 +123,8 @@ while running do
 				v.selected = false;
 			end
 			selected = nil;
+			SetCameraPosition({0.0, 2.0, 10.0});
+			SetCameraTarget({0.0, 0.0, 0.0});
 		end
 	elseif holdingEditor then
 		holdingEditor = false;

@@ -181,7 +181,6 @@
     <None Include="Run\helpFuncs.lua" />
     <None Include="Run\imgui.ini" />
     <None Include="Run\inputUpdate.lua" />
-    <None Include="Run\level1.lua" />
     <None Include="Run\levelCache.lua" />
     <None Include="Run\levels.lua" />
     <None Include="Run\titlescreen.lua" />

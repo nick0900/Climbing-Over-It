@@ -20,7 +20,14 @@ LuaInit = function()
 	Entities = {};
 
 	LevelLoad = function(level)
-		dofile(level.path);
+		local f = io.open(level.path,"r");
+		if f ~= nil then 
+			io.close(f);
+			dofile(level.path);
+		else
+			dofile("baselevel.lua");
+		end
+		
 		Entities = loaded;
 		ActiveScene:ClearAll();
 		LoadToScene(Entities, ActiveScene);

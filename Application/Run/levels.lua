@@ -1,20 +1,20 @@
 Levels = {
   [3] = {
-  ["name"] = "Level3",
   ["path"] = "level3.lua",
+  ["name"] = "Level3",
   ["highScore"] = 0,
 }
 ,
   [1] = {
-  ["name"] = "Level1",
   ["path"] = "level1.lua",
-  ["highScore"] = 22201,
+  ["name"] = "Level1",
+  ["highScore"] = 17991,
 }
 ,
   [2] = {
-  ["name"] = "Level2",
   ["path"] = "level2.lua",
-  ["highScore"] = 69420,
+  ["name"] = "Level2",
+  ["highScore"] = 0,
 }
 ,
   ["Menu"] = {
