@@ -109,6 +109,19 @@ while running do
 	RenderText(tostring(math.floor(score)), math.floor(ScreenWidth() * 0.19), math.floor(ScreenHeight() * 0.09), math.floor(ScreenHeight() * 0.07), {255, 55, 55, 255});
 	EndFrame();
 
+	local botTransform = nil;
+	local botEntity = GetEntity(Entities, "playerBot");
+	if botEntity ~= nil then
+		botTransform = ActiveScene:GetComponent(botEntity.entity, "Transform");
+	end
+	if botTransform ~= nil then
+		if botTransform.ty < -6 then 
+			ingame = false;
+			LevelLoad(Levels.Menu);
+			CursorEnable(); 
+		end
+	end
+
 	if KeyDown(KEY_LEFT_CONTROL) and KeyDown(KEY_P) then
 		if not holdingEditor then
 			editing = true;

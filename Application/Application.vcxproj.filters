@@ -59,6 +59,7 @@
     <None Include="Run\levels.lua" />
     <None Include="Run\titlescreen.lua" />
     <None Include="Run\baselevel.lua" />
+    <None Include="Run\level1.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuaInterface.h">
