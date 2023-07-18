@@ -200,6 +200,10 @@ int Scene::lua_HasComponents(lua_State* L)
             {
                 result = false;
             }
+            else if ((component == CompHitTrigger) && !scene->HasComponents<HitTrigger>(entity))
+            {
+                result = false;
+            }
         }
         lua_pushboolean(L, result);
         return 1;
@@ -252,6 +256,10 @@ int Scene::lua_GetComponent(lua_State* L)
         else if (component == CompSliderJoint)
         {
             lua_pushsliderjoint(L, scene->GetComponent<SliderWrapper>(entity));
+        }
+        else if (component == CompHitTrigger)
+        {
+            lua_pushhittrigger(L, scene->GetComponent<HitTrigger>(entity));
         }
 
         return 1;
@@ -397,6 +405,10 @@ int Scene::lua_SetComponent(lua_State* L)
             }
           
             scene->SetComponent<SliderWrapper>(entity, slider);
+        }
+        else if (component == CompHitTrigger)
+        {
+            scene->SetComponent<HitTrigger>(entity, lua_tohittrigger(L, 4));
         }
     }
     else
@@ -694,6 +706,19 @@ int Scene::lua_CreateComponent(lua_State* L)
             return luaL_error(L, "Got %d arguments expected 13 (self, entity, componentstr, objectA, objectB, anchorWorldX, anchorWorldY, worldaxisX, worldaxisY, lowerlimit, upperlimit, motorEnabled, maxforce)", n);
         }
     }
+    else if (component == CompHitTrigger)
+    {
+        if (n == 4)
+        {
+            std::string function = luaL_checkstring(L, 4);
+
+            scene->SetComponent<HitTrigger>(entity, { function });
+        }
+        else
+        {
+            return luaL_error(L, "Got %d arguments expected 4 (self, entity, componentstr, functionName)", n);
+        }
+    }
     else
     {
         return luaL_error(L, "componentstr not existing or wrong input, expected (self, entity, componentstr,...)", n);
@@ -758,6 +783,10 @@ int Scene::lua_RemoveComponent(lua_State* L)
                 }
             }
             scene->RemoveComponent<SliderWrapper>(entity);
+        }
+        else if (component == CompHitTrigger)
+        {
+            scene->RemoveComponent<HitTrigger>(entity);
         }
     }
     else

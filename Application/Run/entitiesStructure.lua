@@ -80,6 +80,9 @@ function DuplicateEntity(entity, entities, scene)
 		if comp.name == "Hingejoint" or comp.name == "Sliderjoint" then
 			table.insert(delayed, {name = comp.name, data = comp.data});
 		else
+			if comp.name == "HitTrigger" then 
+				comp.data.object = newname;
+			end
 			scene:SetComponent(new.entity, comp.name, comp.data);
 			NewComponent(new.components, comp.name, scene:GetComponent(new.entity, comp.name));
 		end

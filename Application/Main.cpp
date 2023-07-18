@@ -69,6 +69,9 @@ int main(void)
 
     Physics sys_Physics;
     LuaLinking::PointerReg(L, "sys_Physics", &sys_Physics);
+
+    HitCheck sys_HitCheck(L);
+    LuaLinking::PointerReg(L, "sys_HitCheck", &sys_HitCheck);
     //------------------------------------------------------------------------------------//
 
     //-----------------------------------Raylib setup-------------------------------------//
@@ -83,8 +86,6 @@ int main(void)
     lua_pop(L, 1);
 
     InitWindow(screenWidth, screenHeight, "Climbing Over It");
-
-    DisableCursor();
 
     lua_getglobal(L, "TargetFps");
     SetTargetFPS(luaL_checkinteger(L, -1));

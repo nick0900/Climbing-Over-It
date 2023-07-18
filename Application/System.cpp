@@ -191,3 +191,36 @@ void Physics::RemoveBody(entt::registry& registry, entt::entity entity)
         }
     }
 }
+
+HitCheck::HitCheck(lua_State* L) : m_L(L) {}
+
+void HitCheck::SystemSetup(entt::registry* registry)
+{
+}
+
+bool HitCheck::OnUpdate(entt::registry* registry, float dt)
+{
+    for (auto [entity, rigidbody, trigger] : registry->view<b2Body*, HitTrigger>().each())
+    {
+        if ((trigger.function != "") && (rigidbody->GetContactList() != nullptr))
+        {
+            lua_getglobal(m_L, trigger.function.c_str());
+            if (lua_isfunction(m_L, -1))
+            {
+                lua_pushstring(m_L, trigger.object.c_str());
+                lua_pcall(m_L, 1, 0, -2);
+            }
+        }
+    }
+    return true;
+}
+
+bool HitCheck::OnEdit(entt::registry* registry, float dt)
+{
+    return true;
+}
+
+bool HitCheck::OnDraw(entt::registry* registry, float dt)
+{
+    return true;
+}

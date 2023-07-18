@@ -1,9 +1,98 @@
+MainMenu = function(dt, running)
+--init
+titlecard = true;
+endscreen = false;
+
+dt, running = coroutine.yield();
+--loop
+while running do
+	BeginFrame();
+	ClearFrame();
+	Begin3D();
+
+	ActiveScene:Draw(dt);
+
+	End3D();
+
+	if titlecard then 
+		SetCameraPosition({0.0, 2.0, 10.0});
+		SetCameraTarget({0.0, 0.0, 0.0});
+
+		RenderText("Climbing Over It", math.floor(ScreenWidth() * 0.07), math.floor(ScreenHeight() * 0.09), math.floor(ScreenHeight() * 0.08), {155, 255, 255, 255});	
+
+		if TextButton("Start", math.floor(ScreenWidth() * 0.07), math.floor(ScreenHeight() * 0.20), math.floor(ScreenHeight() * 0.06), {0, 255, 155, 255}, {0, 0, 0, 255}) then
+		titlecard = false;
+		end
+	elseif endscreen then
+		RenderText("Score:", math.floor(ScreenWidth() * 0.05), math.floor(ScreenHeight() * 0.09), math.floor(ScreenHeight() * 0.07), {155, 255, 255, 255});
+		RenderText(tostring(math.floor(score)), math.floor(ScreenWidth() * 0.19), math.floor(ScreenHeight() * 0.09), math.floor(ScreenHeight() * 0.07), {255, 55, 55, 255})
+
+		if CurrentLevel.highScore == score then
+			RenderText("New Highscore!", math.floor(ScreenWidth() * 0.05), math.floor(ScreenHeight() * 0.16), math.floor(ScreenHeight() * 0.04), {255, 55, 55, 255});
+		end
+
+		RenderText("Well Done!", math.floor(ScreenWidth() * 0.05), math.floor(ScreenHeight() * 0.24), math.floor(ScreenHeight() * 0.04), {0, 255, 155, 255});
+		
+		if TextButton("Continue", math.floor(ScreenWidth() * 0.05), math.floor(ScreenHeight() * 0.30), math.floor(ScreenHeight() * 0.05), {155, 255, 255, 255}, {0, 0, 0, 255}) then
+			LevelLoad(Levels.Menu);
+			endscreen = false;
+		end
+	else
+		SetCameraPosition({0.0, 2.0, 10.0});
+		SetCameraTarget({0.0, 0.0, 0.0});
+
+		RenderText("Climbing Over It", math.floor(ScreenWidth() * 0.3), math.floor(ScreenHeight() * 0.05), math.floor(ScreenHeight() * 0.06), {0, 255, 155, 255});
+
+		for i, v in ipairs(Levels) do
+			if TextButton(v.name, math.floor(ScreenWidth() * 0.3), math.floor(ScreenHeight() * 0.09 + ScreenHeight() * 0.07 * i), math.floor(ScreenHeight() * 0.04), {155, 255, 255, 255}, {0, 0, 0, 255}) then
+				ingame = true;
+				CursorDisable();
+				LevelLoad(v);
+
+				collectedCoins = 0;
+				timer = 0;
+				score = 0;
+
+				CursorDisable();
+				file = io.open("levelCache.lua", "w");
+				io.output(file);
+				io.write("loaded = ");
+				serialize(Entities);
+				io.close(file);
+
+				filepath = v.path;
+			end
+
+			RenderText("Highscore:", math.floor(ScreenWidth() * 0.4), math.floor(ScreenHeight() * 0.09 + ScreenHeight() * 0.07 * i), math.floor(ScreenHeight() * 0.04), {155, 255, 255, 255});
+			RenderText(tostring(v.highScore), math.floor(ScreenWidth() * 0.53), math.floor(ScreenHeight() * 0.09 + ScreenHeight() * 0.07 * i), math.floor(ScreenHeight() * 0.04), {255, 55, 55, 255});
+			if TextButton("Reset", math.floor(ScreenWidth() * (0.535 + 0.014 * string.len(tostring(v.highScore)))), math.floor(ScreenHeight() * 0.09 + ScreenHeight() * 0.07 * i), math.floor(ScreenHeight() * 0.04), {0, 0, 0, 255}, {255, 55, 55, 255}) then
+				v.highScore = 0;
+				file = io.open("levels.lua", "w");
+				io.output(file);
+				io.write("Levels = ");
+				serialize(Levels);
+				io.close(file);
+			end
+		end
+	end
+	EndFrame();
+
+	dt, running = coroutine.yield();
+end
+--deinit
+
+end
+
+
 GameLoop = function(dt, running)
 --init
 
 dt, running = coroutine.yield();
 --loop
 while running do
+	timer = timer + dt;
+	score = ((collectedCoins + 1) * 10000) / (1 + timer / 10);
+
 	playerController(dt);
 	PhysStep(dt, 20, 4);
 	ActiveScene:Update(dt);
@@ -15,7 +104,29 @@ while running do
 	ActiveScene:Draw(dt);
 
 	End3D();
+
+	RenderText("Score:", math.floor(ScreenWidth() * 0.05), math.floor(ScreenHeight() * 0.09), math.floor(ScreenHeight() * 0.07), {155, 255, 255, 255});
+	RenderText(tostring(math.floor(score)), math.floor(ScreenWidth() * 0.19), math.floor(ScreenHeight() * 0.09), math.floor(ScreenHeight() * 0.07), {255, 55, 55, 255});
 	EndFrame();
+
+	if KeyDown(KEY_LEFT_CONTROL) and KeyDown(KEY_P) then
+		if not holdingEditor then
+			editing = true;
+			holdingEditor = true;
+
+			CursorEnable(); 
+			dofile("levelCache.lua");
+			Entities = loaded;
+			ActiveScene:ClearAll();
+			LoadToScene(Entities, ActiveScene);
+			for _, v in ipairs(Entities) do
+				v.selected = false;
+			end
+			selected = nil;
+		end
+	elseif holdingEditor then
+		holdingEditor = false;
+	end
 
 	dt, running = coroutine.yield();
 end
@@ -29,7 +140,7 @@ EditorLoop = function(dt, running)
 local windowScale = math.floor(ScreenHeight() / 1080);
 selected = nil;
 local newname = "new";
-local filepath = "test.lua";
+filepath = "test.lua";
 
 dt, running = coroutine.yield();
 --loop
@@ -43,6 +154,26 @@ while running do
 	ActiveScene:Draw(dt);
 
 	End3D();
+
+	if KeyDown(KEY_LEFT_CONTROL) and KeyDown(KEY_P) then
+		if not holdingEditor then
+			editing = false;
+			holdingEditor = true;
+
+			CursorDisable();
+			file = io.open("levelCache.lua", "w");
+			io.output(file);
+			io.write("loaded = ");
+			serialize(Entities);
+			io.close(file);
+
+			collectedCoins = 0;
+			timer = 0;
+			score = 0;
+		end
+	elseif holdingEditor then
+		holdingEditor = false;
+	end
 
 	ImguiStartFrame();
 	
@@ -234,7 +365,22 @@ while running do
 					ActiveScene:RemoveComponent(selected.entity, "Sliderjoint");
 					RemoveComponent(selected.components, "Sliderjoint");
 				end
+
+			elseif comp.name == "HitTrigger" then
+				changed, comp.data.triggerFunction = ImguiInputText("Function", comp.data.triggerFunction, 40);
+				if changed then update = true; end
+
+				if comp.data.object ~= selected.name then
+					comp.data.object = selected.name;
+					update = true;
+				end
+
+				if ImguiButton("RemoveHitTrigger", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+					ActiveScene:RemoveComponent(selected.entity, "HitTrigger");
+					RemoveComponent(selected.components, "HitTrigger");
+				end
 			end
+
 
 			if update then
 				ActiveScene:SetComponent(selected.entity, comp.name, comp.data);
@@ -282,6 +428,11 @@ while running do
 			if ImguiButton("NewSliderJoint", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
 				ActiveScene:CreateComponent(selected.entity, "Sliderjoint", "", "", 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, false, 1.0);
 				NewComponent(selected.components, "Sliderjoint", ActiveScene:GetComponent(selected.entity, "Sliderjoint"));
+			end
+
+			if ImguiButton("NewHitTrigger", {math.floor(ScreenWidth() * 0.145), math.floor(ScreenHeight() * 0.02)}) then
+				ActiveScene:CreateComponent(selected.entity, "HitTrigger", "", selected.name);
+				NewComponent(selected.components, "HitTrigger", ActiveScene:GetComponent(selected.entity, "HitTrigger"));
 			end
 		ImguiEndListBox();
 

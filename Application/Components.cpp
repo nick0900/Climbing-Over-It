@@ -472,3 +472,35 @@ b2Joint* lua_tojoint(lua_State* L, int index)
 	}
 	return out;
 }
+
+void lua_pushhittrigger(lua_State* L, HitTrigger hitTrigger)
+{
+	lua_newtable(L);
+
+	lua_pushstring(L, hitTrigger.function.c_str());
+	lua_setfield(L, -2, "triggerFunction");
+
+	lua_pushstring(L, hitTrigger.object.c_str());
+	lua_setfield(L, -2, "object");
+}
+
+HitTrigger lua_tohittrigger(lua_State* L, int index)
+{
+	HitTrigger out;
+
+	if (lua_istable(L, index))
+	{
+		lua_getfield(L, index, "triggerFunction");
+		out.function = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+
+		lua_getfield(L, index, "object");
+		out.object = luaL_checkstring(L, -1);
+		lua_pop(L, 1);
+	}
+	else
+	{
+		luaL_error(L, "item at index %d is not a table", index);
+	}
+	return out;
+}

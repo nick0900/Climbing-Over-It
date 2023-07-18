@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -173,6 +173,7 @@
     <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Run\baselevel.lua" />
     <None Include="Run\characterinit.lua" />
     <None Include="Run\crLoops.lua" />
     <None Include="Run\entitiesStructure.lua" />
@@ -180,7 +181,10 @@
     <None Include="Run\helpFuncs.lua" />
     <None Include="Run\imgui.ini" />
     <None Include="Run\inputUpdate.lua" />
+    <None Include="Run\level1.lua" />
     <None Include="Run\levelCache.lua" />
+    <None Include="Run\levels.lua" />
+    <None Include="Run\titlescreen.lua" />
     <None Include="Run\windowConfig.lua" />
   </ItemGroup>
   <ItemGroup>

@@ -25,6 +25,9 @@ namespace LuaRendering
 
 	static int ScreenWidth(lua_State* L);
 	static int ScreenHeight(lua_State* L);
+
+	static int RenderText(lua_State* L);
+	static int TextButton(lua_State* L);
 }
 
 void lua_pushvector2(lua_State * L, Vector2& vec);
@@ -35,3 +38,6 @@ Vector3 lua_tovector3(lua_State* L, int index);
 
 void lua_pushvector4(lua_State* L, Vector4& vec);
 Vector4 lua_tovector4(lua_State* L, int index);
+
+void lua_pushcolor(lua_State* L, Color& color);
+Color lua_tocolor(lua_State* L, int index);

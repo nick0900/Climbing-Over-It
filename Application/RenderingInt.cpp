@@ -29,6 +29,9 @@ void LuaRendering::Register(lua_State* L)
 	FunctionQuickReg(L, ScreenWidth);
 	FunctionQuickReg(L, ScreenHeight);
 
+	FunctionQuickReg(L, RenderText);
+	FunctionQuickReg(L, TextButton);
+
 	EnumQuickReg(L, CAMERA_PERSPECTIVE);
 	EnumQuickReg(L, CAMERA_ORTHOGRAPHIC);
 	EnumQuickReg(L, CAMERA_CUSTOM);
@@ -176,6 +179,59 @@ int LuaRendering::ScreenHeight(lua_State* L)
 	return 1;
 }
 
+int LuaRendering::RenderText(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 5)
+	{
+		std::string text = luaL_checkstring(L, 1);
+		int posx = luaL_checkinteger(L, 2);
+		int posy = luaL_checkinteger(L, 3);
+		int size = luaL_checkinteger(L, 4);
+		Color color = lua_tocolor(L, 5);
+		DrawText(text.c_str(), posx, posy, size, color);
+		return 0;
+	}
+	return luaL_error(L, "Got %d arguments expected 5, (text, posx, posy, fontsize, color{r,g,b,a})", n);
+}
+
+int LuaRendering::TextButton(lua_State* L)
+{
+	int n = lua_gettop(L);
+	if (n == 6)
+	{
+		std::string text = luaL_checkstring(L, 1);
+		int posx = luaL_checkinteger(L, 2);
+		int posy = luaL_checkinteger(L, 3);
+		int size = luaL_checkinteger(L, 4);
+		Color color1 = lua_tocolor(L, 5);
+		Color color2 = lua_tocolor(L, 6);
+		
+		float textWidth = MeasureText(text.c_str(), size);
+		float textHeight = size;
+
+		if (CheckCollisionPointRec(GetMousePosition(), {(float)posx, (float)posy, textWidth, textHeight}))
+		{
+			DrawRectangle(posx, posy, textWidth, textHeight, color1);
+			DrawText(text.c_str(), posx, posy, size, color2);
+
+			if (IsMouseButtonDown(MOUSE_BUTTON_LEFT))
+			{
+				lua_pushboolean(L, true);
+				return 1;
+			}
+		}
+		else
+		{
+			DrawRectangle(posx, posy, textWidth, textHeight, color2);
+			DrawText(text.c_str(), posx, posy, size, color1);
+		}
+		lua_pushboolean(L, false);
+		return 1;
+	}
+	return luaL_error(L, "Got %d arguments expected 6, (text, posx, posy, fontsize, color1{r,g,b,a}, color2{r,g,b,a})", n);
+}
+
 void lua_pushvector2(lua_State* L, Vector2& vec)
 {
 	lua_newtable(L);
@@ -286,6 +342,51 @@ Vector4 lua_tovector4(lua_State* L, int index)
 	else
 	{
 		luaL_error(L, "not a table at index %d, expected ({x, y, z, w})", index);
+	}
+	return out;
+}
+
+void lua_pushcolor(lua_State* L, Color& color)
+{
+	lua_newtable(L);
+
+	lua_pushinteger(L, color.r);
+	lua_rawseti(L, -2, 1);
+
+	lua_pushinteger(L, color.g);
+	lua_rawseti(L, -2, 2);
+
+	lua_pushinteger(L, color.b);
+	lua_rawseti(L, -2, 3);
+
+	lua_pushinteger(L, color.a);
+	lua_rawseti(L, -2, 4);
+}
+
+Color lua_tocolor(lua_State* L, int index)
+{
+	Color out = Color();
+	if (lua_istable(L, index))
+	{
+		lua_rawgeti(L, index, 1);
+		out.r = luaL_checkinteger(L, -1);
+		lua_pop(L, 1);
+
+		lua_rawgeti(L, index, 2);
+		out.g = luaL_checkinteger(L, -1);
+		lua_pop(L, 1);
+
+		lua_rawgeti(L, index, 3);
+		out.b = luaL_checkinteger(L, -1);
+		lua_pop(L, 1);
+
+		lua_rawgeti(L, index, 4);
+		out.a = luaL_checkinteger(L, -1);
+		lua_pop(L, 1);
+	}
+	else
+	{
+		luaL_error(L, "not a table at index %d, expected ({r, g, b, a})", index);
 	}
 	return out;
 }

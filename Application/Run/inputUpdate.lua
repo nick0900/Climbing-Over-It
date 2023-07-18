@@ -1,33 +1,3 @@
-baseinput = function(dt)
-	if KeyDown(KEY_LEFT_CONTROL) and KeyDown(KEY_P) then
-		if not holdingEditor then
-			editing = not editing;
-			holdingEditor = true;
-
-			if not editing then 
-				CursorDisable();
-				file = io.open("levelCache.lua", "w");
-				io.output(file);
-				io.write("loaded = ");
-				serialize(Entities);
-				io.close(file);
-			else 
-				CursorEnable(); 
-				dofile("levelCache.lua");
-				Entities = loaded;
-				ActiveScene:ClearAll();
-				LoadToScene(Entities, ActiveScene);
-				for _, v in ipairs(Entities) do
-					v.selected = false;
-				end
-				selected = nil;
-			end
-		end
-	elseif holdingEditor then
-		holdingEditor = false;
-	end
-end
-
 transformIO = function(dt, transform)
 	local changed = false;
 	local regular = 2;

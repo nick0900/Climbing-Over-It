@@ -97,3 +97,13 @@ void lua_pushsliderjoint(lua_State* L, SliderWrapper slider);
 SliderWrapper lua_tosliderjoint(lua_State* L, int index);
 
 b2Joint* lua_tojoint(lua_State* L, int index);
+
+struct HitTrigger
+{
+	std::string function;
+	std::string object;
+};
+
+#define CompHitTrigger "HitTrigger"
+void lua_pushhittrigger(lua_State* L, HitTrigger hitTrigger);
+HitTrigger lua_tohittrigger(lua_State* L, int index);

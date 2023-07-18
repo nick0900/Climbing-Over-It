@@ -42,3 +42,17 @@ public:
 	static void SetBody(entt::registry& registry, entt::entity entity);
 	static void RemoveBody(entt::registry& registry, entt::entity entity);
 };
+
+class HitCheck : public System
+{
+public:
+	HitCheck(lua_State* L);
+	virtual void SystemSetup(entt::registry* registry) override;
+
+	virtual bool OnUpdate(entt::registry* registry, float dt) override;
+	virtual bool OnEdit(entt::registry* registry, float dt) override;
+	virtual bool OnDraw(entt::registry* registry, float dt) override;
+
+private:
+	lua_State* m_L;
+};
