@@ -182,6 +182,8 @@
     <None Include="Run\imgui.ini" />
     <None Include="Run\inputUpdate.lua" />
     <None Include="Run\level1.lua" />
+    <None Include="Run\level2.lua" />
+    <None Include="Run\level3.lua" />
     <None Include="Run\levelCache.lua" />
     <None Include="Run\levels.lua" />
     <None Include="Run\titlescreen.lua" />
@@ -198,6 +200,10 @@
     <ClInclude Include="TransformInt.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="System.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Run\assets\textures\climber eyes.png" />
+    <Image Include="Run\assets\textures\climber pallet.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

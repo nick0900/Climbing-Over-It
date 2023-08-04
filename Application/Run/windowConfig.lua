@@ -1,3 +1,3 @@
-WindowWidth = 3840;
-WindowHeight = 2160;
+WindowWidth = 1920;
+WindowHeight = 1080;
 TargetFps = 60;

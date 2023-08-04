@@ -60,6 +60,8 @@
     <None Include="Run\titlescreen.lua" />
     <None Include="Run\baselevel.lua" />
     <None Include="Run\level1.lua" />
+    <None Include="Run\level2.lua" />
+    <None Include="Run\level3.lua" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LuaInterface.h">
@@ -92,5 +94,13 @@
     <ClInclude Include="RenderingInt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Run\assets\textures\climber eyes.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Run\assets\textures\climber pallet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

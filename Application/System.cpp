@@ -89,7 +89,8 @@ bool Physics::OnUpdate(entt::registry* registry, float dt)
     {
         b2Transform b2transform = rigidbody->GetTransform();
         transform.translation = { b2transform.p.x, b2transform.p.y, transform.translation.z };
-        transform.rotation = QuaternionFromEuler(0.0f, 0.0f, b2transform.q.GetAngle());
+        Vector3 rot = QuaternionToEuler(transform.rotation);
+        transform.rotation = QuaternionFromEuler(rot.x, rot.y, b2transform.q.GetAngle());
         transform.scale = { box.sx, box.sy, transform.scale.z};
     }
     return true;
